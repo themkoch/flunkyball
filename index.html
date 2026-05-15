@@ -580,64 +580,64 @@ body {
 .report-modal h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; color: var(--text); }
 .report-body {
   flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  font-size: 0.88rem; line-height: 1.5; color: var(--text);
+  font-size: 0.92rem; line-height: 1.6; color: var(--text);
   background: var(--inset-bg); border-radius: 14px; padding: 0;
-  border: 1px solid var(--border); margin-bottom: 12px; overflow: hidden;
+  border: 1px solid var(--border); margin-bottom: 12px;
 }
 /* report components */
 .rpt-header { padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
-.rpt-meta { font-size: 0.73rem; color: var(--text-muted); margin-bottom: 5px; }
-.rpt-opener { font-style: italic; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.rpt-meta { font-size: 0.78rem; color: var(--text); opacity: 0.75; margin-bottom: 5px; }
+.rpt-opener { font-style: italic; font-size: 0.88rem; color: var(--text); opacity: 0.8; line-height: 1.6; }
 .rpt-score-block { display: flex; align-items: stretch; padding: 14px 14px 10px; gap: 8px; }
 .rpt-team-card { flex: 1; border-radius: 14px; padding: 12px 8px 10px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.rpt-team-card.team-a { background: rgba(249,115,22,0.10); border: 1.5px solid rgba(249,115,22,0.25); }
-.rpt-team-card.team-b { background: rgba(37,99,235,0.10); border: 1.5px solid rgba(37,99,235,0.25); }
-.rpt-team-card.team-a.winner { background: rgba(249,115,22,0.18); border-color: var(--orange); }
-.rpt-team-card.team-b.winner { background: rgba(37,99,235,0.18); border-color: var(--blue); }
-.rpt-team-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+.rpt-team-card.team-a { background: rgba(249,115,22,0.15); border: 2px solid rgba(249,115,22,0.45); }
+.rpt-team-card.team-b { background: rgba(37,99,235,0.15); border: 2px solid rgba(37,99,235,0.45); }
+.rpt-team-card.team-a.winner { background: rgba(249,115,22,0.25); border-color: var(--orange); }
+.rpt-team-card.team-b.winner { background: rgba(37,99,235,0.25); border-color: var(--blue); }
+.rpt-team-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text); }
 .rpt-team-hits { font-size: 2.4rem; font-weight: 900; line-height: 1; }
 .rpt-team-card.team-a .rpt-team-hits { color: var(--orange); }
 .rpt-team-card.team-b .rpt-team-hits { color: var(--blue); }
-.rpt-team-hits-label { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: -3px; }
+.rpt-team-hits-label { font-size: 0.68rem; color: var(--text); opacity: 0.75; font-weight: 700; text-transform: uppercase; margin-top: -3px; }
 .rpt-player-chips { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-top: 4px; }
-.rpt-player-chip { font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); }
-.rpt-vs { display: flex; align-items: center; justify-content: center; padding: 0 4px; font-size: 0.72rem; font-weight: 800; color: var(--text-muted); }
+.rpt-player-chip { font-size: 0.72rem; font-weight: 700; padding: 3px 7px; border-radius: 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: var(--text); }
+.rpt-vs { display: flex; align-items: center; justify-content: center; padding: 0 4px; font-size: 0.78rem; font-weight: 800; color: var(--text); }
 .rpt-winner-banner { margin: 0 14px 14px; padding: 9px 14px; border-radius: 12px; font-size: 0.88rem; font-weight: 800; text-align: center; }
-.rpt-winner-banner.team-a { background: rgba(249,115,22,0.12); color: var(--orange); border: 1px solid rgba(249,115,22,0.4); }
-.rpt-winner-banner.team-b { background: rgba(37,99,235,0.12); color: var(--blue); border: 1px solid rgba(37,99,235,0.35); }
-.rpt-hitters { padding: 4px 14px 14px; display: flex; flex-direction: column; gap: 7px; }
-.rpt-hitters-title { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 1px; }
+.rpt-winner-banner.team-a { background: rgba(249,115,22,0.20); color: var(--orange); border: 2px solid rgba(249,115,22,0.6); }
+.rpt-winner-banner.team-b { background: rgba(37,99,235,0.20); color: var(--blue); border: 2px solid rgba(37,99,235,0.55); }
+.rpt-hitters { padding: 4px 14px 14px; display: flex; flex-direction: column; gap: 8px; }
+.rpt-hitters-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text); margin-bottom: 2px; }
 .rpt-hitter-row { display: flex; align-items: center; gap: 8px; }
-.rpt-hitter-name { font-size: 0.78rem; font-weight: 700; min-width: 72px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rpt-hitter-name { font-size: 0.82rem; font-weight: 700; min-width: 72px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rpt-hitter-bar-wrap { flex: 1; height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
 .rpt-hitter-bar { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
-.rpt-hitter-val { font-size: 0.73rem; font-weight: 800; min-width: 26px; text-align: right; }
-.rpt-caption-row { padding: 8px 14px; font-size: 0.76rem; color: var(--text-muted); border-top: 1px solid var(--border); }
-.rpt-closer { padding: 12px 16px; font-style: italic; font-size: 0.83rem; color: var(--text-muted); text-align: center; line-height: 1.6; border-top: 1px solid var(--border); }
+.rpt-hitter-val { font-size: 0.8rem; font-weight: 800; min-width: 26px; text-align: right; }
+.rpt-caption-row { padding: 8px 14px; font-size: 0.8rem; color: var(--text); opacity: 0.8; border-top: 1px solid var(--border); }
+.rpt-closer { padding: 12px 16px; font-style: italic; font-size: 0.86rem; color: var(--text); opacity: 0.8; text-align: center; line-height: 1.7; border-top: 1px solid var(--border); }
 .rpt-tourn-stats { display: flex; gap: 6px; padding: 14px 14px 10px; }
-.rpt-tourn-stat { flex: 1; text-align: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 8px 4px; border: 1px solid var(--border); }
-.rpt-tourn-stat-num { font-size: 1.25rem; font-weight: 900; }
-.rpt-tourn-stat-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
+.rpt-tourn-stat { flex: 1; text-align: center; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 4px; border: 1px solid rgba(255,255,255,0.2); }
+.rpt-tourn-stat-num { font-size: 1.3rem; font-weight: 900; color: var(--text); }
+.rpt-tourn-stat-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text); opacity: 0.7; margin-top: 2px; }
 .rpt-champion { padding: 14px 16px 12px; text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(249,115,22,0.05); }
 .rpt-champion-crown { font-size: 1.9rem; line-height: 1; }
 .rpt-champion-name { font-size: 1.15rem; font-weight: 900; margin-top: 3px; }
-.rpt-champion-sub { font-size: 0.73rem; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+.rpt-champion-sub { font-size: 0.78rem; color: var(--text); opacity: 0.75; margin-top: 3px; font-weight: 600; }
 .rpt-highlight-row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-top: 1px solid var(--border); }
 .rpt-highlight-icon { font-size: 1.1rem; width: 26px; text-align: center; flex-shrink: 0; }
 .rpt-highlight-body { flex: 1; }
-.rpt-highlight-text { font-size: 0.82rem; font-weight: 800; }
-.rpt-highlight-sub { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
-.rpt-day-row { display: flex; align-items: center; padding: 8px 14px; border-top: 1px solid var(--border); gap: 10px; }
-.rpt-day-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); min-width: 52px; flex-shrink: 0; }
-.rpt-day-info { font-size: 0.8rem; font-weight: 700; }
-.rpt-day-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 1px; }
+.rpt-highlight-text { font-size: 0.86rem; font-weight: 800; }
+.rpt-highlight-sub { font-size: 0.75rem; color: var(--text); opacity: 0.75; font-weight: 600; margin-top: 2px; }
+.rpt-day-row { display: flex; align-items: center; padding: 10px 14px; border-top: 1px solid var(--border); gap: 10px; }
+.rpt-day-label { font-size: 0.78rem; font-weight: 800; color: var(--text); opacity: 0.7; min-width: 52px; flex-shrink: 0; }
+.rpt-day-info { font-size: 0.84rem; font-weight: 700; }
+.rpt-day-sub { font-size: 0.75rem; color: var(--text); opacity: 0.7; margin-top: 2px; }
 /* plain text fallback for chatgpt prompts */
 .report-line { display: block; margin-bottom: 2px; }
 .report-line.heading { font-size: 0.95rem; font-weight: 800; color: var(--orange); margin-top: 10px; margin-bottom: 4px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
 .report-line.meta { font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
 .report-line.empty { margin-bottom: 6px; display: block; }
 .report-line strong { color: var(--orange); font-weight: 800; font-style: normal; }
-.report-plain { padding: 14px 16px; font-size: 0.82rem; line-height: 1.7; font-family: 'Georgia', serif; white-space: pre-wrap; }
+.report-plain { padding: 14px 16px; font-size: 0.88rem; line-height: 1.8; font-family: 'Georgia', serif; white-space: pre-wrap; }
 .report-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .report-actions .btn { margin-bottom: 0; }
 .report-btn {
@@ -1142,9 +1142,18 @@ body {
 <div class="modal-overlay hidden" id="avatarPickerOverlay">
   <div class="modal" style="max-width:320px;">
     <h3 data-i18n="avatarPickTitle">🎭 Emoji auswählen</h3>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="font-size:2rem;min-width:2.4rem;text-align:center;" id="avatarPreview">😀</span>
+      <input id="avatarCustomInput" type="text" inputmode="text"
+        placeholder="Eigenes Emoji tippen…"
+        style="flex:1;padding:10px 12px;border-radius:10px;border:1.5px solid var(--border);background:var(--inset-bg);color:var(--text);font-size:1.3rem;outline:none;"
+        oninput="onAvatarCustomInput(this.value)"
+      >
+    </div>
     <div class="avatar-picker-grid" id="avatarPickerGrid"></div>
-    <div style="margin-top:10px;">
-      <button class="btn btn-secondary" onclick="document.getElementById('avatarPickerOverlay').classList.add('hidden')">✕ Cancel</button>
+    <div style="margin-top:10px;display:flex;gap:8px;">
+      <button class="btn btn-secondary" style="flex:1;" onclick="document.getElementById('avatarPickerOverlay').classList.add('hidden')">✕ Cancel</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="confirmAvatarCustom()">✓ OK</button>
     </div>
   </div>
 </div>
@@ -1167,8 +1176,8 @@ body {
     <h3 id="reportTitle">🗞️ Spielbericht</h3>
     <div class="report-body" id="reportBody"></div>
     <div class="report-actions">
-      <button class="btn btn-secondary" style="flex:1;" onclick="document.getElementById('reportOverlay').classList.add('hidden')" data-i18n="close">✕ Close</button>
-      <button class="btn btn-primary" style="flex:1;" id="reportCopyBtn" data-i18n="copy">📋 Copy</button>
+      <button class="btn btn-secondary" style="flex:1;" id="reportCloseBtn" onclick="reportModalBack()">✕ Close</button>
+      <button class="btn btn-primary" style="flex:1;background:var(--orange);border-color:var(--orange-dark);" id="reportExportBtn" onclick="exportReportAsImage()" title="Als Bild exportieren">📤 Teilen</button>
     </div>
   </div>
 </div>
@@ -2196,112 +2205,55 @@ async function exportCardAsImage(cardEl, filename) {
   if (!cardEl) return;
 
   const isDark = document.body.classList.contains('dark');
-  const pad = 20;
 
-  // Measure the card as it appears
-  const rect = cardEl.getBoundingClientRect();
-  const w = Math.ceil(rect.width);
-
-  // Deep-clone and resolve CSS custom properties to real values
-  const clone = cardEl.cloneNode(true);
-  const rootStyle = getComputedStyle(document.documentElement);
-  const targetStyle = isDark
-    ? getComputedStyle(document.body.classList.contains('dark') ? document.body : document.documentElement)
-    : getComputedStyle(document.documentElement);
-
-  // Resolve vars in all inline style attributes within clone
-  function resolveVars(el) {
-    const cs = getComputedStyle(el);
-    // Copy computed background, color, border-color onto inline style so SVG foreignObject sees them
-    const props = ['background','background-color','color','border-color','border','border-left','font-size','font-weight','padding','margin','border-radius'];
-    let inlined = '';
-    props.forEach(p => { try { const v = cs.getPropertyValue(p); if (v) inlined += `${p}:${v};`; } catch(e){} });
-    if (inlined) el.style.cssText = inlined + el.style.cssText;
-    Array.from(el.children).forEach(resolveVars);
+  // Lazy-load html2canvas (works on iOS Safari unlike SVG/foreignObject)
+  if (!window.html2canvas) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
   }
-  resolveVars(clone);
-  clone.style.width = w + 'px';
-  clone.style.margin = '0';
-  clone.style.boxSizing = 'border-box';
-  clone.style.backdropFilter = 'none';
-  clone.style.webkitBackdropFilter = 'none';
 
-  // Get all style text from the page's inline <style> block
-  const styleEl = document.querySelector('style');
-  const styleText = styleEl ? styleEl.textContent : '';
-
-  // Background gradient colors
   const bgFrom = isDark ? '#0a0f1e' : '#dbeafe';
   const bgTo   = isDark ? '#130c28' : '#ede9fe';
 
-  // Temporarily measure clone height by attaching off-screen
-  clone.style.position = 'fixed';
-  clone.style.left = '-9999px';
-  clone.style.top = '0';
-  document.body.appendChild(clone);
-  const h = Math.ceil(clone.scrollHeight);
-  document.body.removeChild(clone);
-  clone.style.position = '';
-  clone.style.left = '';
-  clone.style.top = '';
-
-  const totalW = w + pad * 2;
-  const totalH = h + pad * 2;
-
-  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="${totalH}">
-  <defs>
-    <style>
-      ${styleText.replace(/<\/style>/g,'').replace(/<style>/g,'')}
-      * { box-sizing:border-box; -webkit-print-color-adjust:exact !important; color-adjust:exact !important; }
-    </style>
-    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${bgFrom}"/>
-      <stop offset="100%" stop-color="${bgTo}"/>
-    </linearGradient>
-  </defs>
-  <rect width="${totalW}" height="${totalH}" fill="url(#pageBg)"/>
-  <foreignObject x="${pad}" y="${pad}" width="${w}" height="${h}">
-    <html xmlns="http://www.w3.org/1999/xhtml">
-      <body class="${isDark?'dark':''}" style="margin:0;padding:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-        ${clone.outerHTML}
-      </body>
-    </html>
-  </foreignObject>
-</svg>`;
-
-  const scale = Math.min(window.devicePixelRatio || 2, 3);
-  const cvs = document.createElement('canvas');
-  cvs.width  = totalW * scale;
-  cvs.height = totalH * scale;
-  const ctx = cvs.getContext('2d');
-  ctx.scale(scale, scale);
-
-  // Draw background gradient manually as fallback
-  const grad = ctx.createLinearGradient(0, 0, totalW, totalH);
-  grad.addColorStop(0, bgFrom); grad.addColorStop(1, bgTo);
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, totalW, totalH);
-
-  const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
-  const svgUrl  = URL.createObjectURL(svgBlob);
-  const img = new Image();
-
-  await new Promise((res) => {
-    img.onload = res;
-    img.onerror = res; // continue even on error
-    img.src = svgUrl;
+  // Remove backdrop-filter temporarily (unsupported in html2canvas)
+  const allEls = cardEl.querySelectorAll('*');
+  const saved = [];
+  allEls.forEach(el => {
+    saved.push({ el, bf: el.style.backdropFilter, wbf: el.style.webkitBackdropFilter });
+    el.style.backdropFilter = 'none';
+    el.style.webkitBackdropFilter = 'none';
   });
 
-  try { ctx.drawImage(img, 0, 0); } catch(e) {}
-  URL.revokeObjectURL(svgUrl);
+  let cvs;
+  try {
+    cvs = await html2canvas(cardEl, {
+      scale: Math.min(window.devicePixelRatio || 2, 3),
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: bgFrom,
+      logging: false,
+    });
+  } catch(e) {
+    showToast('❌ Export fehlgeschlagen');
+    return;
+  } finally {
+    saved.forEach(({ el, bf, wbf }) => {
+      el.style.backdropFilter = bf;
+      el.style.webkitBackdropFilter = wbf;
+    });
+  }
 
   cvs.toBlob(async imgBlob => {
     if (!imgBlob) { showToast('❌ Export fehlgeschlagen'); return; }
     const pngFile = new File([imgBlob], filename || 'kachel.png', { type: 'image/png' });
-    // Try native Web Share (iOS / Android)
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [pngFile] })) {
       try { await navigator.share({ files: [pngFile], title: 'Flunkyball' }); return; } catch(e) {}
     }
-    // Desktop fallback: download
     const a = document.createElement('a');
     a.href = URL.createObjectURL(imgBlob);
     a.download = filename || 'kachel.png';
@@ -2314,6 +2266,76 @@ async function exportCardAsImage(cardEl, filename) {
 
 function exportLeaderboardImage() {
   exportCardAsImage(document.getElementById('leaderboardCard'), 'rangliste.png');
+}
+
+async function exportReportAsImage() {
+  const body = document.getElementById('reportBody');
+  const title = document.getElementById('reportTitle');
+  if (!body) return;
+
+  const isDark = document.body.classList.contains('dark');
+
+  if (!window.html2canvas) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  // Build a standalone render container with title + full body (no scroll clipping)
+  const wrap = document.createElement('div');
+  wrap.style.cssText = `position:fixed;left:-9999px;top:0;width:${body.offsetWidth}px;background:${isDark?'#0f1a2e':'#fff7ed'};border-radius:16px;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;`;
+  if (isDark) wrap.classList.add('dark');
+
+  const titleClone = document.createElement('div');
+  titleClone.textContent = title.textContent;
+  titleClone.style.cssText = `font-size:1.05rem;font-weight:800;margin-bottom:12px;color:${isDark?'#f1f5f9':'#1e293b'};`;
+
+  const bodyClone = body.cloneNode(true);
+  bodyClone.style.cssText = `overflow:visible;max-height:none;height:auto;background:transparent;border:none;`;
+
+  wrap.appendChild(titleClone);
+  wrap.appendChild(bodyClone);
+  document.body.appendChild(wrap);
+
+  // Remove backdrop-filter from all children
+  wrap.querySelectorAll('*').forEach(el => {
+    el.style.backdropFilter = 'none';
+    el.style.webkitBackdropFilter = 'none';
+  });
+
+  let cvs;
+  try {
+    cvs = await html2canvas(wrap, {
+      scale: Math.min(window.devicePixelRatio || 2, 3),
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: isDark ? '#0f1a2e' : '#fff7ed',
+      logging: false,
+    });
+  } catch(e) {
+    showToast('❌ Export fehlgeschlagen');
+    document.body.removeChild(wrap);
+    return;
+  }
+  document.body.removeChild(wrap);
+
+  const safeTitle = (title.textContent || 'bericht').replace(/[^a-zA-Z0-9äöüÄÖÜß_\- ]/g,'').trim().replace(/\s+/g,'_');
+
+  cvs.toBlob(async imgBlob => {
+    if (!imgBlob) { showToast('❌ Export fehlgeschlagen'); return; }
+    const pngFile = new File([imgBlob], safeTitle + '.png', { type: 'image/png' });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [pngFile] })) {
+      try { await navigator.share({ files: [pngFile], title: 'Flunkyball' }); return; } catch(e) {}
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(imgBlob);
+    a.download = safeTitle + '.png';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    showToast('📸 Bericht gespeichert');
+  }, 'image/png');
 }
 
 // ============================================================
@@ -4071,14 +4093,64 @@ function renderPlayerProfile() {
     </div>`;
   }
 
-  // Best single game
+  // Notable games
+  const notableRow = (label, detail, matchId) => `
+    <div style="font-size:0.82rem;padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <span style="font-weight:700;">${label}</span>
+      <span style="display:flex;align-items:center;gap:6px;">
+        <span style="color:var(--text);opacity:0.8;">${detail}</span>
+        <button onclick="showMatchReport(${matchId})" style="padding:3px 9px;border-radius:8px;border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.12);color:var(--orange);font-size:0.75rem;font-weight:700;cursor:pointer;flex-shrink:0;">🗞️ ${isDE?'Bericht':'Report'}</button>
+      </span>
+    </div>`;
+
   if (bestHits > 0) {
     const bDate = new Date(bestGame.timestamp).toLocaleDateString();
     const bWon = (bestGame.teamA.includes(name)&&bestGame.winner==='A')||(bestGame.teamB.includes(name)&&bestGame.winner==='B');
-    html += `<div style="font-size:0.82rem;padding:8px 0;border-bottom:1px solid var(--border);">
-      <span style="font-weight:700;">${isDE?'Bestes Spiel':'Best Game'}</span>
-      <span style="float:right;">${bestHits} ${isDE?'Treffer':'hits'} · ${bDate} · ${bWon?'✅':'❌'}</span>
-    </div>`;
+    html += notableRow(isDE?'Bestes Spiel':'Best Game', `${bestHits} ${isDE?'Treffer':'hits'} · ${bDate} · ${bWon?'✅':'❌'}`, bestGame.id);
+  }
+
+  // Most penalties in a single game
+  const penGames = pm.filter(m=>(m.penalties?.[name]||0)>0).sort((a,b)=>(b.penalties[name]||0)-(a.penalties[name]||0));
+  if (penGames.length) {
+    const m = penGames[0], pen = m.penalties[name];
+    const won = (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B');
+    html += notableRow(isDE?'Meiste Strafdosen':'Most Penalties', `${pen}🍺 · ${new Date(m.timestamp).toLocaleDateString()} · ${won?'✅':'❌'}`, m.id);
+  }
+
+  // Most multi-hits (double/triple) in a single game
+  const multiGames = pm.filter(m=>m.multiHits?.[name]).map(m=>({m, score:(m.multiHits[name].double||0)*2+(m.multiHits[name].triple||0)*3+(m.multiHits[name].can||0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  if (multiGames.length) {
+    const {m} = multiGames[0];
+    const mh = m.multiHits[name];
+    const parts = [];
+    if (mh.triple) parts.push(`${mh.triple}× 💫`);
+    if (mh.double) parts.push(`${mh.double}× 💥`);
+    if (mh.can)    parts.push(`${mh.can}× 🎯`);
+    const won = (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B');
+    html += notableRow(isDE?'Spektakulärste Treffer':'Most Special Hits', `${parts.join(' ')} · ${new Date(m.timestamp).toLocaleDateString()} · ${won?'✅':'❌'}`, m.id);
+  }
+
+  // Worst game: lost with 0 hits (most embarrassing)
+  const zeroHitLosses = pm.filter(m=>{
+    const won=(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B');
+    return !won && (m.hits[name]||0)===0;
+  });
+  if (zeroHitLosses.length) {
+    const m = zeroHitLosses[zeroHitLosses.length-1];
+    html += notableRow(isDE?'Zu-Null-Niederlage':'Shutout Loss', `0 ${isDE?'Treffer':'hits'} · ${new Date(m.timestamp).toLocaleDateString()} · ❌`, m.id);
+  }
+
+  // Biggest win margin for this player
+  const winMargins = pm.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).map(m=>{
+    const ownH  = (m.winner==='A'?m.teamA:m.teamB).reduce((s,p)=>s+(m.hits[p]||0),0);
+    const oppH  = (m.winner==='A'?m.teamB:m.teamA).reduce((s,p)=>s+(m.hits[p]||0),0);
+    return {m, diff: ownH - oppH};
+  }).filter(x=>x.diff>=4).sort((a,b)=>b.diff-a.diff);
+  if (winMargins.length) {
+    const {m, diff} = winMargins[0];
+    const ownH = (m.winner==='A'?m.teamA:m.teamB).reduce((s,p)=>s+(m.hits[p]||0),0);
+    const oppH = (m.winner==='A'?m.teamB:m.teamA).reduce((s,p)=>s+(m.hits[p]||0),0);
+    html += notableRow(isDE?'Höchster Sieg':'Biggest Win', `${ownH}:${oppH} (+${diff}) · ${new Date(m.timestamp).toLocaleDateString()} · ✅`, m.id);
   }
 
   // Time-of-day performance (2-hour windows, bar chart style)
@@ -4685,6 +4757,53 @@ function buildMatchReportHTML(m) {
     html += `</div>`;
   }
 
+  // ── BESONDERE MOMENTE ──────────────────────────────────────
+  const moments = [];
+
+  // Zu-Null-Sieg
+  const loserHits = (m.winner==='A'?m.teamB:m.teamA).reduce((s,p)=>s+(m.hits[p]||0),0);
+  if (loserHits === 0) moments.push({ icon:'🪣', text: isDE?'Zu-Null-Sieg':'Shutout win', sub: isDE?'Das Gegnerteam blieb ohne Treffer.':'The opposing team scored zero hits.' });
+
+  // Hoher Sieg (Differenz ≥ 5)
+  if (Math.abs(aHits - bHits) >= 5) moments.push({ icon:'💪', text: isDE?`Klarer Sieg (+${Math.abs(aHits-bHits)})`:`Dominant win (+${Math.abs(aHits-bHits)})`, sub: isDE?'Eindeutige Überlegenheit des Siegerteams.':'The winning team was clearly superior.' });
+
+  // Knappes Ergebnis (Differenz ≤ 1, kein Unentschieden)
+  if (Math.abs(aHits - bHits) === 1) moments.push({ icon:'⚖️', text: isDE?'Hauchdünne Entscheidung':'Razor-thin result', sub: isDE?'Nur ein Treffer Unterschied!':'Just one hit separated the teams!' });
+
+  // Strafdosen Spieler
+  const penPlayers = [...m.teamA,...m.teamB].filter(p=>(m.penalties&&m.penalties[p]||0)>0);
+  penPlayers.forEach(p => {
+    const pen = m.penalties[p];
+    moments.push({ icon:'🍺', text: isDE?`Strafdose${pen>1?'n':''}: ${esc(p)}`:`Penalty drink${pen>1?'s':''}: ${esc(p)}`, sub: isDE?`${pen}× Strafdose kassiert`:`${pen}× penalty drink` });
+  });
+
+  // Team-Strafdosen
+  if (m.teamPenalties?.A > 0) moments.push({ icon:'🍺', text: isDE?`Team Hecke: Teamstrafe`:`Team Hecke: Team penalty`, sub: `${m.teamPenalties.A}×` });
+  if (m.teamPenalties?.B > 0) moments.push({ icon:'🍺', text: isDE?`Team Straße: Teamstrafe`:`Team Straße: Team penalty`, sub: `${m.teamPenalties.B}×` });
+
+  // Mehrfachtreffer / Dosentreffer
+  const allPlayers = [...m.teamA,...m.teamB];
+  allPlayers.forEach(p => {
+    const mh = m.multiHits?.[p];
+    if (!mh) return;
+    if (mh.double > 0) moments.push({ icon:'💥', text: isDE?`Doppeltreffer: ${esc(p)}`:`Double hit: ${esc(p)}`, sub: isDE?`${mh.double}× zwei Treffer in einem Wurf`:`${mh.double}× two hits in one throw` });
+    if (mh.triple > 0) moments.push({ icon:'💫', text: isDE?`Dreifachtreffer: ${esc(p)}`:`Triple hit: ${esc(p)}`, sub: isDE?`${mh.triple}× drei Treffer in einem Wurf`:`${mh.triple}× three hits in one throw` });
+    if (mh.can   > 0) moments.push({ icon:'🎯', text: isDE?`Dosentreffer: ${esc(p)}`:`Can hit: ${esc(p)}`, sub: isDE?`${mh.can}× Dose direkt getroffen`:`${mh.can}× direct can hit` });
+  });
+
+  if (moments.length) {
+    html += `<div style="padding:4px 14px 2px;font-size:0.7rem;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);border-top:1px solid var(--border);">✨ ${isDE?'Besondere Momente':'Match Highlights'}</div>`;
+    moments.forEach(mo => {
+      html += `<div class="rpt-highlight-row">
+        <div class="rpt-highlight-icon">${mo.icon}</div>
+        <div class="rpt-highlight-body">
+          <div class="rpt-highlight-text">${mo.text}</div>
+          <div class="rpt-highlight-sub">${mo.sub}</div>
+        </div>
+      </div>`;
+    });
+  }
+
   return html;
 }
 
@@ -4831,6 +4950,40 @@ function buildDayReportHTML(dayIdx) {
   return html;
 }
 
+function miniScoreCard(m, icon, label, isDE) {
+  const aH = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
+  const bH = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
+  const winA = m.winner === 'A';
+  const date = new Date(m.timestamp).toLocaleDateString('de-DE',{day:'numeric',month:'short'});
+  const av = n => state.avatars[n] ? state.avatars[n]+' ' : '';
+  const teamNameA = m.teamA.map(p=>av(p)+esc(p)).join(', ');
+  const teamNameB = m.teamB.map(p=>av(p)+esc(p)).join(', ');
+  return `<div style="padding:8px 14px 10px;border-top:1px solid var(--border);">
+    <div style="font-size:0.68rem;font-weight:900;text-transform:uppercase;letter-spacing:0.07em;color:var(--text);opacity:0.55;margin-bottom:6px;">${icon} ${label}</div>
+    <div style="display:flex;align-items:stretch;gap:6px;">
+      <div style="flex:1;border-radius:12px;padding:8px 6px;text-align:center;
+        background:rgba(249,115,22,${winA?'0.20':'0.08'});
+        border:${winA?'2px':'1.5px'} solid rgba(249,115,22,${winA?'0.55':'0.25'});">
+        <div style="font-size:1.6rem;font-weight:900;color:var(--orange);line-height:1;">${aH}${winA?' 🏆':''}</div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--text);opacity:0.7;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${teamNameA}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 2px;">
+        <div style="font-size:0.65rem;font-weight:800;color:var(--text);opacity:0.45;">vs</div>
+        <div style="font-size:0.6rem;color:var(--text);opacity:0.35;">${date}</div>
+      </div>
+      <div style="flex:1;border-radius:12px;padding:8px 6px;text-align:center;
+        background:rgba(37,99,235,${!winA?'0.20':'0.08'});
+        border:${!winA?'2px':'1.5px'} solid rgba(37,99,235,${!winA?'0.55':'0.25'});">
+        <div style="font-size:1.6rem;font-weight:900;color:var(--blue);line-height:1;">${bH}${!winA?' 🏆':''}</div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--text);opacity:0.7;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${teamNameB}</div>
+      </div>
+    </div>
+    <div style="margin-top:6px;text-align:center;">
+      <button onclick="showMatchReport(${m.id})" style="padding:4px 12px;border-radius:8px;border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.12);color:var(--orange);font-size:0.75rem;font-weight:700;cursor:pointer;">🗞️ ${isDE?'Spielbericht':'Match Report'}</button>
+    </div>
+  </div>`;
+}
+
 function buildTournamentReportHTML() {
   const isDE = currentLang === 'de';
   const stats = computeStats();
@@ -4839,38 +4992,105 @@ function buildTournamentReportHTML() {
   if (!n) return `<div class="rpt-closer">${isDE?'Keine Spiele vorhanden.':'No matches played.'}</div>`;
 
   const totalHits = state.matches.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+  const avgHitsPerMatch = (totalHits / n).toFixed(1);
   const days = [...new Set(state.matches.map(m=>new Date(m.timestamp).toLocaleDateString()))];
-  const leader = [...players].sort((a,b)=>b.wins-a.wins||b.winRate-a.winRate)[0];
-  const topHitter = [...players].sort((a,b)=>b.hits-a.hits)[0];
-  const qual = players.filter(p=>p.played>=3).sort((a,b)=>b.winRate-a.winRate);
-  const clutch = qual[0];
-  // compute all-time best win streak per player (not just current)
-  let longestStreakP = null, longestStreakC = 0;
+  const av = nm => (state.avatars[nm]||'');
+
+  // --- per-player streak stats ---
+  const playerStreaks = {};
   players.forEach(p => {
     const pm = state.matches.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name));
-    let best = 0, cur = 0;
+    let bestW=0,curW=0,bestL=0,curL=0;
     pm.forEach(m => {
-      const won = (m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B');
-      if (won) { cur++; best = Math.max(best, cur); } else cur = 0;
+      const won=(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B');
+      if(won){curW++;bestW=Math.max(bestW,curW);curL=0;}else{curL++;bestL=Math.max(bestL,curL);curW=0;}
     });
-    if (best > longestStreakC) { longestStreakC = best; longestStreakP = p.name; }
+    playerStreaks[p.name]={bestWin:bestW,bestLoss:bestL};
+  });
+  const longestWinEntry  = players.reduce((b,p)=>playerStreaks[p.name].bestWin >playerStreaks[b.name].bestWin ?p:b, players[0]);
+  const longestLossEntry = players.reduce((b,p)=>playerStreaks[p.name].bestLoss>playerStreaks[b.name].bestLoss?p:b, players[0]);
+
+  // --- match extremes ---
+  const matchHits = state.matches.map(m=>({m, total:Object.values(m.hits).reduce((a,b)=>a+b,0)}));
+  const highestScoringMatch = matchHits.reduce((b,x)=>x.total>b.total?x:b, matchHits[0]);
+  const lowestScoringMatch  = matchHits.reduce((b,x)=>x.total<b.total?x:b, matchHits[0]);
+  const closestMatch = state.matches.reduce((best,m) => {
+    const aH=Object.values(m.hits).filter((_,i)=>m.teamA.includes(Object.keys(m.hits)[i])).reduce((a,b)=>a+b,0);
+    const bH=Object.values(m.hits).filter((_,i)=>m.teamB.includes(Object.keys(m.hits)[i])).reduce((a,b)=>a+b,0);
+    const diff=Math.abs(aH-bH);
+    const bestAH=Object.values(best.hits).filter((_,i)=>best.teamA.includes(Object.keys(best.hits)[i])).reduce((a,b)=>a+b,0);
+    const bestBH=Object.values(best.hits).filter((_,i)=>best.teamB.includes(Object.keys(best.hits)[i])).reduce((a,b)=>a+b,0);
+    return diff<Math.abs(bestAH-bestBH)?m:best;
+  }, state.matches[0]);
+
+  // best single-game performance
+  let bestPerfPlayer=null,bestPerfHits=0,bestPerfMatch=null;
+  state.matches.forEach(m=>{
+    Object.entries(m.hits).forEach(([p,h])=>{
+      if(h>bestPerfHits){bestPerfHits=h;bestPerfPlayer=p;bestPerfMatch=m;}
+    });
   });
 
-  const av = n => (state.avatars[n]||'');
-  const tOpener = rnd(isDE ? DE_TOURN_OPENERS : EN_MATCH_OPENERS);
-  const tCloser = rnd(isDE ? DE_TOURN_CLOSERS : EN_MATCH_CLOSERS);
+  // worst single-game (most hits against, lost)
+  let worstPerfPlayer=null,worstPerfHits=Infinity,worstPerfMatch=null;
+  players.forEach(p=>{
+    const pm=state.matches.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name));
+    pm.forEach(m=>{
+      const won=(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B');
+      if(!won&&(m.hits[p.name]||0)<worstPerfHits){worstPerfHits=m.hits[p.name]||0;worstPerfPlayer=p.name;worstPerfMatch=m;}
+    });
+  });
+
+  // --- trend: first half vs second half win rates ---
+  const half=Math.floor(n/2);
+  const firstHalf=state.matches.slice(0,half), secondHalf=state.matches.slice(half);
+  const trendPlayers = players.filter(p=>p.played>=2).map(p=>{
+    const w1=firstHalf.filter(m=>(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B')).length;
+    const g1=firstHalf.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name)).length;
+    const w2=secondHalf.filter(m=>(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B')).length;
+    const g2=secondHalf.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name)).length;
+    const r1=g1?w1/g1:0, r2=g2?w2/g2:0;
+    return {name:p.name,delta:r2-r1,r1,r2,g1,g2};
+  }).filter(x=>x.g1>=1&&x.g2>=1);
+  const mostImproved = trendPlayers.length ? trendPlayers.reduce((b,x)=>x.delta>b.delta?x:b,trendPlayers[0]) : null;
+  const mostDeclined = trendPlayers.length ? trendPlayers.reduce((b,x)=>x.delta<b.delta?x:b,trendPlayers[0]) : null;
+
+  // --- team size / hit rate correlation ---
+  const avg1v1 = state.matches.filter(m=>m.teamA.length===1&&m.teamB.length===1);
+  const avg2v2 = state.matches.filter(m=>m.teamA.length===2&&m.teamB.length===2);
+  const hpg1v1 = avg1v1.length ? (avg1v1.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0)/avg1v1.length).toFixed(1) : null;
+  const hpg2v2 = avg2v2.length ? (avg2v2.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0)/avg2v2.length).toFixed(1) : null;
+
+  const qual  = players.filter(p=>p.played>=3).sort((a,b)=>b.winRate-a.winRate);
+  const leader    = [...players].sort((a,b)=>b.wins-a.wins||b.winRate-a.winRate)[0];
+  const topHitter = [...players].sort((a,b)=>b.hits-a.hits)[0];
+  const clutch    = qual[0];
+  const coldest   = players.filter(p=>p.played>=2).sort((a,b)=>a.winRate-b.winRate)[0];
+  const leastHits = [...players].sort((a,b)=>a.hitsPerGame-b.hitsPerGame)[0];
+
+  // helper: match report link button
+  const matchLink = (m, label) =>
+    `<button onclick="showMatchReport(${m.id})" style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:7px;border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.12);color:var(--orange);font-size:0.75rem;font-weight:700;cursor:pointer;vertical-align:middle;margin-left:4px;">🗞️ ${esc(label)}</button>`;
+
+  // section header helper
+  const sectionHead = (icon, title) =>
+    `<div style="padding:10px 14px 4px;font-size:0.7rem;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);border-top:1px solid var(--border);">${icon} ${title}</div>`;
+
+  // --- build HTML ---
+  const tOpener  = rnd(isDE ? DE_TOURN_OPENERS : EN_MATCH_OPENERS);
+  const tCloser  = rnd(isDE ? DE_TOURN_CLOSERS : EN_MATCH_CLOSERS);
   const tSummary = isDE
-    ? `${n} Spiele über ${days.length} Tag${days.length!==1?'e':''}, ${totalHits} Treffer insgesamt — mit ${players.length} Spielern am Start.`
-    : `${n} matches over ${days.length} day${days.length!==1?'s':''}, ${totalHits} total hits — with ${players.length} players competing.`;
+    ? `${n} Spiele über ${days.length} Tag${days.length!==1?'e':''}, ${totalHits} Treffer insgesamt (⌀ ${avgHitsPerMatch}/Spiel) — mit ${players.length} Spielern am Start.`
+    : `${n} matches over ${days.length} day${days.length!==1?'s':''}, ${totalHits} total hits (avg ${avgHitsPerMatch}/match) — with ${players.length} players.`;
   const tLeader = leader?.wins > 0
-    ? (isDE ? `${leader.name} dominierte mit ${leader.wins} Siegen und einer Siegquote von ${Math.round(leader.winRate*100)} Prozent.`
-            : `${leader.name} dominated with ${leader.wins} wins and a ${Math.round(leader.winRate*100)}% win rate.`)
+    ? (isDE?`${leader.name} dominierte das Feld mit ${leader.wins} Siegen und einer Siegquote von ${Math.round(leader.winRate*100)}%.`
+           :`${leader.name} dominated with ${leader.wins} wins at a ${Math.round(leader.winRate*100)}% win rate.`)
     : '';
-  const tStreak = longestStreakP && longestStreakC >= 2
-    ? (isDE ? `Die beeindruckendste Serie gehörte ${longestStreakP} mit ${longestStreakC} Siegen in Folge.`
-            : `The most impressive streak belonged to ${longestStreakP} with ${longestStreakC} consecutive wins.`)
+  const tStreakLine = longestWinEntry && playerStreaks[longestWinEntry.name].bestWin>=2
+    ? (isDE?`Die beeindruckendste Serie gehörte ${longestWinEntry.name} mit ${playerStreaks[longestWinEntry.name].bestWin} Siegen in Folge.`
+           :`The most impressive streak belonged to ${longestWinEntry.name} with ${playerStreaks[longestWinEntry.name].bestWin} consecutive wins.`)
     : '';
-  const tNarrative = [tOpener, tSummary, tLeader, tStreak, tCloser].filter(Boolean).join(' ');
+  const tNarrative = [tOpener,tSummary,tLeader,tStreakLine,tCloser].filter(Boolean).join(' ');
 
   let html = `<div class="rpt-header">
     <div class="rpt-meta">📅 ${isDE?'Turnier':'Tournament'} · ${n} ${isDE?`Spiel${n!==1?'e':''}`:` match${n!==1?'es':''}`} · ${days.length} ${isDE?`Tag${days.length!==1?'e':''}`:` day${days.length!==1?'s':''}`}</div>
@@ -4880,7 +5100,7 @@ function buildTournamentReportHTML() {
   html += `<div class="rpt-tourn-stats">
     <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${n}</div><div class="rpt-tourn-stat-label">${isDE?'Spiele':'Matches'}</div></div>
     <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${totalHits}</div><div class="rpt-tourn-stat-label">${isDE?'Treffer':'Hits'}</div></div>
-    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${days.length}</div><div class="rpt-tourn-stat-label">${isDE?'Tage':'Days'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${avgHitsPerMatch}</div><div class="rpt-tourn-stat-label">${isDE?'⌀/Spiel':'avg/match'}</div></div>
     <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${players.length}</div><div class="rpt-tourn-stat-label">${isDE?'Spieler':'Players'}</div></div>
   </div>`;
 
@@ -4892,41 +5112,130 @@ function buildTournamentReportHTML() {
     </div>`;
   }
 
-  const highlights = [];
-  if (topHitter?.hits > 0) highlights.push({ icon:'🍺', text: esc(topHitter.name), sub: isDE?`${topHitter.hits} Treffer · ${topHitter.hitsPerGame.toFixed(1)}/Spiel`:`${topHitter.hits} hits · ${topHitter.hitsPerGame.toFixed(1)}/game` });
-  if (clutch && clutch.name !== leader?.name) highlights.push({ icon:'🎯', text: esc(clutch.name), sub: isDE?`${Math.round(clutch.winRate*100)}% Siegquote in ${clutch.played} Spielen`:`${Math.round(clutch.winRate*100)}% win rate in ${clutch.played} games` });
-  if (longestStreakP && longestStreakC >= 2) highlights.push({ icon:'🔥', text: esc(longestStreakP), sub: isDE?`${longestStreakC} Siege in Folge`:`${longestStreakC} wins in a row` });
+  // ── HIGHLIGHTS ──────────────────────────────────────────────
+  html += sectionHead('⭐', isDE?'Highlights':'Highlights');
 
-  if (highlights.length) {
-    highlights.forEach(h => {
-      html += `<div class="rpt-highlight-row">
-        <div class="rpt-highlight-icon">${h.icon}</div>
-        <div class="rpt-highlight-body">
-          <div class="rpt-highlight-text">${h.text}</div>
-          <div class="rpt-highlight-sub">${h.sub}</div>
-        </div>
-      </div>`;
-    });
-  }
+  if (topHitter?.hits > 0) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">🍺</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(topHitter.name)} — ${isDE?'Meiste Treffer gesamt':'Most total hits'}</div>
+      <div class="rpt-highlight-sub">${topHitter.hits} ${isDE?'Treffer':'hits'} · ⌀ ${topHitter.hitsPerGame.toFixed(1)}${isDE?'/Spiel':'/game'}</div>
+    </div></div>`;
 
+  if (clutch) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">🎯</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(clutch.name)} — ${isDE?'Beste Siegquote (≥3 Spiele)':'Best win rate (≥3 games)'}</div>
+      <div class="rpt-highlight-sub">${Math.round(clutch.winRate*100)}% ${isDE?'in':'in'} ${clutch.played} ${isDE?'Spielen':'games'}</div>
+    </div></div>`;
+
+  if (longestWinEntry && playerStreaks[longestWinEntry.name].bestWin >= 2) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">🔥</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(longestWinEntry.name)} — ${isDE?'Längste Siegesserie':'Longest win streak'}</div>
+      <div class="rpt-highlight-sub">${playerStreaks[longestWinEntry.name].bestWin} ${isDE?'Siege in Folge':'wins in a row'}</div>
+    </div></div>`;
+
+  if (bestPerfMatch) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">💥</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(bestPerfPlayer)} — ${isDE?'Beste Einzelleistung':'Best single-game performance'}${matchLink(bestPerfMatch, isDE?'Bericht':'Report')}</div>
+      <div class="rpt-highlight-sub">${bestPerfHits} ${isDE?'Treffer in einem Spiel':'hits in one match'}</div>
+    </div></div>`;
+
+  if (highestScoringMatch) html += miniScoreCard(highestScoringMatch.m, '🎆', isDE?'Trefferreichstes Spiel':'Highest-scoring match', isDE);
+
+  // ── LOWLIGHTS ───────────────────────────────────────────────
+  html += sectionHead('📉', isDE?'Lowlights':'Lowlights');
+
+  if (coldest && coldest.name !== leader?.name) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">🥶</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(coldest.name)} — ${isDE?'Schlechteste Siegquote':'Worst win rate'}</div>
+      <div class="rpt-highlight-sub">${Math.round(coldest.winRate*100)}% ${isDE?'in':'in'} ${coldest.played} ${isDE?'Spielen':'games'}</div>
+    </div></div>`;
+
+  if (leastHits && leastHits.name !== topHitter?.name) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">💤</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(leastHits.name)} — ${isDE?'Wenigste Treffer pro Spiel':'Fewest hits per game'}</div>
+      <div class="rpt-highlight-sub">⌀ ${leastHits.hitsPerGame.toFixed(1)} ${isDE?'Treffer/Spiel':'hits/game'} · ${leastHits.hits} ${isDE?'gesamt':'total'}</div>
+    </div></div>`;
+
+  if (longestLossEntry && playerStreaks[longestLossEntry.name].bestLoss >= 2) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">😬</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(longestLossEntry.name)} — ${isDE?'Längste Niederlagenserie':'Longest losing streak'}</div>
+      <div class="rpt-highlight-sub">${playerStreaks[longestLossEntry.name].bestLoss} ${isDE?'Niederlagen in Folge':'losses in a row'}</div>
+    </div></div>`;
+
+  if (lowestScoringMatch) html += miniScoreCard(lowestScoringMatch.m, '😴', isDE?'Trefferärmstes Spiel':'Lowest-scoring match', isDE);
+
+  // ── TRENDS & BEOBACHTUNGEN ───────────────────────────────────
+  html += sectionHead('📊', isDE?'Trends & Beobachtungen':'Trends & Observations');
+
+  if (mostImproved && mostImproved.delta > 0.1) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">📈</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(mostImproved.name)} — ${isDE?'Stärkste Formverbesserung':'Biggest improvement'}</div>
+      <div class="rpt-highlight-sub">${Math.round(mostImproved.r1*100)}% → ${Math.round(mostImproved.r2*100)}% ${isDE?'Siegquote (1. vs 2. Hälfte)':'win rate (1st vs 2nd half)'}</div>
+    </div></div>`;
+
+  if (mostDeclined && mostDeclined.delta < -0.1) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">📉</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(mostDeclined.name)} — ${isDE?'Stärkster Formeinbruch':'Biggest decline'}</div>
+      <div class="rpt-highlight-sub">${Math.round(mostDeclined.r1*100)}% → ${Math.round(mostDeclined.r2*100)}% ${isDE?'Siegquote (1. vs 2. Hälfte)':'win rate (1st vs 2nd half)'}</div>
+    </div></div>`;
+
+  if (closestMatch) html += miniScoreCard(closestMatch, '⚖️', isDE?'Knappstes Spiel':'Closest match', isDE);
+
+  // team-size trend
+  if (hpg1v1 && hpg2v2) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">👥</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${isDE?'Teamgröße & Trefferrate':'Team size vs hit rate'}</div>
+      <div class="rpt-highlight-sub">1v1: ⌀ ${hpg1v1} ${isDE?'Treffer/Spiel':'hits/match'} · 2v2: ⌀ ${hpg2v2} ${isDE?'Treffer/Spiel':'hits/match'}</div>
+    </div></div>`;
+
+  // most consistent player (lowest std-dev win rate days)
+  const consistent = qual.length >= 2 ? qual.reduce((b,p)=>{
+    const pm=state.matches.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name));
+    const wr=pm.map(m=>((m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B'))?1:0);
+    const mean=wr.reduce((a,b)=>a+b,0)/wr.length;
+    const sd=Math.sqrt(wr.reduce((s,v)=>s+(v-mean)**2,0)/wr.length);
+    return (!b||sd<b.sd)?{name:p.name,sd,played:p.played}:b;
+  }, null) : null;
+  if (consistent && consistent.played>=3) html += `<div class="rpt-highlight-row">
+    <div class="rpt-highlight-icon">🧱</div>
+    <div class="rpt-highlight-body">
+      <div class="rpt-highlight-text">${esc(consistent.name)} — ${isDE?'Konstanteste Leistung':'Most consistent player'}</div>
+      <div class="rpt-highlight-sub">${isDE?`Niedrigste Streuung über ${consistent.played} Spiele`:`Lowest variance across ${consistent.played} games`}</div>
+    </div></div>`;
+
+  // ── TAGESÜBERSICHT ───────────────────────────────────────────
   const groupedDays = groupMatchesByDay();
   const sortedKeys = Object.keys(groupedDays).sort((a,b)=>new Date(groupedDays[a][0].timestamp)-new Date(groupedDays[b][0].timestamp));
-  if (sortedKeys.length > 1) {
-    sortedKeys.forEach((d, i) => {
-      const dm = groupedDays[d];
-      const dh = dm.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
-      const dayWins = {};
-      dm.forEach(m => { const w = m.winner==='A'?m.teamA:m.teamB; w.forEach(p=>{dayWins[p]=(dayWins[p]||0)+1;}); });
-      const mvp = Object.entries(dayWins).sort((a,b)=>b[1]-a[1])[0];
-      html += `<div class="rpt-day-row">
+  html += sectionHead('📅', isDE?'Tagesübersicht':'Day by Day');
+
+  sortedKeys.forEach((d, i) => {
+    const dm = groupedDays[d];
+    const dh = dm.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+    const dayWins = {};
+    dm.forEach(m => { const w=m.winner==='A'?m.teamA:m.teamB; w.forEach(p=>{dayWins[p]=(dayWins[p]||0)+1;}); });
+    const mvp = Object.entries(dayWins).sort((a,b)=>b[1]-a[1])[0];
+    const matchLinks = dm.map((m,mi)=>matchLink(m, `${isDE?'Spiel':'Match'} ${mi+1}`)).join(' ');
+    html += `<div class="rpt-day-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+      <div style="display:flex;align-items:center;gap:8px;width:100%;">
         <div class="rpt-day-label">${isDE?`Tag ${i+1}`:`Day ${i+1}`}</div>
-        <div>
-          <div class="rpt-day-info">${esc(d)} · ${dm.length} ${isDE?`Spiel${dm.length!==1?'e':''}`:` match${dm.length!==1?'es':''}`} · ${dh} ${isDE?'Treffer':'hits'}</div>
-          ${mvp?`<div class="rpt-day-sub">🏅 MVP: ${esc(mvp[0])} (${mvp[1]}${isDE?' Siege':' wins'})</div>`:''}
-        </div>
-      </div>`;
-    });
-  }
+        <div class="rpt-day-info">${esc(d)} · ${dm.length} ${isDE?`Spiel${dm.length!==1?'e':''}`:` match${dm.length!==1?'es':''}`} · ${dh} ${isDE?'Treffer':'hits'}</div>
+      </div>
+      ${mvp?`<div class="rpt-day-sub" style="padding-left:2px;">🏅 MVP: ${esc(mvp[0])} (${mvp[1]}${isDE?' Siege':' wins'})</div>`:''}
+      <div style="display:flex;flex-wrap:wrap;gap:4px;padding-left:2px;">${matchLinks}</div>
+    </div>`;
+  });
+
+  html += `<div class="rpt-closer">${esc(tCloser)}</div>`;
 
   return html;
 }
@@ -5041,48 +5350,72 @@ function formatReportHTML(text) {
   }).join('');
 }
 
-function openReportModal(title, bodyHTML, copyText) {
+const reportHistory = [];
+
+function openReportModal(title, bodyHTML) {
+  const overlay = document.getElementById('reportOverlay');
+  const isOpen = !overlay.classList.contains('hidden');
+  if (isOpen) {
+    // push current state onto stack before replacing
+    reportHistory.push({
+      title: document.getElementById('reportTitle').textContent,
+      body:  document.getElementById('reportBody').innerHTML,
+    });
+  } else {
+    reportHistory.length = 0; // fresh open — clear stack
+  }
   document.getElementById('reportTitle').textContent = title;
   document.getElementById('reportBody').innerHTML = bodyHTML;
-  document.getElementById('reportOverlay').classList.remove('hidden');
-  const copyPayload = copyText || '';
-  document.getElementById('reportCopyBtn').style.display = copyPayload ? '' : 'none';
-  document.getElementById('reportCopyBtn').onclick = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(copyPayload).then(() => showToast(t('copied')));
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = copyPayload; document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
-      showToast(t('copied'));
-    }
-  };
+  document.getElementById('reportBody').scrollTop = 0;
+  overlay.classList.remove('hidden');
+  updateReportCloseBtn();
+}
+
+function updateReportCloseBtn() {
+  const btn = document.getElementById('reportCloseBtn');
+  if (reportHistory.length > 0) {
+    btn.textContent = '← Zurück';
+  } else {
+    btn.textContent = '✕ Close';
+  }
+}
+
+function reportModalBack() {
+  if (reportHistory.length > 0) {
+    const prev = reportHistory.pop();
+    document.getElementById('reportTitle').textContent = prev.title;
+    document.getElementById('reportBody').innerHTML = prev.body;
+    document.getElementById('reportBody').scrollTop = 0;
+    updateReportCloseBtn();
+  } else {
+    document.getElementById('reportOverlay').classList.add('hidden');
+  }
 }
 
 function showMatchReport(id) {
   const m = state.matches.find(x=>x.id===id);
   if (!m) return;
-  openReportModal('🗞️ ' + t('btnMatchReport').replace(/^🗞️\s*/,''), buildMatchReportHTML(m), buildMatchReport(m));
+  openReportModal('🗞️ ' + t('btnMatchReport').replace(/^🗞️\s*/,''), buildMatchReportHTML(m));
 }
 function showMatchChatGPT(id) {
   const m = state.matches.find(x=>x.id===id);
   if (!m) return;
   const txt = buildMatchChatGPT(m);
-  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`);
 }
 function showDayReport(dayIdx) {
-  openReportModal('🗞️ ' + t('btnDayReport').replace(/^🗞️\s*/,''), buildDayReportHTML(dayIdx), buildDayReport(dayIdx));
+  openReportModal('🗞️ ' + t('btnDayReport').replace(/^🗞️\s*/,''), buildDayReportHTML(dayIdx));
 }
 function showDayChatGPT(dayIdx) {
   const txt = buildDayChatGPT(dayIdx);
-  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`);
 }
 function showTournamentReport() {
-  openReportModal('🏆 ' + t('btnTournamentReport').replace(/^🏆\s*/,''), buildTournamentReportHTML(), buildTournamentReport());
+  openReportModal('🏆 ' + t('btnTournamentReport').replace(/^🏆\s*/,''), buildTournamentReportHTML());
 }
 function showTournamentChatGPT() {
   const txt = buildTournamentChatGPT();
-  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`);
 }
 
 // ============================================================
@@ -5228,12 +5561,33 @@ function openAvatarPicker(idx) {
   const existing = editAvatarsList[idx] || '';
   const modal = document.getElementById('avatarPickerOverlay');
   const grid = document.getElementById('avatarPickerGrid');
+  const input = document.getElementById('avatarCustomInput');
+  const preview = document.getElementById('avatarPreview');
+  input.value = existing;
+  preview.textContent = existing || '😀';
   grid.innerHTML = ['', ...AVATAR_OPTIONS].map(em => {
     const sel = em === existing ? ' selected' : '';
     const label = em || '✕';
     return `<button class="avatar-option${sel}" onclick="pickAvatar('${em}')">${label}</button>`;
   }).join('');
   modal.classList.remove('hidden');
+  // small delay so the keyboard doesn't auto-open on mobile unless tapped
+}
+
+function onAvatarCustomInput(val) {
+  // extract first grapheme cluster (emoji or char)
+  const seg = [...(val.trim())];
+  const em = seg.length ? seg[0] : '';
+  document.getElementById('avatarPreview').textContent = em || '😀';
+  // deselect grid
+  document.querySelectorAll('#avatarPickerGrid .avatar-option').forEach(b => b.classList.remove('selected'));
+}
+
+function confirmAvatarCustom() {
+  const val = document.getElementById('avatarCustomInput').value.trim();
+  const seg = [...val];
+  const em = seg.length ? seg[0] : '';
+  pickAvatar(em);
 }
 
 function pickAvatar(em) {
@@ -5331,8 +5685,10 @@ function init() {
   applyI18n();
   renderPlayerSelectionGrid(); updateLastSavedDisplay(); loadDraftOnInit();
   document.getElementById('reportOverlay').addEventListener('click', e => {
-    if (e.target === document.getElementById('reportOverlay'))
+    if (e.target === document.getElementById('reportOverlay')) {
+      reportHistory.length = 0;
       document.getElementById('reportOverlay').classList.add('hidden');
+    }
   });
   document.getElementById('avatarPickerOverlay').addEventListener('click', e => {
     if (e.target === document.getElementById('avatarPickerOverlay'))
