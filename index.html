@@ -101,7 +101,7 @@ body {
   border-bottom: 3px solid transparent; margin-bottom: -2px;
   transition: all 0.2s;
 }
-.nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); background: rgba(249,115,22,0.10); border-radius: 10px 10px 0 0; }
 
 /* ── PAGES ───────────────────────────────────────────────── */
 .page { display: none; padding: 16px; max-width: 600px; margin: 0 auto; }
@@ -123,28 +123,44 @@ body {
 .card-title-text { display: flex; align-items: center; gap: 6px; }
 
 /* ── PLAYER GRID — solid interactive ─────────────────────── */
-.player-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.player-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .player-btn {
-  padding: 14px 8px; border-radius: 14px;
-  border: 1.5px solid var(--border);
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  color: var(--text); font-size: 0.9rem; font-weight: 600;
-  cursor: pointer; transition: all 0.15s;
-  text-align: center; min-height: 54px;
-  display: flex; align-items: center; justify-content: center; user-select: none;
+  padding: 14px 6px 10px; border-radius: 20px;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: var(--text); cursor: pointer; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  text-align: center; min-height: 76px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; user-select: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.08);
+  position: relative; overflow: hidden;
 }
-.player-btn:active { transform: scale(0.95); }
+.player-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+  pointer-events: none; border-radius: inherit;
+}
+.player-btn:active { transform: scale(0.91); box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: all 0.08s; }
+.player-btn .player-btn-avatar { font-size: 1.7rem; line-height: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3)); }
+.player-btn .player-btn-name { font-size: 0.88rem; font-weight: 800; letter-spacing: 0.01em; line-height: 1.2; word-break: break-word; max-width: 100%; }
 /* SOLID when assigned — high contrast for tournament use */
 .player-btn.team-a {
-  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  border-color: var(--orange-dark); color: #fff;
+  background: linear-gradient(150deg, #fb923c 0%, #ea580c 100%);
+  border-color: rgba(255,255,255,0.15); color: #fff;
   backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 .player-btn.team-b {
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-  border-color: var(--blue-dark); color: #fff;
+  background: linear-gradient(150deg, #60a5fa 0%, #2563eb 100%);
+  border-color: rgba(255,255,255,0.15); color: #fff;
   backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.player-btn .player-btn-team-badge {
+  font-size: 0.58rem; font-weight: 900; text-transform: uppercase;
+  letter-spacing: 0.1em; opacity: 0.8; margin-top: 2px;
+  background: rgba(0,0,0,0.18); padding: 1px 6px; border-radius: 20px;
 }
 
 /* ── TEAM HEADER (solid) ─────────────────────────────────── */
@@ -173,7 +189,21 @@ body {
 .hit-btn:active { transform: scale(0.88); }
 .hit-minus { background: rgba(100,116,139,0.22); color: var(--text); }
 .hit-plus  { background: var(--orange); color: #fff; }
+@keyframes hitPulse { 0%{transform:scale(1)} 50%{transform:scale(1.28)} 100%{transform:scale(1)} }
+.hit-plus.pulse { animation: hitPulse 0.22s ease; }
 .hit-count { width: 36px; text-align: center; font-size: 1.25rem; font-weight: 800; color: var(--text); }
+.hit-special-row { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 12px 10px; }
+.special-btn { display: flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--inset-bg); color: var(--text); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.13s; }
+.special-btn:active { transform: scale(0.94); }
+.special-btn .special-count { min-width: 14px; text-align: center; font-weight: 800; color: var(--text-muted); }
+.special-btn.has-count .special-count { color: var(--orange); }
+.special-btn.penalty { border-color: rgba(239,68,68,0.4); }
+.special-btn.penalty.has-count { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.7); }
+.team-penalty-row { display: flex; align-items: center; gap: 8px; padding: 0 2px 10px; }
+.team-penalty-btn { flex: 1; padding: 9px 10px; border-radius: 11px; border: 1.5px solid rgba(239,68,68,0.35); background: var(--inset-bg); color: var(--text); font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.13s; text-align: center; }
+.team-penalty-btn:active { transform: scale(0.96); }
+.team-penalty-btn.has-penalty { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.7); }
+.team-penalty-count { font-weight: 800; color: rgba(239,68,68,0.9); }
 
 /* ── WIN BUTTONS (solid when selected, glass when not) ───── */
 .win-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
@@ -370,6 +400,21 @@ body {
 .modal-actions { display: flex; gap: 8px; }
 .modal-actions .btn { margin-bottom: 0; }
 
+/* ── COLLAPSIBLE CARDS ───────────────────────────────────── */
+.card-collapse-body {
+  overflow: hidden; transition: max-height 0.35s ease;
+}
+.card-collapse-body.collapsed { max-height: 0 !important; }
+.card-collapse-toggle {
+  width: 100%; padding: 8px; border: none; background: none; cursor: pointer;
+  font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+  text-align: center; letter-spacing: 0.04em;
+  border-top: 1px solid var(--border); margin-top: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: color 0.15s;
+}
+.card-collapse-toggle:active { color: var(--orange); }
+
 /* ── MISC ────────────────────────────────────────────────── */
 .section-label {
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
@@ -386,7 +431,7 @@ body {
 /* ── RIVALS ──────────────────────────────────────────────── */
 .player-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 12px; }
 .picker-btn {
-  padding: 10px 6px; border-radius: 10px;
+  padding: 10px 14px; border-radius: 20px;
   border: 1.5px solid var(--border);
   background: var(--inset-bg); color: var(--text);
   font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; text-align: center;
@@ -449,10 +494,34 @@ body {
 
 /* ── LIVE SCOREBOARD ─────────────────────────────────────── */
 .live-score {
-  display: flex; align-items: center; justify-content: center; gap: 0;
+  display: flex; align-items: stretch; justify-content: center; gap: 0;
   background: var(--inset-bg); border: 1px solid var(--border);
-  border-radius: 16px; padding: 10px 0; margin-bottom: 14px;
+  border-radius: 16px; margin-bottom: 14px; overflow: hidden;
 }
+.live-score-btn {
+  flex: 1; cursor: pointer;
+  padding: 14px 8px; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; transition: background 0.18s, box-shadow 0.18s; position: relative;
+  -webkit-tap-highlight-color: transparent; border: 2px solid transparent;
+  background: none;
+}
+.live-score-btn:active { transform: scale(0.97); }
+.live-score-btn.selected-a {
+  background: rgba(249,115,22,0.14);
+  border-color: var(--orange);
+  box-shadow: inset 0 0 0 1px rgba(249,115,22,0.3);
+}
+.live-score-btn.selected-b {
+  background: rgba(29,78,216,0.16);
+  border-color: var(--blue);
+  box-shadow: inset 0 0 0 1px rgba(29,78,216,0.3);
+}
+.live-winner-check {
+  position: absolute; top: 6px; right: 8px;
+  font-size: 1rem; opacity: 0; transition: opacity 0.18s;
+}
+.live-score-btn.selected-a .live-winner-check,
+.live-score-btn.selected-b .live-winner-check { opacity: 1; }
 /* sticky mini-score bar shown when scrolled past live-score during match */
 .sticky-score {
   position: sticky; top: 112px; z-index: 98;
@@ -461,23 +530,36 @@ body {
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
   border-bottom: 1px solid var(--glass-border);
-  padding: 6px 20px;
-  justify-content: center; align-items: center; gap: 16px;
+  padding: 4px 12px;
+  align-items: stretch; gap: 0;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   -webkit-transform: translateZ(0); transform: translateZ(0);
 }
 .sticky-score.visible { display: flex; }
+.sticky-score-btn {
+  flex: 1; background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 6px 10px; border-radius: 10px; transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent; position: relative;
+}
+.sticky-score-btn:active { opacity: 0.75; }
+.sticky-score-btn.sel-a { background: rgba(249,115,22,0.15); }
+.sticky-score-btn.sel-b { background: rgba(29,78,216,0.18); }
 .sticky-score-num { font-size: 1.4rem; font-weight: 900; font-variant-numeric: tabular-nums; }
 .sticky-score-num.score-a { color: var(--orange); }
 .sticky-score-num.score-b { color: var(--blue); }
-.sticky-score-sep { font-size: 1rem; font-weight: 900; color: var(--border); }
-.sticky-score-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); text-align: center; line-height: 1.2; }
+.sticky-score-sep { font-size: 1rem; font-weight: 900; color: var(--border); padding: 0 6px; display: flex; align-items: center; }
+.sticky-score-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); text-align: left; line-height: 1.2; }
+.sticky-crown { font-size: 0.9rem; opacity: 0; transition: opacity 0.15s; }
+.sticky-score-btn.sel-a .sticky-crown,
+.sticky-score-btn.sel-b .sticky-crown { opacity: 1; }
 .live-score-side { flex: 1; text-align: center; }
 .live-score-num { font-size: 2.8rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
 .live-score-num.score-a { color: var(--orange); }
 .live-score-num.score-b { color: var(--blue); }
 .live-score-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 2px; }
 .live-score-sep { font-size: 1.8rem; font-weight: 900; color: var(--border); padding: 0 8px; }
+.live-score-hint { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); text-align: center; padding: 3px 0 6px; opacity: 0.8; }
 
 /* ── EDIT PLAYERS MODAL ──────────────────────────────────── */
 .edit-players-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
@@ -498,11 +580,64 @@ body {
 .report-modal h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; color: var(--text); }
 .report-body {
   flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  font-size: 0.88rem; line-height: 1.75; color: var(--text);
-  background: var(--inset-bg); border-radius: 12px; padding: 14px;
-  border: 1px solid var(--border); margin-bottom: 12px;
-  white-space: pre-wrap; font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.88rem; line-height: 1.5; color: var(--text);
+  background: var(--inset-bg); border-radius: 14px; padding: 0;
+  border: 1px solid var(--border); margin-bottom: 12px; overflow: hidden;
 }
+/* report components */
+.rpt-header { padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
+.rpt-meta { font-size: 0.73rem; color: var(--text-muted); margin-bottom: 5px; }
+.rpt-opener { font-style: italic; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.rpt-score-block { display: flex; align-items: stretch; padding: 14px 14px 10px; gap: 8px; }
+.rpt-team-card { flex: 1; border-radius: 14px; padding: 12px 8px 10px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.rpt-team-card.team-a { background: rgba(249,115,22,0.10); border: 1.5px solid rgba(249,115,22,0.25); }
+.rpt-team-card.team-b { background: rgba(37,99,235,0.10); border: 1.5px solid rgba(37,99,235,0.25); }
+.rpt-team-card.team-a.winner { background: rgba(249,115,22,0.18); border-color: var(--orange); }
+.rpt-team-card.team-b.winner { background: rgba(37,99,235,0.18); border-color: var(--blue); }
+.rpt-team-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+.rpt-team-hits { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+.rpt-team-card.team-a .rpt-team-hits { color: var(--orange); }
+.rpt-team-card.team-b .rpt-team-hits { color: var(--blue); }
+.rpt-team-hits-label { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: -3px; }
+.rpt-player-chips { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-top: 4px; }
+.rpt-player-chip { font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); }
+.rpt-vs { display: flex; align-items: center; justify-content: center; padding: 0 4px; font-size: 0.72rem; font-weight: 800; color: var(--text-muted); }
+.rpt-winner-banner { margin: 0 14px 14px; padding: 9px 14px; border-radius: 12px; font-size: 0.88rem; font-weight: 800; text-align: center; }
+.rpt-winner-banner.team-a { background: rgba(249,115,22,0.12); color: var(--orange); border: 1px solid rgba(249,115,22,0.4); }
+.rpt-winner-banner.team-b { background: rgba(37,99,235,0.12); color: var(--blue); border: 1px solid rgba(37,99,235,0.35); }
+.rpt-hitters { padding: 4px 14px 14px; display: flex; flex-direction: column; gap: 7px; }
+.rpt-hitters-title { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 1px; }
+.rpt-hitter-row { display: flex; align-items: center; gap: 8px; }
+.rpt-hitter-name { font-size: 0.78rem; font-weight: 700; min-width: 72px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rpt-hitter-bar-wrap { flex: 1; height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.rpt-hitter-bar { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.rpt-hitter-val { font-size: 0.73rem; font-weight: 800; min-width: 26px; text-align: right; }
+.rpt-caption-row { padding: 8px 14px; font-size: 0.76rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+.rpt-closer { padding: 12px 16px; font-style: italic; font-size: 0.83rem; color: var(--text-muted); text-align: center; line-height: 1.6; border-top: 1px solid var(--border); }
+.rpt-tourn-stats { display: flex; gap: 6px; padding: 14px 14px 10px; }
+.rpt-tourn-stat { flex: 1; text-align: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 8px 4px; border: 1px solid var(--border); }
+.rpt-tourn-stat-num { font-size: 1.25rem; font-weight: 900; }
+.rpt-tourn-stat-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
+.rpt-champion { padding: 14px 16px 12px; text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(249,115,22,0.05); }
+.rpt-champion-crown { font-size: 1.9rem; line-height: 1; }
+.rpt-champion-name { font-size: 1.15rem; font-weight: 900; margin-top: 3px; }
+.rpt-champion-sub { font-size: 0.73rem; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+.rpt-highlight-row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-top: 1px solid var(--border); }
+.rpt-highlight-icon { font-size: 1.1rem; width: 26px; text-align: center; flex-shrink: 0; }
+.rpt-highlight-body { flex: 1; }
+.rpt-highlight-text { font-size: 0.82rem; font-weight: 800; }
+.rpt-highlight-sub { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+.rpt-day-row { display: flex; align-items: center; padding: 8px 14px; border-top: 1px solid var(--border); gap: 10px; }
+.rpt-day-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); min-width: 52px; flex-shrink: 0; }
+.rpt-day-info { font-size: 0.8rem; font-weight: 700; }
+.rpt-day-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 1px; }
+/* plain text fallback for chatgpt prompts */
+.report-line { display: block; margin-bottom: 2px; }
+.report-line.heading { font-size: 0.95rem; font-weight: 800; color: var(--orange); margin-top: 10px; margin-bottom: 4px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.report-line.meta { font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
+.report-line.empty { margin-bottom: 6px; display: block; }
+.report-line strong { color: var(--orange); font-weight: 800; font-style: normal; }
+.report-plain { padding: 14px 16px; font-size: 0.82rem; line-height: 1.7; font-family: 'Georgia', serif; white-space: pre-wrap; }
 .report-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .report-actions .btn { margin-bottom: 0; }
 .report-btn {
@@ -527,6 +662,13 @@ body {
 .sortable { cursor:pointer; user-select:none; }
 .sortable:active { opacity:0.7; }
 .sort-active { color:var(--orange) !important; }
+.card-export-btn {
+  width:30px; height:30px; border-radius:8px; border:none; cursor:pointer;
+  background:var(--gray-btn); color:var(--gray-btn-text);
+  font-size:1rem; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:background 0.15s;
+}
+.card-export-btn:active { background:rgba(249,115,22,0.2); }
 
 /* ── STATS TAB ───────────────────────────────────────────── */
 .overview-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
@@ -612,6 +754,56 @@ body {
 .momentum-pct { font-size:2.2rem; font-weight:900; color:var(--orange); }
 .momentum-label { font-size:0.8rem; color:var(--text-muted); margin-top:4px; }
 .momentum-detail { font-size:0.75rem; color:var(--text-muted); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); }
+
+/* ── PLAYER COMPARISON ───────────────────────────────────── */
+.compare-header { display:grid; grid-template-columns:1fr 60px 1fr; gap:0; align-items:center; margin-bottom:10px; }
+.compare-name-a { font-weight:800; font-size:0.95rem; color:var(--orange); text-align:right; padding-right:8px; }
+.compare-name-b { font-weight:800; font-size:0.95rem; color:var(--blue); text-align:left; padding-left:8px; }
+.compare-vs-label { text-align:center; font-size:0.75rem; font-weight:800; color:var(--text-muted); }
+.compare-row { display:grid; grid-template-columns:1fr 60px 1fr; gap:0; align-items:center; margin-bottom:4px; }
+.compare-val { padding:7px 10px; font-weight:700; font-size:0.88rem; border-radius:8px; }
+.compare-val-a { text-align:right; background:rgba(249,115,22,0.07); }
+.compare-val-b { text-align:left; background:rgba(29,78,216,0.07); }
+.compare-val-a.winner { background:rgba(249,115,22,0.25); color:var(--orange-dark); }
+.compare-val-b.winner { background:rgba(29,78,216,0.22); color:var(--blue); }
+.dark .compare-val-a.winner { color:var(--orange-light); }
+.dark .compare-val-b.winner { color:var(--blue-light); }
+.compare-label { text-align:center; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); }
+
+/* ── ACHIEVEMENTS / BADGES ───────────────────────────────── */
+.badge-section { margin-bottom:8px; }
+.badge-player-row { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
+.badge-player-row:last-child { border-bottom:none; }
+.badge-player-name { font-weight:700; font-size:0.88rem; flex:0 0 68px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); padding-top:2px; }
+.badge-chips { display:flex; flex-wrap:wrap; gap:5px; flex:1; }
+.badge-chip { display:inline-flex; align-items:center; gap:4px; padding:4px 9px; border-radius:20px; font-size:0.72rem; font-weight:700; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.4); color:#92400e; white-space:nowrap; cursor:default; }
+.dark .badge-chip { color:#fde68a; border-color:rgba(245,158,11,0.35); }
+
+
+/* ── HEATMAP ─────────────────────────────────────────────── */
+.heatmap-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.heatmap-grid { display:flex; gap:3px; align-items:flex-start; }
+.heatmap-col { display:flex; flex-direction:column; gap:3px; }
+.heatmap-cell { width:22px; height:22px; border-radius:4px; background:var(--inset-bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:var(--text-muted); flex-shrink:0; cursor:default; }
+.heatmap-cell.h1 { background:rgba(249,115,22,0.25); color:var(--orange-dark); border-color:rgba(249,115,22,0.4); }
+.heatmap-cell.h2 { background:rgba(249,115,22,0.50); color:var(--orange-dark); border-color:rgba(249,115,22,0.6); }
+.heatmap-cell.h3 { background:var(--orange); color:#fff; border-color:var(--orange-dark); }
+.heatmap-month-label { font-size:0.6rem; font-weight:700; color:var(--text-muted); text-align:center; margin-bottom:2px; }
+.heatmap-day-header { display:flex; gap:3px; margin-bottom:3px; }
+.heatmap-day-label { width:22px; text-align:center; font-size:0.55rem; font-weight:700; color:var(--text-muted); }
+
+/* ── TIME-BASED STATS ────────────────────────────────────── */
+.time-slot-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.time-slot-row:last-child { border-bottom:none; }
+.time-slot-label { font-size:0.72rem; font-weight:800; flex:0 0 90px; color:var(--text); }
+.time-player-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.time-player-row:last-child { border-bottom:none; }
+.time-player-name { font-weight:700; flex:0 0 72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.82rem; color:var(--text); }
+.time-slot-pill { font-size:0.7rem; padding:3px 8px; border-radius:20px; font-weight:700; background:var(--inset-bg); border:1px solid var(--border); color:var(--text-muted); white-space:nowrap; }
+.time-slot-pill.good { background:rgba(34,197,94,0.15); color:#15803d; border-color:rgba(34,197,94,0.4); }
+.dark .time-slot-pill.good { color:#86efac; }
+.time-slot-pill.bad { background:rgba(239,68,68,0.12); color:#b91c1c; border-color:rgba(239,68,68,0.3); }
+.dark .time-slot-pill.bad { color:#fca5a5; }
 </style>
 </head>
 <body>
@@ -629,8 +821,8 @@ body {
 <nav class="nav-tabs">
   <button class="nav-tab active" data-tab="new-match" data-i18n="tabMatch">⚡ Match</button>
   <button class="nav-tab" data-tab="leaderboard" data-i18n="tabBoard">🏆 Board</button>
-  <button class="nav-tab" data-tab="stats" data-i18n="tabStats">📊 Stats</button>
-  <button class="nav-tab" data-tab="rivals" data-i18n="tabRivals">🏟️ Rivals</button>
+  <button class="nav-tab" data-tab="stats" data-i18n="tabStats">📈 Gesamt</button>
+  <button class="nav-tab" data-tab="rivals" data-i18n="tabRivals">🌟 Spieler</button>
   <button class="nav-tab" data-tab="awards" data-i18n="tabAwards">🎖️ Awards</button>
   <button class="nav-tab" data-tab="history" data-i18n="tabHistory">📜 Verlauf</button>
   <button class="nav-tab" data-tab="backup" data-i18n="tabBackup">💾 Backup</button>
@@ -641,7 +833,6 @@ body {
   <div class="steps">
     <div class="step active" id="step1"></div>
     <div class="step" id="step2"></div>
-    <div class="step" id="step3"></div>
   </div>
 
   <div id="matchStep1">
@@ -659,7 +850,7 @@ body {
       <div class="draft-banner-text" data-i18n="rematchSameTeams">⚡ Gleiche Teams nochmal?</div>
       <div class="draft-banner-actions">
         <button class="draft-action-btn draft-restore" onclick="quickRematch(false)" data-i18n="rematchSame">Gleich</button>
-        <button class="draft-action-btn draft-restore" onclick="quickRematch(true)" style="background:rgba(249,115,22,0.9);color:#fff;" data-i18n="rematchSwap">Tauschen</button>
+        <button class="draft-action-btn draft-restore" onclick="quickRematch(true)" style="background:rgba(249,115,22,0.9);color:#fff;" data-i18n="rematchSwap">Seite tauschen</button>
         <button class="draft-action-btn draft-discard" onclick="document.getElementById('quickRematchBar').style.display='none'">✕</button>
       </div>
     </div>
@@ -667,11 +858,11 @@ body {
       <div class="card-title"><span class="card-title-text" data-i18n="selectTeams">👥 Select Teams</span></div>
       <div style="display:flex; gap:8px; margin-bottom:12px;">
         <div style="flex:1; padding:8px; background:rgba(249,115,22,0.10); border-radius:10px; border:1.5px solid rgba(249,115,22,0.5);">
-          <div style="font-size:0.75rem; font-weight:700; color:var(--orange); margin-bottom:4px;">🟠 TEAM HECKE</div>
+          <div style="font-size:0.95rem; font-weight:800; color:var(--orange); margin-bottom:4px;">🟠 TEAM HECKE</div>
           <div id="teamACount" style="font-size:0.85rem; color:var(--text-muted);">0 players</div>
         </div>
         <div style="flex:1; padding:8px; background:rgba(29,78,216,0.10); border-radius:10px; border:1.5px solid rgba(29,78,216,0.5);">
-          <div style="font-size:0.75rem; font-weight:700; color:var(--blue); margin-bottom:4px;">🔵 TEAM STRASSE</div>
+          <div style="font-size:0.95rem; font-weight:800; color:var(--blue); margin-bottom:4px;">🔵 TEAM STRASSE</div>
           <div id="teamBCount" style="font-size:0.85rem; color:var(--text-muted);">0 players</div>
         </div>
       </div>
@@ -696,48 +887,68 @@ body {
     <button class="btn btn-secondary" id="freshTeamsBtn" data-i18n="freshTeams">🆕 Frische Teams</button>
     <button class="btn btn-secondary" id="randomTeamsBtn" data-i18n="randomTeams">🎲 Zufällige Teams</button>
     <button class="btn btn-primary" id="startMatchBtn" data-i18n="startMatch">⚡ Spiel starten →</button>
+    <button class="btn btn-secondary" id="clearSelectionBtn" data-i18n="clearSelection">✕ Auswahl löschen</button>
   </div>
 
   <div id="matchStep2" style="display:none;">
     <!-- sticky mini-scoreboard shown when live-score scrolls off screen -->
     <div class="sticky-score" id="stickyScore">
-      <div style="text-align:center;">
-        <div class="sticky-score-num score-a" id="stickyScoreA">0</div>
-        <div class="sticky-score-label">Hecke</div>
+      <button class="sticky-score-btn" id="stickyWinBtnA" onclick="selectWinner('A')">
+        <span class="sticky-crown">🏆</span>
+        <div>
+          <div class="sticky-score-num score-a" id="stickyScoreA">0</div>
+          <div class="sticky-score-label">Hecke</div>
+        </div>
+      </button>
+      <div class="sticky-score-sep">
+        <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--border);"></span>
       </div>
-      <div class="sticky-score-sep">–</div>
-      <div style="text-align:center;">
-        <div class="sticky-score-num score-b" id="stickyScoreB">0</div>
-        <div class="sticky-score-label">Straße</div>
-      </div>
+      <button class="sticky-score-btn" id="stickyWinBtnB" onclick="selectWinner('B')">
+        <div>
+          <div class="sticky-score-num score-b" id="stickyScoreB">0</div>
+          <div class="sticky-score-label">Straße</div>
+        </div>
+        <span class="sticky-crown">🏆</span>
+      </button>
     </div>
     <div class="card">
       <div class="card-title">
         <span class="card-title-text" data-i18n="trackHits">🍺 Track Bottle Hits</span>
         <span id="timerDisplay" class="timer-display">0:00</span>
       </div>
-      <div class="live-score" id="liveScore">
-        <div class="live-score-side">
+      <div class="live-score-hint" id="liveScoreHint" data-i18n="winnerHint">👆 Auf ein Team tippen = Sieger wählen</div>
+      <div class="live-score" id="liveScore" style="padding:0;overflow:hidden;">
+        <button class="live-score-side live-score-btn" id="liveWinBtnA" onclick="selectWinner('A')" style="border-radius:14px 0 0 14px;">
+          <div class="live-winner-check" id="liveWinCheckA">🏆</div>
           <div class="live-score-num score-a" id="liveScoreA">0</div>
           <div class="live-score-label">Hecke</div>
-        </div>
-        <div class="live-score-sep">–</div>
-        <div class="live-score-side">
+        </button>
+        <div class="live-score-sep"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--border);vertical-align:middle;"></span></div>
+        <button class="live-score-side live-score-btn" id="liveWinBtnB" onclick="selectWinner('B')" style="border-radius:0 14px 14px 0;">
+          <div class="live-winner-check" id="liveWinCheckB">🏆</div>
           <div class="live-score-num score-b" id="liveScoreB">0</div>
           <div class="live-score-label">Straße</div>
-        </div>
+        </button>
       </div>
       <div class="team-section">
         <div class="team-header team-a">
           <span>🟠 Team Hecke</span>
-          <span id="teamATotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span id="teamATotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
+            <button class="team-penalty-btn" id="teamPenaltyBtnA" onclick="changeTeamPenalty('A',1)" style="padding:4px 8px;font-size:0.75rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.15);color:#fff;cursor:pointer;">🍺<span id="teamPenaltyCountA"></span></button>
+            <button onclick="changeTeamPenalty('A',-1)" style="padding:4px 7px;font-size:0.8rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;">−</button>
+          </div>
         </div>
         <div id="teamAHitRows"></div>
       </div>
       <div class="team-section">
         <div class="team-header team-b">
           <span>🔵 Team Straße</span>
-          <span id="teamBTotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span id="teamBTotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
+            <button class="team-penalty-btn" id="teamPenaltyBtnB" onclick="changeTeamPenalty('B',1)" style="padding:4px 8px;font-size:0.75rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.15);color:#fff;cursor:pointer;">🍺<span id="teamPenaltyCountB"></span></button>
+            <button onclick="changeTeamPenalty('B',-1)" style="padding:4px 7px;font-size:0.8rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;">−</button>
+          </div>
         </div>
         <div id="teamBHitRows"></div>
       </div>
@@ -746,24 +957,19 @@ body {
         <textarea class="notes-input" id="matchNotesInput" data-i18n-placeholder="matchNotesPlaceholder" placeholder="e.g. Overtime, Disputed, Rematch…" oninput="saveDraft()"></textarea>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title"><span class="card-title-text" data-i18n="selectWinner">🏅 Select Winner</span></div>
-      <div class="win-section">
-        <button class="win-btn team-a-win" id="winTeamA" onclick="selectWinner('A')" data-i18n="teamAWins">🟠 Team Hecke gewinnt!</button>
-        <button class="win-btn team-b-win" id="winTeamB" onclick="selectWinner('B')" data-i18n="teamBWins">🔵 Team Straße gewinnt!</button>
-      </div>
-    </div>
     <div style="display:flex; gap:8px;">
       <button class="btn btn-secondary" style="width:auto;flex:none;padding:14px 16px;" onclick="goToStep(1)" data-i18n="back">← Back</button>
-      <button class="btn btn-success" id="saveMatchBtn" onclick="saveMatch()" data-i18n="saveMatch">💾 Save Match</button>
+      <button class="btn btn-success" id="saveMatchBtn" onclick="saveMatch()" data-i18n="saveMatch">💾 Spiel speichern</button>
     </div>
   </div>
 </div>
 
 <!-- ===================== LEADERBOARD TAB ===================== -->
 <div id="tab-leaderboard" class="page">
-  <div class="card">
-    <div class="card-title"><span class="card-title-text" data-i18n="leaderboard">🏆 Leaderboard</span></div>
+  <div class="card" id="leaderboardCard">
+    <div class="card-title">
+      <span class="card-title-text" data-i18n="leaderboard">🏆 Leaderboard</span>
+    </div>
     <div id="leaderboardContent">
       <div class="empty-state"><div class="emoji">🍺</div><p data-i18n="noMatchesYet">No matches yet. Start playing!</p></div>
     </div>
@@ -827,10 +1033,6 @@ body {
     <div class="card-title"><span class="card-title-text" data-i18n="perDayWinRate">📅 Win Rate per Day</span></div>
     <div id="perDayWinRateContent"></div>
   </div>
-  <div class="card" id="winRateBySizeCard" style="display:none;">
-    <div class="card-title"><span class="card-title-text" data-i18n="winRateBySize">👥 Win Rate by Team Size</span></div>
-    <div id="winRateBySizeContent"></div>
-  </div>
   <div class="card" id="momentumCard" style="display:none;">
     <div class="card-title"><span class="card-title-text" data-i18n="momentum">🔥 Momentum</span></div>
     <div id="momentumContent"></div>
@@ -839,8 +1041,8 @@ body {
 
 <!-- ===================== RIVALS TAB ===================== -->
 <div id="tab-rivals" class="page">
-  <div class="card">
-    <div class="card-title"><span class="card-title-text" data-i18n="headToHead">⚔️ Head-to-Head</span></div>
+  <div class="card" id="individualStatsCard">
+    <div class="card-title"><span class="card-title-text" data-i18n="headToHead">👤 Individuelle Statistik</span></div>
     <div class="section-label" data-i18n="selectPlayer">Select a player</div>
     <div class="player-picker" id="h2hPlayerPicker"></div>
     <div id="h2hContent">
@@ -850,6 +1052,19 @@ body {
       <div class="section-label" data-i18n="nemesisSidekick">😈 Nemesis &amp; 🤝 Sidekick</div>
       <div id="nemesisContent"></div>
     </div>
+    <div id="playerProfileCard" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+      <div class="section-label" id="playerProfileTitle" style="font-size:0.85rem;font-weight:800;text-transform:none;letter-spacing:0;color:var(--text);margin-bottom:10px;">👤 Spielerprofil</div>
+      <div id="playerProfileContent"></div>
+    </div>
+    <div id="compareToggleRow" style="display:none;margin-top:10px;">
+      <button class="btn btn-secondary btn-sm" style="width:100%;font-size:0.82rem;" onclick="toggleCompare()">🆚 <span id="compareToggleLabel" data-i18n="playerCompare">Spieler-Vergleich</span></button>
+    </div>
+  </div>
+  <div class="card" id="compareCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="playerCompare">🆚 Spieler-Vergleich</span></div>
+    <div id="compareVsLabel" style="font-size:0.72rem;font-weight:700;color:var(--blue);margin-bottom:4px;" data-i18n="comparePickB">Vergleichen mit:</div>
+    <div class="player-picker" id="comparePickerB" style="margin-bottom:10px;"></div>
+    <div id="compareContent"><div class="empty-state" style="padding:12px 0;"><p data-i18n="compareHint">Spieler oben auswählen, dann Gegner wählen.</p></div></div>
   </div>
   <div class="card">
     <div class="card-title"><span class="card-title-text" data-i18n="whoPlayedWhom">🏟️ Who Played Whom</span></div>
@@ -869,6 +1084,14 @@ body {
     <div id="awardsContent">
       <div class="empty-state"><div class="emoji">🏅</div><p data-i18n="playToUnlock">Play some matches to unlock awards!</p></div>
     </div>
+  </div>
+  <div class="card" id="badgesCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="achievementBadges">🏅 Achievements & Badges</span></div>
+    <div id="badgesContent"></div>
+  </div>
+  <div class="card" id="comebackCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="comebacks">🔄 Siege mit weniger Treffern</span></div>
+    <div id="comebackContent"></div>
   </div>
   <div class="card" id="teamAwardsCard" style="display:none;">
     <div class="card-title"><span class="card-title-text" data-i18n="teamAwards">🏅 Team-Awards</span></div>
@@ -926,6 +1149,19 @@ body {
   </div>
 </div>
 
+<div class="modal-overlay hidden" id="editMatchOverlay">
+  <div class="modal" style="max-width:420px;max-height:90vh;display:flex;flex-direction:column;padding:0;overflow:hidden;">
+    <div style="padding:16px 18px 12px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <h3 style="margin:0;font-size:1.05rem;font-weight:800;">✏️ <span id="editMatchTitle">Spiel bearbeiten</span></h3>
+    </div>
+    <div id="editMatchBody" style="overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;padding:16px 18px;"></div>
+    <div style="padding:12px 18px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0;">
+      <button class="btn btn-secondary" style="flex:1;" onclick="document.getElementById('editMatchOverlay').classList.add('hidden')">✕ Abbrechen</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="saveEditedMatch()">💾 Speichern</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay hidden" id="reportOverlay">
   <div class="report-modal">
     <h3 id="reportTitle">🗞️ Spielbericht</h3>
@@ -934,6 +1170,13 @@ body {
       <button class="btn btn-secondary" style="flex:1;" onclick="document.getElementById('reportOverlay').classList.add('hidden')" data-i18n="close">✕ Close</button>
       <button class="btn btn-primary" style="flex:1;" id="reportCopyBtn" data-i18n="copy">📋 Copy</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="matchSummaryOverlay">
+  <div class="modal" style="max-width:420px;max-height:88vh;display:flex;flex-direction:column;padding:16px;">
+    <div id="matchSummaryContent" style="overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;padding-right:2px;"></div>
+    <button class="btn btn-primary" style="margin-top:10px;flex-shrink:0;" onclick="closeMatchSummary()">Weiter →</button>
   </div>
 </div>
 
@@ -964,12 +1207,17 @@ let state = {
   lastSaved: null,
   darkMode: false,
   matchesSinceBackup: 0,
-  avatars: {}
+  avatars: {},
+  predictions: []
 };
 
 let matchTeamA = [], matchTeamB = [], matchHits = {}, selectedWinner = null, currentStep = 1;
+let matchPenalties = {}; // { playerName: count }
+let matchTeamPenalties = { A: 0, B: 0 }; // team-wide penalty drinks
+let matchMultiHits = {}; // { playerName: { double:0, triple:0, can:0 } }
 let matchStartTime = null, matchTimerInterval = null;
 let selectedH2HPlayer = null;
+let selectedCompareA = null, selectedCompareB = null;
 
 // Feature 1: Captain state
 let matchCaptainA = null, matchCaptainB = null;
@@ -988,6 +1236,56 @@ function esc(str) {
 function formatTime(ms) {
   const s = Math.floor(ms / 1000);
   return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+
+// ── COLLAPSIBLE CARD HELPER ───────────────────────────────
+// Wraps the content of a container in a collapsible body.
+// contentEl: the element whose children to wrap
+// maxHeightPx: height when expanded (use a large value to show all)
+// startCollapsed: initial state
+function makeCollapsible(contentEl, startCollapsed, labelMore, labelLess) {
+  if (!contentEl) return;
+  if (!contentEl.children.length) return;
+  // Remove any previously added toggle
+  const existing = contentEl.querySelector('.card-collapse-toggle');
+  if (existing) existing.remove();
+  const existingBody = contentEl.querySelector('.card-collapse-body');
+  if (existingBody) {
+    // Unwrap previously wrapped content
+    while (existingBody.firstChild) contentEl.insertBefore(existingBody.firstChild, existingBody);
+    existingBody.remove();
+  }
+  const isDE = currentLang === 'de';
+  labelMore = labelMore || (isDE ? 'Mehr anzeigen ▾' : 'Show more ▾');
+  labelLess = labelLess || (isDE ? 'Weniger ▴' : 'Show less ▴');
+
+  const body = document.createElement('div');
+  body.className = 'card-collapse-body';
+  // Move existing children into body
+  while (contentEl.firstChild) body.appendChild(contentEl.firstChild);
+  contentEl.appendChild(body);
+
+  const toggle = document.createElement('button');
+  toggle.className = 'card-collapse-toggle';
+  toggle.textContent = startCollapsed ? labelMore : labelLess;
+  contentEl.appendChild(toggle);
+
+  const fullH = body.scrollHeight;
+  body.style.maxHeight = startCollapsed ? '0px' : fullH + 'px';
+  if (startCollapsed) body.classList.add('collapsed');
+
+  toggle.addEventListener('click', () => {
+    const collapsed = body.classList.contains('collapsed');
+    if (collapsed) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.classList.remove('collapsed');
+      toggle.textContent = labelLess;
+    } else {
+      body.style.maxHeight = '0px';
+      body.classList.add('collapsed');
+      toggle.textContent = labelMore;
+    }
+  });
 }
 // Return all players tied at the max value for a given numeric getter.
 function allTied(players, getter) {
@@ -1025,6 +1323,7 @@ function load() {
       if (!Array.isArray(state.matches)) state.matches = [];
       if (typeof state.matchesSinceBackup !== 'number') state.matchesSinceBackup = 0;
       if (!state.avatars || typeof state.avatars !== 'object') state.avatars = {};
+      if (!Array.isArray(state.predictions)) state.predictions = [];
     }
   } catch(e) { console.error('Load error:', e); }
 }
@@ -1049,6 +1348,7 @@ function saveDraft() {
   try {
     localStorage.setItem('flunkyball_draft', JSON.stringify({
       teamA: matchTeamA, teamB: matchTeamB, hits: matchHits,
+      penalties: matchPenalties, teamPenalties: matchTeamPenalties, multiHits: matchMultiHits,
       winner: selectedWinner, step: currentStep,
       notes: notes ? notes.value : '', startTime: matchStartTime,
       captainA: matchCaptainA, captainB: matchCaptainB
@@ -1072,12 +1372,15 @@ function restoreDraft() {
     const d = JSON.parse(raw);
     matchTeamA = d.teamA || []; matchTeamB = d.teamB || [];
     matchHits = d.hits || {}; selectedWinner = d.winner || null;
+    matchPenalties = d.penalties || {}; matchTeamPenalties = d.teamPenalties || { A:0, B:0 };
+    matchMultiHits = d.multiHits || {};
     matchCaptainA = d.captainA || null; matchCaptainB = d.captainB || null;
     document.getElementById('draftBanner').style.display = 'none';
     renderPlayerSelectionGrid();
     if (d.step === 2) {
       renderHitRows();
-      if (selectedWinner) selectWinner(selectedWinner);
+      updateTeamPenaltyUI();
+      if (selectedWinner) updateWinnerUI();
       const notesEl = document.getElementById('matchNotesInput');
       if (notesEl) notesEl.value = d.notes || '';
       goToStep(2);
@@ -1204,8 +1507,9 @@ function goToStep(n) {
   currentStep = n;
   document.getElementById('matchStep1').style.display = n === 1 ? 'block' : 'none';
   document.getElementById('matchStep2').style.display = n === 2 ? 'block' : 'none';
-  ['step1','step2','step3'].forEach((id, i) => {
+  ['step1','step2'].forEach((id, i) => {
     const el = document.getElementById(id);
+    if (!el) return;
     el.classList.toggle('done',   i + 1 < n);
     el.classList.toggle('active', i + 1 === n);
   });
@@ -1267,9 +1571,14 @@ function renderPlayerSelectionGrid() {
   [...state.players].sort((a,b) => a.localeCompare(b)).forEach(name => {
     const btn = document.createElement('button');
     btn.className = 'player-btn';
-    btn.textContent = playerDisplayName(name);
-    if (matchTeamA.includes(name))      btn.classList.add('team-a');
-    else if (matchTeamB.includes(name)) btn.classList.add('team-b');
+    const av = state.avatars[name] || '';
+    const inA = matchTeamA.includes(name);
+    const inB = matchTeamB.includes(name);
+    const badge = inA ? `<div class="player-btn-team-badge">Hecke</div>`
+                : inB ? `<div class="player-btn-team-badge">Straße</div>` : '';
+    btn.innerHTML = `${av ? `<div class="player-btn-avatar">${av}</div>` : ''}<div class="player-btn-name">${esc(name)}</div>${badge}`;
+    if (inA)      btn.classList.add('team-a');
+    else if (inB) btn.classList.add('team-b');
     btn.addEventListener('click', () => cyclePlayerTeam(name));
     // Swipe right → A, swipe left → B
     let tx = 0, ty = 0;
@@ -1287,7 +1596,6 @@ function renderPlayerSelectionGrid() {
   document.getElementById('teamACount').textContent = pWord(matchTeamA.length);
   document.getElementById('teamBCount').textContent = pWord(matchTeamB.length);
   checkBackupReminder();
-
   // Show/hide captain section
   const captainSection = document.getElementById('captainSection');
   if (matchTeamA.length > 0 || matchTeamB.length > 0) {
@@ -1315,6 +1623,14 @@ function assignToTeam(name, team) {
   if (team === 'A') matchTeamA.push(name); else matchTeamB.push(name);
   renderPlayerSelectionGrid(); saveDraft();
 }
+document.getElementById('clearSelectionBtn').addEventListener('click', () => {
+  matchTeamA = []; matchTeamB = [];
+  matchCaptainA = null; matchCaptainB = null;
+  renderPlayerSelectionGrid();
+  renderCaptainPickers();
+  saveDraft();
+});
+
 document.getElementById('randomTeamsBtn').addEventListener('click', () => {
   const shuffled = [...state.players].sort(() => Math.random() - 0.5);
   const half = Math.floor(shuffled.length / 2);
@@ -1392,15 +1708,16 @@ document.getElementById('freshTeamsBtn').addEventListener('click', () => {
   renderPlayerSelectionGrid();
   renderCaptainPickers();
   saveDraft();
-  showToast(currentLang==='de'?`🆕 Frische Teams! (Score: ${bestScore})`:`🆕 Fresh teams! (score: ${bestScore})`);
+  showToast(currentLang==='de'?'🆕 Frische Teams!':'🆕 Fresh teams!');
 });
 document.getElementById('startMatchBtn').addEventListener('click', () => {
   if (!matchTeamA.length || !matchTeamB.length) { alert(t('alertBothTeams')); return; }
-  matchHits = {};
+  matchHits = {}; matchPenalties = {}; matchTeamPenalties = { A:0, B:0 }; matchMultiHits = {};
   [...matchTeamA, ...matchTeamB].forEach(p => matchHits[p] = 0);
   selectedWinner = null;
   document.getElementById('matchNotesInput').value = '';
   renderHitRows(); goToStep(2); startTimer(); saveDraft();
+  updateWinnerUI();
 });
 
 // ============================================================
@@ -1410,28 +1727,96 @@ function renderHitRows() {
   renderTeamHitRows('teamAHitRows', matchTeamA);
   renderTeamHitRows('teamBHitRows', matchTeamB);
   updateHitTotals();
+  updateTeamPenaltyUI();
 }
 function renderTeamHitRows(containerId, players) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
+  const isDE = currentLang === 'de';
   players.forEach(name => {
     const isCaptain = name === matchCaptainA || name === matchCaptainB;
-    const row = document.createElement('div');
-    row.className = 'player-hit-row';
     const av = state.avatars[name] ? state.avatars[name] + ' ' : '';
-    row.innerHTML = `
-      <div class="player-name-hit">${isCaptain ? '👑 ' : ''}${av}${esc(name)}</div>
-      <button class="hit-btn hit-minus" onclick="changeHit('${esc(name)}',-1)">−</button>
-      <div class="hit-count" id="hit-${esc(name)}">${matchHits[name]||0}</div>
-      <button class="hit-btn hit-plus"  onclick="changeHit('${esc(name)}', 1)">+</button>`;
-    container.appendChild(row);
+    const en = esc(name);
+    const pen = matchPenalties[name] || 0;
+    const mh = matchMultiHits[name] || {};
+
+    const isA = matchTeamA.includes(name);
+    const teamBg = isA
+      ? 'background:rgba(249,115,22,0.07);border:1px solid rgba(249,115,22,0.2);'
+      : 'background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.2);';
+    const wrap = document.createElement('div');
+    wrap.style.cssText = `${teamBg}border-radius:14px;margin-bottom:8px;overflow:hidden;`;
+
+    wrap.innerHTML = `
+      <div class="player-hit-row" style="border:none;border-radius:0;margin-bottom:0;background:transparent;">
+        <div class="player-name-hit">${isCaptain ? '👑 ' : ''}${av}${en}</div>
+        <button class="hit-btn hit-minus" onclick="changeHit('${en}',-1)">−</button>
+        <div class="hit-count" id="hit-${en}">${matchHits[name]||0}</div>
+        <button class="hit-btn hit-plus" id="hitplus-${en}" onclick="changeHit('${en}', 1)">+</button>
+      </div>
+      <div style="padding:0 10px 8px;">
+        <div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin:4px 0 5px;">${isDE?'Treffer':'Hits'}</div>
+        <div class="hit-special-row" style="padding:0;margin-bottom:8px;">
+          <button class="special-btn${(mh.double||0)>0?' has-count':''}" onclick="changeMulti('${en}','double',1)">
+            💥 ${isDE?'Doppel':'Double'} <span class="special-count">${(mh.double||0)>0?mh.double:''}</span>
+          </button>
+          <button class="special-btn${(mh.triple||0)>0?' has-count':''}" onclick="changeMulti('${en}','triple',1)">
+            🔱 ${isDE?'Dreifach':'Triple'} <span class="special-count">${(mh.triple||0)>0?mh.triple:''}</span>
+          </button>
+          <button class="special-btn${(mh.can||0)>0?' has-count':''}" onclick="changeMulti('${en}','can',1)">
+            🥤 ${isDE?'Dose':'Can'} <span class="special-count">${(mh.can||0)>0?mh.can:''}</span>
+          </button>
+        </div>
+        <div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(239,68,68,0.7);margin-bottom:5px;">${isDE?'Strafen':'Penalties'}</div>
+        <div class="hit-special-row" style="padding:0;">
+          <button class="special-btn penalty${pen>0?' has-count':''}" onclick="changePenalty('${en}',1)">
+            🍺 ${isDE?'Strafdose':'Penalty'} <span class="special-count">${pen>0?pen:''}</span>
+          </button>
+          <button class="special-btn penalty" style="padding:6px 10px;" onclick="changePenalty('${en}',-1)">−</button>
+        </div>
+      </div>`;
+    container.appendChild(wrap);
   });
 }
 function changeHit(name, delta) {
   matchHits[name] = Math.max(0, (matchHits[name]||0) + delta);
   const el = document.getElementById('hit-' + name);
   if (el) el.textContent = matchHits[name];
+  if (delta > 0) {
+    const btn = document.getElementById('hitplus-' + name);
+    if (btn) { btn.classList.remove('pulse'); void btn.offsetWidth; btn.classList.add('pulse'); }
+  }
   updateHitTotals(); saveDraft();
+}
+function changePenalty(name, delta) {
+  matchPenalties[name] = Math.max(0, (matchPenalties[name]||0) + delta);
+  renderHitRows(); saveDraft();
+}
+function changeMulti(name, type, delta) {
+  if (!matchMultiHits[name]) matchMultiHits[name] = { double:0, triple:0, can:0 };
+  const prev = matchMultiHits[name][type]||0;
+  const next = Math.max(0, prev + delta);
+  const diff = next - prev;
+  matchMultiHits[name][type] = next;
+  // Double = 2 hits, Triple = 3 hits, Can = individual achievement only (no hit count)
+  if (type !== 'can') {
+    const hitValue = type === 'double' ? 2 : 3;
+    matchHits[name] = Math.max(0, (matchHits[name]||0) + diff * hitValue);
+  }
+  renderHitRows(); updateHitTotals(); saveDraft();
+}
+function changeTeamPenalty(side, delta) {
+  matchTeamPenalties[side] = Math.max(0, (matchTeamPenalties[side]||0) + delta);
+  updateTeamPenaltyUI(); saveDraft();
+}
+function updateTeamPenaltyUI() {
+  ['A','B'].forEach(side => {
+    const count = matchTeamPenalties[side] || 0;
+    const countEl = document.getElementById('teamPenaltyCount' + side);
+    const btn = document.getElementById('teamPenaltyBtn' + side);
+    if (countEl) countEl.textContent = count > 0 ? `×${count}` : '';
+    if (btn) btn.style.background = count > 0 ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.15)';
+  });
 }
 function updateHitTotals() {
   const aT = matchTeamA.reduce((s,p) => s + (matchHits[p]||0), 0);
@@ -1445,10 +1830,54 @@ function updateHitTotals() {
   document.getElementById('stickyScoreB').textContent = bT;
 }
 function selectWinner(team) {
+  // Two-tap confirmation: first tap selects, second tap on same team saves
+  if (selectedWinner === team) {
+    // Second tap — confirm & save
+    saveMatch();
+    return;
+  }
   selectedWinner = team;
-  document.getElementById('winTeamA').classList.toggle('selected-win', team === 'A');
-  document.getElementById('winTeamB').classList.toggle('selected-win', team === 'B');
+  updateWinnerUI();
   saveDraft();
+}
+
+function updateWinnerUI() {
+  const isDE = currentLang === 'de';
+  const btnA  = document.getElementById('liveWinBtnA');
+  const btnB  = document.getElementById('liveWinBtnB');
+  const sbtnA = document.getElementById('stickyWinBtnA');
+  const sbtnB = document.getElementById('stickyWinBtnB');
+  const hint  = document.getElementById('liveScoreHint');
+  const saveBtn = document.getElementById('saveMatchBtn');
+
+  const selA = selectedWinner === 'A';
+  const selB = selectedWinner === 'B';
+  const none = !selectedWinner;
+
+  if (btnA) btnA.classList.toggle('selected-a', selA);
+  if (btnB) btnB.classList.toggle('selected-b', selB);
+  if (sbtnA) sbtnA.classList.toggle('sel-a', selA);
+  if (sbtnB) sbtnB.classList.toggle('sel-b', selB);
+
+  if (hint) {
+    if (none) {
+      hint.textContent = isDE ? '👆 Auf ein Team tippen = Sieger wählen' : '👆 Tap a team = select winner';
+      hint.style.color = '';
+    } else {
+      const winName = selectedWinner === 'A' ? 'Team Hecke' : 'Team Straße';
+      hint.textContent = isDE
+        ? `✓ ${winName} — nochmal tippen zum Speichern`
+        : `✓ ${winName} — tap again to save`;
+      hint.style.color = selectedWinner === 'A' ? 'var(--orange)' : 'var(--blue)';
+    }
+  }
+
+  if (saveBtn) {
+    saveBtn.style.opacity = selectedWinner ? '1' : '0.65';
+    saveBtn.textContent = selectedWinner
+      ? (isDE ? '💾 Bestätigen & Speichern' : '💾 Confirm & Save')
+      : (isDE ? '💾 Spiel speichern' : '💾 Save Match');
+  }
 }
 
 // ============================================================
@@ -1461,19 +1890,112 @@ function saveMatch() {
     id: Date.now(), timestamp: new Date().toISOString(),
     teamA: [...matchTeamA], teamB: [...matchTeamB],
     winner: selectedWinner, hits: { ...matchHits },
+    penalties: { ...matchPenalties },
+    teamPenalties: { ...matchTeamPenalties },
+    multiHits: JSON.parse(JSON.stringify(matchMultiHits)),
     notes: document.getElementById('matchNotesInput').value.trim(), duration,
     captainA: matchCaptainA, captainB: matchCaptainB
   };
   lastMatchTeamA = [...matchTeamA]; lastMatchTeamB = [...matchTeamB];
   state.matches.push(match); state.matchesSinceBackup++;
-  clearDraft(); save(); launchConfetti(); showToast(t('toastSaved'));
+  clearDraft(); save(); launchConfetti();
+  showMatchSummary(match);
+}
+
+function showMatchSummary(m) {
+  const isDE = currentLang === 'de';
+  const allPlayers = [...m.teamA, ...m.teamB];
+
+  // MVP: highest hits
+  const mvp = allPlayers.reduce((best, p) => (m.hits[p]||0) > (m.hits[best]||0) ? p : best, allPlayers[0]);
+  const mvpHits = m.hits[mvp] || 0;
+
+  const winTeam  = m.winner === 'A' ? m.teamA : m.teamB;
+  const loseTeam = m.winner === 'A' ? m.teamB : m.teamA;
+  const winHits  = winTeam.reduce((s,p) => s+(m.hits[p]||0), 0);
+  const loseHits = loseTeam.reduce((s,p) => s+(m.hits[p]||0), 0);
+  const winLabel = m.winner === 'A' ? 'Team Hecke' : 'Team Straße';
+  const winEmoji = m.winner === 'A' ? '🟠' : '🔵';
+  const winGrad  = m.winner === 'A'
+    ? 'linear-gradient(135deg,var(--orange),var(--orange-dark))'
+    : 'linear-gradient(135deg,var(--blue),var(--blue-dark))';
+  const durStr = m.duration ? formatTime(m.duration) : '';
+
+  // Per-player card
+  const playerCard = (p, isWinner) => {
+    const h = m.hits[p]||0;
+    const pen = m.penalties && m.penalties[p] ? m.penalties[p] : 0;
+    const mh  = m.multiHits && m.multiHits[p] ? m.multiHits[p] : {};
+    const av  = state.avatars[p] ? state.avatars[p]+' ' : '';
+    const chips = [];
+    if (mh.double) chips.push(`<span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);border-radius:8px;padding:2px 6px;font-size:0.65rem;font-weight:700;color:rgba(21,128,61,0.9);">💥×${mh.double}</span>`);
+    if (mh.triple) chips.push(`<span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);border-radius:8px;padding:2px 6px;font-size:0.65rem;font-weight:700;color:rgba(21,128,61,0.9);">🔱×${mh.triple}</span>`);
+    if (mh.can)    chips.push(`<span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);border-radius:8px;padding:2px 6px;font-size:0.65rem;font-weight:700;color:rgba(21,128,61,0.9);">🥤×${mh.can}</span>`);
+    if (pen)       chips.push(`<span style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:2px 6px;font-size:0.65rem;font-weight:700;color:rgba(239,68,68,0.9);">🍺×${pen}</span>`);
+    const isMvp = p === mvp && mvpHits > 0;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--inset-bg);border-radius:10px;border:1px solid var(--border);">
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${isMvp?'⭐ ':''}${av}${esc(p)}</div>
+        ${chips.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;">${chips.join('')}</div>` : ''}
+      </div>
+      <div style="font-size:1.4rem;font-weight:900;color:${isWinner?'var(--orange)':'var(--text-muted)'};min-width:28px;text-align:right;">${h}</div>
+    </div>`;
+  };
+
+  const tpA = m.teamPenalties && m.teamPenalties.A;
+  const tpB = m.teamPenalties && m.teamPenalties.B;
+
+  let html = `
+    <div style="background:${winGrad};border-radius:16px;padding:16px;text-align:center;margin-bottom:16px;color:#fff;">
+      <div style="font-size:2rem;margin-bottom:4px;">🏆</div>
+      <div style="font-size:1.2rem;font-weight:900;letter-spacing:-0.3px;">${winEmoji} ${winLabel}</div>
+      <div style="font-size:0.82rem;opacity:0.85;margin-top:2px;">${isDE?'gewinnt':'wins'}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;">
+        <span style="font-size:2.4rem;font-weight:900;line-height:1;">${winHits}</span>
+        <span style="font-size:1rem;opacity:0.6;">:</span>
+        <span style="font-size:2.4rem;font-weight:900;line-height:1;opacity:0.65;">${loseHits}</span>
+      </div>
+      ${durStr ? `<div style="font-size:0.75rem;opacity:0.75;margin-top:6px;">⏱️ ${durStr}</div>` : ''}
+    </div>`;
+
+  if (mvpHits > 0) {
+    const av = state.avatars[mvp] ? state.avatars[mvp]+' ' : '';
+    html += `<div style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.5);border-radius:12px;padding:10px 14px;text-align:center;margin-bottom:14px;">
+      <div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:3px;">${isDE?'⭐ Spieler des Spiels':'⭐ Player of the Match'}</div>
+      <div style="font-size:1rem;font-weight:800;">${av}${esc(mvp)}</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">${mvpHits} ${isDE?'Treffer':'hits'}</div>
+    </div>`;
+  }
+
+  const teamBlock = (team, label, teamEmoji, teamColor, tp) => {
+    const isWin = m.winner === (team === m.teamA ? 'A' : 'B');
+    return `
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px;">
+          <span style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:${teamColor};">${teamEmoji} ${label}</span>
+          ${tp ? `<span style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);border-radius:8px;padding:2px 7px;font-size:0.65rem;font-weight:700;color:rgba(239,68,68,0.9);">🍺 Team ×${tp}</span>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">${team.map(p => playerCard(p, isWin)).join('')}</div>
+      </div>`;
+  };
+
+  html += teamBlock(m.teamA, 'Team Hecke',  '🟠', 'var(--orange)', tpA);
+  html += teamBlock(m.teamB, 'Team Straße', '🔵', 'var(--blue)',   tpB);
+
+  document.getElementById('matchSummaryContent').innerHTML = html;
+  document.getElementById('matchSummaryOverlay').classList.remove('hidden');
+}
+
+function closeMatchSummary() {
+  document.getElementById('matchSummaryOverlay').classList.add('hidden');
   matchTeamA = []; matchTeamB = []; matchHits = {}; selectedWinner = null;
+  matchPenalties = {}; matchTeamPenalties = { A:0, B:0 }; matchMultiHits = {};
   matchCaptainA = null; matchCaptainB = null;
   document.getElementById('timerDisplay').textContent = '0:00';
-  // Show quick-rematch bar
+  showToast(t('toastSaved'));
   const qrb = document.getElementById('quickRematchBar');
   if (qrb && lastMatchTeamA.length && lastMatchTeamB.length) qrb.style.display = 'flex';
-  renderPlayerSelectionGrid(); goToStep(1);
+  renderPlayerSelectionGrid(); goToStep(1); updateWinnerUI();
 }
 
 // ============================================================
@@ -1497,12 +2019,17 @@ function quickRematch(swap) {
 // ============================================================
 function computeStats() {
   const stats = {};
-  state.players.forEach(p => { stats[p] = { name: p, played: 0, wins: 0, losses: 0, hits: 0, captainPlayed: 0, captainWins: 0 }; });
+  state.players.forEach(p => { stats[p] = { name: p, played: 0, wins: 0, losses: 0, hits: 0, captainPlayed: 0, captainWins: 0, penalties: 0, doubles: 0, triples: 0, cans: 0 }; });
   state.matches.forEach(m => {
     [...m.teamA, ...m.teamB].forEach(p => {
-      if (!stats[p]) stats[p] = { name: p, played: 0, wins: 0, losses: 0, hits: 0, captainPlayed: 0, captainWins: 0 };
+      if (!stats[p]) stats[p] = { name: p, played: 0, wins: 0, losses: 0, hits: 0, captainPlayed: 0, captainWins: 0, penalties: 0, doubles: 0, triples: 0, cans: 0 };
       stats[p].played++;
-      stats[p].hits += (m.hits[p]||0);
+      stats[p].hits += (m.hits[p]||0); // already includes multi-hit values (double=2, triple=3, can=1)
+      if (m.penalties) stats[p].penalties += (m.penalties[p]||0);
+      const mhp = m.multiHits && m.multiHits[p] ? m.multiHits[p] : {};
+      stats[p].doubles += (mhp.double||0);
+      stats[p].triples += (mhp.triple||0);
+      stats[p].cans    += (mhp.can||0);
       const won = (m.teamA.includes(p) && m.winner==='A') || (m.teamB.includes(p) && m.winner==='B');
       if (won) stats[p].wins++; else stats[p].losses++;
     });
@@ -1551,9 +2078,40 @@ function thSort(col, label) {
   return `<th class="sortable${active}" onclick="setLbSort('${col}')">${label}${arrow}</th>`;
 }
 
+function computeRankOrder(matchesSlice) {
+  const s = {};
+  matchesSlice.forEach(m => {
+    [...m.teamA, ...m.teamB].forEach(p => {
+      if (!s[p]) s[p] = { wins:0, losses:0, hits:0 };
+      const won = (m.teamA.includes(p) && m.winner==='A') || (m.teamB.includes(p) && m.winner==='B');
+      if (won) s[p].wins++; else s[p].losses++;
+      s[p].hits += m.hits[p]||0;
+    });
+  });
+  return Object.entries(s)
+    .map(([name, v]) => ({ name, ...v, played: v.wins+v.losses, winRate: v.wins/(v.wins+v.losses) }))
+    .sort((a,b) => b.wins-a.wins || b.winRate-a.winRate || b.hits-a.hits)
+    .map((p,i) => [p.name, i+1]);
+}
+
 function renderLeaderboard() {
   const stats   = computeStats();
   const players = Object.values(stats).filter(s => s.played > 0);
+
+  // Compute rank movement: current rank vs rank before last match
+  const rankMovement = {};
+  if (state.matches.length >= 2 && lbSortCol === 'wins' && lbSortDir === -1) {
+    const prevRanks = Object.fromEntries(computeRankOrder(state.matches.slice(0, -1)));
+    const curRanks  = Object.fromEntries(computeRankOrder(state.matches));
+    // Only show movement for players who were in the last match
+    const lastMatch = state.matches[state.matches.length - 1];
+    const lastPlayers = new Set([...lastMatch.teamA, ...lastMatch.teamB]);
+    lastPlayers.forEach(name => {
+      const prev = prevRanks[name];
+      const cur  = curRanks[name];
+      if (prev != null && cur != null) rankMovement[name] = prev - cur; // positive = moved up
+    });
+  }
 
   // Sort: lbSortDir=-1 means descending, +1 ascending.
   // Formula (a[col]-b[col])*lbSortDir: when dir=-1 and a>b → negative → a first → descending ✓
@@ -1579,6 +2137,7 @@ function renderLeaderboard() {
   const showMedals = lbSortCol === 'wins' && lbSortDir === -1;
   const medals = ['🥇','🥈','🥉'];
 
+  const isDE = currentLang === 'de';
   let html = `<table class="stats-table"><thead><tr>
     <th>#</th>${thSort('name',t('colPlayer'))}${thSort('wins',t('colW'))}${thSort('losses',t('colL'))}${thSort('winRate',t('colWinPct'))}${thSort('hits',t('colHits'))}${thSort('hitsPerGame',t('colHPG'))}
   </tr></thead><tbody>`;
@@ -1598,6 +2157,11 @@ function renderLeaderboard() {
     const rank = ranks[i];
     const rankClass = showMedals && rank <= 3 ? `top-${rank}` : '';
     const rankCell  = showMedals && rank <= 3 ? medals[rank-1] : rank;
+    const mv = rankMovement[p.name];
+    const mvHtml = mv == null ? '' :
+      mv > 0 ? `<span style="font-size:0.6rem;font-weight:800;color:var(--success);margin-left:2px;">▲${mv}</span>` :
+      mv < 0 ? `<span style="font-size:0.6rem;font-weight:800;color:var(--danger);margin-left:2px;">▼${Math.abs(mv)}</span>` :
+      `<span style="font-size:0.6rem;color:var(--text-muted);margin-left:2px;">—</span>`;
     let streakHtml  = '';
     if (p.streak && p.streak.count >= 2) {
       const cls  = p.streak.type === 'W' ? 'streak-w' : 'streak-l';
@@ -1605,17 +2169,151 @@ function renderLeaderboard() {
       streakHtml = `<span class="streak-badge ${cls}">${icon}${p.streak.count}</span>`;
     }
     html += `<tr class="${rankClass}">
-      <td class="rank-cell">${rankCell}</td>
-      <td class="player-name-cell">${state.avatars[p.name]?state.avatars[p.name]+' ':''}${esc(p.name)}${streakHtml}</td>
+      <td class="rank-cell">${rankCell}${mvHtml}</td>
+      <td class="player-name-cell">${state.avatars[p.name]?state.avatars[p.name]+' ':''}${esc(p.name)}${streakHtml}${p.penalties?` <span style="font-size:0.68rem;font-weight:700;padding:1px 5px;border-radius:10px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);color:rgba(239,68,68,0.9);">🍺×${p.penalties}</span>`:''}</td>
       <td style="color:var(--success);font-weight:700;">${p.wins}</td>
       <td style="color:var(--danger);">${p.losses}</td>
       <td>${Math.round(p.winRate*100)}%</td>
-      <td style="font-weight:600;">${p.hits}</td>
+      <td style="font-weight:600;">${p.hits}${(p.doubles||p.triples||p.cans)?`<div style="font-size:0.58rem;color:var(--text-muted);font-weight:600;line-height:1.3;">${[p.doubles?`💥×${p.doubles}`:'',p.triples?`🔱×${p.triples}`:'',p.cans?`🥤×${p.cans}`:''].filter(Boolean).join(' ')}</div>`:''}</td>
       <td style="color:var(--text-muted);">${p.hitsPerGame.toFixed(1)}</td>
     </tr>`;
   });
   html += '</tbody></table>';
+  html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+    <span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);align-self:center;">${isDE?'Legende:':'Legend:'}</span>
+    <span style="font-size:0.68rem;padding:2px 7px;border-radius:20px;background:var(--inset-bg);border:1px solid var(--border);">💥 ${isDE?'Doppeltreffer':'Double hit'}</span>
+    <span style="font-size:0.68rem;padding:2px 7px;border-radius:20px;background:var(--inset-bg);border:1px solid var(--border);">🔱 ${isDE?'Dreifachtreffer':'Triple hit'}</span>
+    <span style="font-size:0.68rem;padding:2px 7px;border-radius:20px;background:var(--inset-bg);border:1px solid var(--border);">🥤 ${isDE?'Dosentreffer':'Can hit'}</span>
+    <span style="font-size:0.68rem;padding:2px 7px;border-radius:20px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);color:rgba(239,68,68,0.9);">🍺 ${isDE?'Strafdosen':'Penalties'}</span>
+  </div>`;
   container.innerHTML = html;
+}
+
+// ============================================================
+// CARD IMAGE EXPORT — uses SVG foreignObject → Canvas → Web Share
+// ============================================================
+async function exportCardAsImage(cardEl, filename) {
+  if (!cardEl) return;
+
+  const isDark = document.body.classList.contains('dark');
+  const pad = 20;
+
+  // Measure the card as it appears
+  const rect = cardEl.getBoundingClientRect();
+  const w = Math.ceil(rect.width);
+
+  // Deep-clone and resolve CSS custom properties to real values
+  const clone = cardEl.cloneNode(true);
+  const rootStyle = getComputedStyle(document.documentElement);
+  const targetStyle = isDark
+    ? getComputedStyle(document.body.classList.contains('dark') ? document.body : document.documentElement)
+    : getComputedStyle(document.documentElement);
+
+  // Resolve vars in all inline style attributes within clone
+  function resolveVars(el) {
+    const cs = getComputedStyle(el);
+    // Copy computed background, color, border-color onto inline style so SVG foreignObject sees them
+    const props = ['background','background-color','color','border-color','border','border-left','font-size','font-weight','padding','margin','border-radius'];
+    let inlined = '';
+    props.forEach(p => { try { const v = cs.getPropertyValue(p); if (v) inlined += `${p}:${v};`; } catch(e){} });
+    if (inlined) el.style.cssText = inlined + el.style.cssText;
+    Array.from(el.children).forEach(resolveVars);
+  }
+  resolveVars(clone);
+  clone.style.width = w + 'px';
+  clone.style.margin = '0';
+  clone.style.boxSizing = 'border-box';
+  clone.style.backdropFilter = 'none';
+  clone.style.webkitBackdropFilter = 'none';
+
+  // Get all style text from the page's inline <style> block
+  const styleEl = document.querySelector('style');
+  const styleText = styleEl ? styleEl.textContent : '';
+
+  // Background gradient colors
+  const bgFrom = isDark ? '#0a0f1e' : '#dbeafe';
+  const bgTo   = isDark ? '#130c28' : '#ede9fe';
+
+  // Temporarily measure clone height by attaching off-screen
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  document.body.appendChild(clone);
+  const h = Math.ceil(clone.scrollHeight);
+  document.body.removeChild(clone);
+  clone.style.position = '';
+  clone.style.left = '';
+  clone.style.top = '';
+
+  const totalW = w + pad * 2;
+  const totalH = h + pad * 2;
+
+  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="${totalH}">
+  <defs>
+    <style>
+      ${styleText.replace(/<\/style>/g,'').replace(/<style>/g,'')}
+      * { box-sizing:border-box; -webkit-print-color-adjust:exact !important; color-adjust:exact !important; }
+    </style>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${bgFrom}"/>
+      <stop offset="100%" stop-color="${bgTo}"/>
+    </linearGradient>
+  </defs>
+  <rect width="${totalW}" height="${totalH}" fill="url(#pageBg)"/>
+  <foreignObject x="${pad}" y="${pad}" width="${w}" height="${h}">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <body class="${isDark?'dark':''}" style="margin:0;padding:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+        ${clone.outerHTML}
+      </body>
+    </html>
+  </foreignObject>
+</svg>`;
+
+  const scale = Math.min(window.devicePixelRatio || 2, 3);
+  const cvs = document.createElement('canvas');
+  cvs.width  = totalW * scale;
+  cvs.height = totalH * scale;
+  const ctx = cvs.getContext('2d');
+  ctx.scale(scale, scale);
+
+  // Draw background gradient manually as fallback
+  const grad = ctx.createLinearGradient(0, 0, totalW, totalH);
+  grad.addColorStop(0, bgFrom); grad.addColorStop(1, bgTo);
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, totalW, totalH);
+
+  const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+  const svgUrl  = URL.createObjectURL(svgBlob);
+  const img = new Image();
+
+  await new Promise((res) => {
+    img.onload = res;
+    img.onerror = res; // continue even on error
+    img.src = svgUrl;
+  });
+
+  try { ctx.drawImage(img, 0, 0); } catch(e) {}
+  URL.revokeObjectURL(svgUrl);
+
+  cvs.toBlob(async imgBlob => {
+    if (!imgBlob) { showToast('❌ Export fehlgeschlagen'); return; }
+    const pngFile = new File([imgBlob], filename || 'kachel.png', { type: 'image/png' });
+    // Try native Web Share (iOS / Android)
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [pngFile] })) {
+      try { await navigator.share({ files: [pngFile], title: 'Flunkyball' }); return; } catch(e) {}
+    }
+    // Desktop fallback: download
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(imgBlob);
+    a.download = filename || 'kachel.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('📸 Bild gespeichert');
+  }, 'image/png');
+}
+
+function exportLeaderboardImage() {
+  exportCardAsImage(document.getElementById('leaderboardCard'), 'rangliste.png');
 }
 
 // ============================================================
@@ -1632,13 +2330,30 @@ function renderHistory() {
     const aHits   = m.teamA.reduce((s,p) => s+(m.hits[p]||0), 0);
     const bHits   = m.teamB.reduce((s,p) => s+(m.hits[p]||0), 0);
     const aW = m.winner==='A', bW = m.winner==='B';
-    const aPlayers = m.teamA.map(p => `${state.avatars[p]?state.avatars[p]+' ':''}${esc(p)}: ${m.hits[p]||0}`).join(', ');
-    const bPlayers = m.teamB.map(p => `${state.avatars[p]?state.avatars[p]+' ':''}${esc(p)}: ${m.hits[p]||0}`).join(', ');
+    const fmtPlayer = (p) => {
+      let s = `${state.avatars[p]?state.avatars[p]+' ':''}${esc(p)}: ${m.hits[p]||0}`;
+      const pen = m.penalties && m.penalties[p];
+      if (pen) s += ` 🍺×${pen}`;
+      const mh = m.multiHits && m.multiHits[p];
+      if (mh) {
+        if (mh.double) s += ` 2×${mh.double}`;
+        if (mh.triple) s += ` 3×${mh.triple}`;
+        if (mh.can)    s += ` 🥤×${mh.can}`;
+      }
+      return s;
+    };
+    const aPlayers = m.teamA.map(fmtPlayer).join(', ');
+    const bPlayers = m.teamB.map(fmtPlayer).join(', ');
     const dur   = m.duration ? `⏱️ ${formatTime(m.duration)}` : '';
     const notes = m.notes ? `<div class="match-notes-display">📝 ${esc(m.notes)}</div>` : '';
     const capA  = m.captainA ? ` 👑${esc(m.captainA)}` : '';
     const capB  = m.captainB ? ` 👑${esc(m.captainB)}` : '';
     const isDE  = currentLang === 'de';
+    const tpA = m.teamPenalties && m.teamPenalties.A;
+    const tpB = m.teamPenalties && m.teamPenalties.B;
+    const teamPenHtml = (tpA || tpB) ? `<div style="font-size:0.76rem;color:rgba(239,68,68,0.8);margin-top:2px;">
+      ${tpA?`🍺 Hecke Team ×${tpA}  `:''}${tpB?`🍺 Straße Team ×${tpB}`:''}
+    </div>` : '';
     // winner banner
     const winnerBanner = `<div class="match-winner-banner ${aW?'banner-a':'banner-b'}">
       🏆 ${aW ? `Hecke${capA}` : `Straße${capB}`} ${isDE?'gewinnt':'wins'} · ${aW?aHits:bHits}–${aW?bHits:aHits}
@@ -1653,11 +2368,13 @@ function renderHistory() {
       </div>
       <div class="match-hits" style="font-size:0.78rem;color:var(--text-muted);">${aPlayers}</div>
       <div class="match-hits" style="margin-top:2px;font-size:0.78rem;color:var(--text-muted);">${bPlayers}</div>
+      ${teamPenHtml}
       ${notes}
       <div class="match-meta"><span>🕐 ${date}</span>${dur?`<span>${dur}</span>`:''}</div>
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
         <button class="report-btn" onclick="showMatchReport(${m.id})">${t('btnMatchReport')}</button>
         <button class="report-btn" onclick="showMatchChatGPT(${m.id})">🤖 ChatGPT</button>
+        <button class="report-btn" onclick="editMatch(${m.id})">✏️ ${isDE?'Bearbeiten':'Edit'}</button>
         <button class="report-btn" onclick="shareMatch(${m.id})" style="margin-left:auto;">📤 ${t('share')}</button>
       </div>
     </div>`;
@@ -1667,6 +2384,109 @@ function deleteMatch(id) {
   confirm_(t('confirmDelete'), t('confirmDeleteMsg'), null, null, () => {
     state.matches = state.matches.filter(m => m.id !== id); save(); renderHistory();
   });
+}
+
+let _editMatchId = null;
+
+function editMatch(id) {
+  const m = state.matches.find(x => x.id === id);
+  if (!m) return;
+  _editMatchId = id;
+  const isDE = currentLang === 'de';
+  document.getElementById('editMatchTitle').textContent = isDE ? 'Spiel bearbeiten' : 'Edit Match';
+
+  const allPlayers = [...m.teamA, ...m.teamB];
+
+  // Winner selector
+  let html = `<div style="margin-bottom:14px;">
+    <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:7px;">🏆 ${isDE?'Sieger':'Winner'}</div>
+    <div style="display:flex;gap:8px;">
+      <button id="editWinA" onclick="editSetWinner('A')" class="btn" style="flex:1;padding:10px;border-radius:12px;font-weight:800;background:${m.winner==='A'?'var(--orange)':'var(--gray-btn)'};color:${m.winner==='A'?'#fff':'var(--gray-btn-text)'};border:2px solid ${m.winner==='A'?'var(--orange)':'transparent'};">🟠 Hecke</button>
+      <button id="editWinB" onclick="editSetWinner('B')" class="btn" style="flex:1;padding:10px;border-radius:12px;font-weight:800;background:${m.winner==='B'?'var(--blue)':'var(--gray-btn)'};color:${m.winner==='B'?'#fff':'var(--gray-btn-text)'};border:2px solid ${m.winner==='B'?'var(--blue)':'transparent'};">🔵 Straße</button>
+    </div>
+  </div>`;
+
+  // Hits per player
+  html += `<div style="margin-bottom:14px;">
+    <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:7px;">🍺 ${isDE?'Treffer':'Hits'}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">`;
+  allPlayers.forEach(p => {
+    const av = state.avatars[p] ? state.avatars[p] + ' ' : '';
+    const isA = m.teamA.includes(p);
+    const clr = isA ? 'var(--orange)' : 'var(--blue)';
+    const bg  = isA ? 'rgba(249,115,22,0.08)' : 'rgba(37,99,235,0.08)';
+    html += `<div style="display:flex;align-items:center;gap:10px;background:${bg};border-radius:12px;padding:8px 12px;">
+      <div style="flex:1;font-size:0.9rem;font-weight:700;">${av}${esc(p)}</div>
+      <button onclick="editChangeHit('${esc(p)}',-1)" style="width:32px;height:32px;border-radius:10px;border:none;background:var(--gray-btn);color:var(--gray-btn-text);font-size:1.2rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
+      <div id="editHit_${esc(p)}" style="min-width:28px;text-align:center;font-size:1.1rem;font-weight:900;color:${clr};">${m.hits[p]||0}</div>
+      <button onclick="editChangeHit('${esc(p)}',1)" style="width:32px;height:32px;border-radius:10px;border:none;background:var(--gray-btn);color:var(--gray-btn-text);font-size:1.2rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Penalties per player
+  const hasPen = allPlayers.some(p => (m.penalties && m.penalties[p]));
+  html += `<div style="margin-bottom:14px;">
+    <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:rgba(239,68,68,0.8);margin-bottom:7px;">🍺 ${isDE?'Strafdosen':'Penalties'}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">`;
+  allPlayers.forEach(p => {
+    const av = state.avatars[p] ? state.avatars[p] + ' ' : '';
+    const pen = (m.penalties && m.penalties[p]) || 0;
+    html += `<div style="display:flex;align-items:center;gap:10px;background:rgba(239,68,68,0.06);border-radius:12px;padding:8px 12px;">
+      <div style="flex:1;font-size:0.9rem;font-weight:700;">${av}${esc(p)}</div>
+      <button onclick="editChangePen('${esc(p)}',-1)" style="width:32px;height:32px;border-radius:10px;border:none;background:var(--gray-btn);color:var(--gray-btn-text);font-size:1.2rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
+      <div id="editPen_${esc(p)}" style="min-width:28px;text-align:center;font-size:1.1rem;font-weight:900;color:rgba(239,68,68,0.9);">${pen}</div>
+      <button onclick="editChangePen('${esc(p)}',1)" style="width:32px;height:32px;border-radius:10px;border:none;background:var(--gray-btn);color:var(--gray-btn-text);font-size:1.2rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Notes
+  html += `<div>
+    <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:7px;">📝 ${isDE?'Notiz':'Notes'}</div>
+    <textarea id="editMatchNotes" style="width:100%;box-sizing:border-box;background:var(--inset-bg);border:1px solid var(--border);border-radius:12px;padding:10px 12px;color:var(--text);font-size:0.88rem;resize:vertical;min-height:60px;" placeholder="${isDE?'Optionale Notiz…':'Optional note…'}">${esc(m.notes||'')}</textarea>
+  </div>`;
+
+  document.getElementById('editMatchBody').innerHTML = html;
+  document.getElementById('editMatchOverlay').classList.remove('hidden');
+}
+
+function editSetWinner(team) {
+  const m = state.matches.find(x => x.id === _editMatchId);
+  if (!m) return;
+  m.winner = team;
+  const btnA = document.getElementById('editWinA');
+  const btnB = document.getElementById('editWinB');
+  if (btnA) { btnA.style.background = team==='A'?'var(--orange)':'var(--gray-btn)'; btnA.style.color = team==='A'?'#fff':'var(--gray-btn-text)'; btnA.style.borderColor = team==='A'?'var(--orange)':'transparent'; }
+  if (btnB) { btnB.style.background = team==='B'?'var(--blue)':'var(--gray-btn)'; btnB.style.color = team==='B'?'#fff':'var(--gray-btn-text)'; btnB.style.borderColor = team==='B'?'var(--blue)':'transparent'; }
+}
+
+function editChangeHit(name, delta) {
+  const m = state.matches.find(x => x.id === _editMatchId);
+  if (!m) return;
+  m.hits[name] = Math.max(0, (m.hits[name]||0) + delta);
+  const el = document.getElementById('editHit_' + name);
+  if (el) el.textContent = m.hits[name];
+}
+
+function editChangePen(name, delta) {
+  const m = state.matches.find(x => x.id === _editMatchId);
+  if (!m) return;
+  if (!m.penalties) m.penalties = {};
+  m.penalties[name] = Math.max(0, (m.penalties[name]||0) + delta);
+  const el = document.getElementById('editPen_' + name);
+  if (el) el.textContent = m.penalties[name];
+}
+
+function saveEditedMatch() {
+  const m = state.matches.find(x => x.id === _editMatchId);
+  if (!m) return;
+  const notesEl = document.getElementById('editMatchNotes');
+  if (notesEl) m.notes = notesEl.value.trim() || null;
+  save();
+  document.getElementById('editMatchOverlay').classList.add('hidden');
+  renderHistory();
+  showToast(currentLang === 'de' ? '✅ Spiel aktualisiert' : '✅ Match updated');
 }
 document.getElementById('undoLastBtn').addEventListener('click', () => {
   if (!state.matches.length) { alert(t('alertNoMatches')); return; }
@@ -1684,12 +2504,15 @@ document.getElementById('clearHistoryBtn').addEventListener('click', () => {
 // ============================================================
 // AWARDS  — all tied leaders shown per category
 // ============================================================
-function awardBlock(icon, title, players, valueFn) {
+function awardBlock(icon, title, players, valueFn, isNegative) {
   if (!players.length) return '';
   const tied = players.length > 1;
   const names = players.map(p => `<strong>${esc(p.name)}</strong>`).join(', ');
   const tieTag = tied ? `<span class="award-tie">${t('awardTie', players.length)}</span>` : '';
-  return `<div class="award-card">
+  const negStyle = isNegative
+    ? 'background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.25);border-left:3px solid rgba(239,68,68,0.75);'
+    : 'border-left:3px solid rgba(34,197,94,0.6);';
+  return `<div class="award-card" style="${negStyle}">
     <div class="award-icon">${icon}</div>
     <div class="award-info">
       <div class="award-title">${esc(title)}</div>
@@ -1749,12 +2572,12 @@ function renderAwards() {
   if (coldies.length) {
     const cWinners = allTied(coldies, p => p.streak.count);
     html += awardBlock('🧊', isDE ? 'Kälteste Serie' : 'Ice-Cold Streak', cWinners,
-      p => `${p.streak.count}${isDE?' Niederlagen in Folge':' losses in a row'}`);
+      p => `${p.streak.count}${isDE?' Niederlagen in Folge':' losses in a row'}`, true);
   }
 
   // Iron man — most games played
   const ironWinners = allTied(all, p => p.played);
-  html += awardBlock('💪', isDE ? 'Eiserner Spieler' : 'Iron Player', ironWinners,
+  html += awardBlock('💪', isDE ? 'Meiste Spiele' : 'Most Games', ironWinners,
     p => `${p.played} ${isDE?'Spiele':'games'}`);
 
   // Perfect captain (≥2 games as captain, 100% win)
@@ -1770,7 +2593,7 @@ function renderAwards() {
     const uWinners = allTied(scored, p => p.unlucky);
     if (uWinners.length) {
       html += awardBlock('😬', t('awardUnlucky'), uWinners,
-        p => t('awardUnluckyVal', p.hits, Math.round(p.winRate*100)));
+        p => t('awardUnluckyVal', p.hits, Math.round(p.winRate*100)), true);
     }
   }
 
@@ -1797,8 +2620,16 @@ function renderAwards() {
   }
 
   container.innerHTML = html || `<div class="empty-state"><div class="emoji">🏅</div><p>${t('playToUnlock')}</p></div>`;
+  if (html) makeCollapsible(container, false);
   renderTeamAwards();
+  renderBadges();
+  renderComebacks();
   renderDuos();
+  // Collapse heavy sub-cards
+  ['badgesContent','comebackContent','teamAwardsContent','duoContent'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.children.length > 2) makeCollapsible(el, true);
+  });
 }
 
 // Score a player for a given set of matches using winRate*0.6 + normalised hitsPerGame*0.4
@@ -1946,7 +2777,7 @@ function renderDuos() {
 // ============================================================
 // RIVALS
 // ============================================================
-function renderRivals() { renderH2HPicker(); renderRRMatrix(); }
+function renderRivals() { renderH2HPicker(); renderRRMatrix(); renderComparePickers(); renderPlayerProfile(); }
 
 function renderH2HPicker() {
   const picker = document.getElementById('h2hPlayerPicker');
@@ -1962,13 +2793,20 @@ function renderH2HPicker() {
     const btn = document.createElement('button');
     btn.className = 'picker-btn' + (selectedH2HPlayer===name?' selected':'');
     btn.textContent = name;
-    btn.addEventListener('click', () => { selectedH2HPlayer = name; renderH2HPicker(); renderH2HContent(); renderNemesisSidekick(); });
+    btn.addEventListener('click', () => {
+      if (selectedH2HPlayer === name) {
+        selectedH2HPlayer = null; selectedCompareB = null;
+      } else {
+        selectedH2HPlayer = name; selectedCompareB = null;
+      }
+      renderH2HPicker(); renderH2HContent(); renderNemesisSidekick(); renderPlayerProfile(); renderComparePickers();
+    });
     picker.appendChild(btn);
   });
 }
 function renderH2HContent() {
   const container = document.getElementById('h2hContent');
-  if (!selectedH2HPlayer) return;
+  if (!selectedH2HPlayer) { container.innerHTML = ''; return; }
   const record = {};
   state.matches.forEach(m => {
     const onA = m.teamA.includes(selectedH2HPlayer);
@@ -1997,6 +2835,7 @@ function renderH2HContent() {
       </div>
     </div>`;
   }).join('');
+  if (entries.length > 4) makeCollapsible(container, true);
 }
 function renderRRMatrix() {
   const container = document.getElementById('rrMatrixContent');
@@ -2015,6 +2854,22 @@ function renderRRMatrix() {
       if (matrix[b]?.[a] !== undefined) matrix[b][a]++;
     }));
   });
+  // Find max for heatmap scaling
+  let maxN = 1;
+  active.forEach(a => active.forEach(b => { if (a!==b && matrix[a][b] > maxN) maxN = matrix[a][b]; }));
+
+  const cellStyle = (n) => {
+    if (n === 0) return 'background:var(--inset-bg);color:var(--text-muted);';
+    const t = n / maxN; // 0..1
+    // Interpolate: low=amber tint → mid=orange → high=deep red-orange
+    const a = 0.12 + t * 0.78; // alpha 0.12 → 0.90
+    const r = Math.round(249 - t * 60);  // 249 → 189
+    const g = Math.round(115 - t * 95);  // 115 → 20
+    const bv = Math.round(22  - t * 22); // 22  → 0
+    const textColor = t > 0.5 ? '#fff' : 'var(--orange-dark)';
+    return `background:rgba(${r},${g},${bv},${a.toFixed(2)});color:${textColor};font-weight:${t>0.3?'800':'700'};`;
+  };
+
   const short = p => p.length > 5 ? p.slice(0,5) : p;
   let html = '<table class="rr-table"><thead><tr><th></th>';
   active.forEach(p => { html += `<th class="col-header">${esc(short(p))}</th>`; });
@@ -2024,8 +2879,7 @@ function renderRRMatrix() {
     active.forEach(col => {
       if (row===col) { html += '<td class="rr-cell-self">·</td>'; return; }
       const n = matrix[row][col]||0;
-      const cls = n===0?'rr-cell-0':n===1?'rr-cell-1':n===2?'rr-cell-2':'rr-cell-many';
-      html += `<td class="${cls}">${n||'·'}</td>`;
+      html += `<td style="${cellStyle(n)}">${n||'·'}</td>`;
     });
     html += '</tr>';
   });
@@ -2047,8 +2901,13 @@ function renderStats() {
   renderMatchPace();
   renderHitEfficiency();
   renderPerDayWinRate();
-  renderWinRateBySize();
   renderMomentum();
+  // Apply collapsible to heavy content sections after all rendering is done
+  const collapsibleIds = ['dailyContent','formContent','consistencyContent','captainRecordsContent','personalBestContent','hitEfficiencyContent','perDayWinRateContent','momentumContent','paceContent'];
+  collapsibleIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.children.length) makeCollapsible(el, true);
+  });
 }
 
 function renderOverview() {
@@ -2273,6 +3132,32 @@ function renderPersonalBests() {
       <div style="font-size:0.95rem;font-weight:700;margin-top:6px;">${teamEmoji} ${esc(teamLabel)} — <span style="color:var(--orange);">${maxTeamHits} hits</span></div>
       <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">${esc(matchDate)}</div>
     </div>`;
+  }
+
+  // Penalties & special hits per player
+  const stats = computeStats();
+  const statVals = Object.values(stats).filter(s => s.played > 0);
+  const isDE2 = currentLang === 'de';
+
+  const penLeaders = [...statVals].filter(s=>s.penalties>0).sort((a,b)=>b.penalties-a.penalties).slice(0,3);
+  const dblLeaders = [...statVals].filter(s=>s.doubles>0).sort((a,b)=>b.doubles-a.doubles).slice(0,3);
+  const tplLeaders = [...statVals].filter(s=>s.triples>0).sort((a,b)=>b.triples-a.triples).slice(0,3);
+  const canLeaders = [...statVals].filter(s=>s.cans>0).sort((a,b)=>b.cans-a.cans).slice(0,3);
+
+  if (penLeaders.length || dblLeaders.length || tplLeaders.length || canLeaders.length) {
+    html += `<div style="padding-top:12px;border-top:1px solid var(--border);">`;
+    const miniRow = (icon, label, arr, key) => {
+      if (!arr.length) return '';
+      return `<div style="margin-bottom:8px;">
+        <div class="section-label" style="margin-bottom:4px;">${icon} ${label}</div>
+        ${arr.map((s,i)=>`<div class="duo-row"><div style="font-weight:700;">${i===0?'🥇':i===1?'🥈':'🥉'} ${esc(s.name)}</div><div style="font-weight:800;color:var(--orange);">${s[key]}</div></div>`).join('')}
+      </div>`;
+    };
+    html += miniRow('🍺', `<span style="color:rgba(239,68,68,0.85);">${isDE2?'Meiste Strafdosen':'Most Penalties'}</span>`, penLeaders, 'penalties');
+    html += miniRow('💥', isDE2?'Meiste 💥 Doppeltreffer':'Most 💥 Double Hits', dblLeaders, 'doubles');
+    html += miniRow('🔱', isDE2?'Meiste 🔱 Dreifachtreffer':'Most 🔱 Triple Hits', tplLeaders, 'triples');
+    html += miniRow('🥤', isDE2?'Meiste 🥤 Dosentreffer':'Most 🥤 Can Hits', canLeaders, 'cans');
+    html += `</div>`;
   }
 
   container.innerHTML = html;
@@ -2633,46 +3518,6 @@ function renderPerDayWinRate() {
   container.innerHTML = html;
 }
 
-// ============================================================
-// WIN RATE BY TEAM SIZE
-// ============================================================
-function renderWinRateBySize() {
-  const card = document.getElementById('winRateBySizeCard');
-  const container = document.getElementById('winRateBySizeContent');
-  const active = state.players.filter(p => state.matches.some(m => m.teamA.includes(p)||m.teamB.includes(p)));
-  if (!active.length) { card.style.display = 'none'; return; }
-
-  let hasData = false;
-  const rows = active.map(name => {
-    const bySz = {};
-    state.matches.forEach(m => {
-      const onA = m.teamA.includes(name), onB = m.teamB.includes(name);
-      if (!onA && !onB) return;
-      const sz = onA ? m.teamA.length : m.teamB.length;
-      if (!bySz[sz]) bySz[sz] = { w:0, l:0 };
-      const won = (onA && m.winner==='A') || (onB && m.winner==='B');
-      if (won) bySz[sz].w++; else bySz[sz].l++;
-    });
-    const sizes = Object.keys(bySz).map(Number).sort((a,b)=>a-b);
-    if (sizes.length < 2) return null;
-    hasData = true;
-    const cells = sizes.map(sz => {
-      const { w, l } = bySz[sz]; const tot = w+l;
-      const pct = Math.round((w/tot)*100);
-      const cls = pct >= 60 ? 'good' : pct <= 40 ? 'bad' : '';
-      return `<span class="wrs-cell ${cls}">${sz}v${sz}: ${pct}%</span>`;
-    }).join('');
-    return { name, cells };
-  }).filter(Boolean);
-
-  if (!hasData) { card.style.display = 'none'; return; }
-  card.style.display = 'block';
-  container.innerHTML = rows.map(r => `
-    <div class="win-rate-size-row">
-      <div class="wrs-name" title="${esc(r.name)}">${state.avatars[r.name]?state.avatars[r.name]+' ':''}${esc(r.name)}</div>
-      <div class="wrs-cells">${r.cells}</div>
-    </div>`).join('');
-}
 
 // ============================================================
 // MOMENTUM — after a win, probability of winning next match
@@ -2744,6 +3589,320 @@ function renderMomentum() {
 }
 
 // ============================================================
+// PREDICTION STATS
+// ============================================================
+
+// ============================================================
+// PLAYER COMPARISON
+// ============================================================
+function toggleCompare() {
+  const card = document.getElementById('compareCard');
+  if (!card) return;
+  const showing = card.style.display !== 'none';
+  card.style.display = showing ? 'none' : '';
+  if (!showing) { renderComparePickers(); renderCompareContent(); }
+}
+
+function renderComparePickers() {
+  selectedCompareA = selectedH2HPlayer;
+  const card = document.getElementById('compareCard');
+  const toggleRow = document.getElementById('compareToggleRow');
+  if (!card) return;
+  if (!selectedCompareA) {
+    card.style.display = 'none';
+    if (toggleRow) toggleRow.style.display = 'none';
+    return;
+  }
+  if (toggleRow) toggleRow.style.display = 'block';
+  // Don't auto-show compare card — respect user toggle
+  if (card.style.display === 'none') { renderCompareContent(); return; }
+
+  const active = state.players
+    .filter(p => p !== selectedCompareA && state.matches.some(m => m.teamA.includes(p)||m.teamB.includes(p)))
+    .sort((a,b) => a.localeCompare(b));
+  const picker = document.getElementById('comparePickerB');
+  if (!picker) return;
+  picker.innerHTML = '';
+  if (!active.length) {
+    picker.innerHTML = `<p style="font-size:0.85rem;color:var(--text-muted);padding:4px 0;">${t('noMatchData')}</p>`;
+    renderCompareContent(); return;
+  }
+  active.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'picker-btn' + (selectedCompareB===name?' selected':'');
+    btn.textContent = (state.avatars[name]||'') + ' ' + name;
+    btn.style.fontSize = '0.72rem';
+    btn.addEventListener('click', () => {
+      selectedCompareB = name;
+      renderComparePickers();
+      renderCompareContent();
+    });
+    picker.appendChild(btn);
+  });
+  renderCompareContent();
+}
+
+function renderCompareContent() {
+  const container = document.getElementById('compareContent');
+  if (!container) return;
+  selectedCompareA = selectedH2HPlayer;
+  if (!selectedCompareA || !selectedCompareB || selectedCompareA === selectedCompareB) {
+    container.innerHTML = `<div class="empty-state" style="padding:12px 0;"><p>${t('compareHint')}</p></div>`;
+    return;
+  }
+
+  // Only matches where both players faced each other on opposing teams
+  const sharedMatches = state.matches.filter(m => {
+    const aOnA = m.teamA.includes(selectedCompareA), bOnB = m.teamB.includes(selectedCompareB);
+    const aOnB = m.teamB.includes(selectedCompareA), bOnA = m.teamA.includes(selectedCompareB);
+    return (aOnA && bOnB) || (aOnB && bOnA);
+  });
+
+  // Stats computed only over shared matches
+  const statFor = (name) => {
+    const pm = sharedMatches.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+    if (!pm.length) return null;
+    const wins = pm.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+    const hits = pm.reduce((s,m)=>s+(m.hits[name]||0),0);
+    return { played: pm.length, wins, winRate: wins/pm.length, hits, hitsPerGame: hits/pm.length };
+  };
+
+  const a = statFor(selectedCompareA), b = statFor(selectedCompareB);
+
+  const isDE = currentLang === 'de';
+  if (!a || !b || sharedMatches.length === 0) {
+    container.innerHTML = `<div class="empty-state" style="padding:12px 0;"><p>${isDE?'Keine Duelle.':'No duels.'}</p></div>`;
+    return;
+  }
+
+  let h2hA = 0, h2hB = 0;
+  sharedMatches.forEach(m => {
+    const aWon = (m.teamA.includes(selectedCompareA) && m.winner==='A') || (m.teamB.includes(selectedCompareA) && m.winner==='B');
+    if (aWon) h2hA++; else h2hB++;
+  });
+
+  const row = (label, va, vb, higherIsGood=true) => {
+    const na = typeof va === 'number', nb = typeof vb === 'number';
+    const aWins = na && nb && (higherIsGood ? va > vb : va < vb);
+    const bWins = na && nb && (higherIsGood ? vb > va : vb < va);
+    return `<div class="compare-row">
+      <div class="compare-val compare-val-a${aWins?' winner':''}">${typeof va==='number'&&!Number.isInteger(va)?va.toFixed(1):va}</div>
+      <div class="compare-label">${label}</div>
+      <div class="compare-val compare-val-b${bWins?' winner':''}">${typeof vb==='number'&&!Number.isInteger(vb)?vb.toFixed(1):vb}</div>
+    </div>`;
+  };
+
+  let html = `<div class="compare-header">
+    <div class="compare-name-a">${state.avatars[selectedCompareA]||''} ${esc(selectedCompareA)}</div>
+    <div class="compare-vs-label">VS</div>
+    <div class="compare-name-b">${state.avatars[selectedCompareB]||''} ${esc(selectedCompareB)}</div>
+  </div>`;
+  html += `<div style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-bottom:6px;">${isDE?`${sharedMatches.length} Duelle`:`${sharedMatches.length} duel${sharedMatches.length!==1?'s':''}`}</div>`;
+  html += row(isDE?'Siege':'Wins', h2hA, h2hB);
+  html += row(isDE?'Siegquote':'Win%', Math.round(a.winRate*100)+'%', Math.round(b.winRate*100)+'%');
+  html += row(isDE?'Treffer':'Hits', a.hits, b.hits);
+  html += row(isDE?'Tr/Spiel':'H/Game', a.hitsPerGame, b.hitsPerGame);
+  container.innerHTML = html;
+}
+
+// ============================================================
+// BADGES / ACHIEVEMENTS
+// ============================================================
+function maxConsecWins(playerName) {
+  const pm = state.matches.filter(m => m.teamA.includes(playerName)||m.teamB.includes(playerName));
+  let max = 0, cur = 0;
+  pm.forEach(m => {
+    const won = (m.teamA.includes(playerName)&&m.winner==='A')||(m.teamB.includes(playerName)&&m.winner==='B');
+    if (won) { cur++; if (cur > max) max = cur; } else cur = 0;
+  });
+  return max;
+}
+
+function computeBadges(playerName) {
+  const pm = state.matches.filter(m => m.teamA.includes(playerName)||m.teamB.includes(playerName));
+  if (!pm.length) return [];
+  const isDE = currentLang === 'de';
+  const badges = [];
+
+  // Total wins
+  const wins = pm.filter(m=>(m.teamA.includes(playerName)&&m.winner==='A')||(m.teamB.includes(playerName)&&m.winner==='B')).length;
+  if (wins >= 3)  badges.push({ icon:'🥉', label: isDE?'3 Siege':'3 Wins' });
+  if (wins >= 5)  badges.push({ icon:'🥈', label: isDE?'5 Siege':'5 Wins' });
+  if (wins >= 10) badges.push({ icon:'🥇', label: isDE?'10 Siege':'10 Wins' });
+  if (wins >= 15) badges.push({ icon:'👑', label: isDE?'15 Siege':'15 Wins' });
+
+  // Total losses
+  const losses = pm.length - wins;
+  if (losses >= 3)  badges.push({ icon:'😬', label: isDE?'3 Niederlagen':'3 Losses' });
+  if (losses >= 5)  badges.push({ icon:'😭', label: isDE?'5 Niederlagen':'5 Losses' });
+  if (losses >= 10) badges.push({ icon:'💩', label: isDE?'10 Niederlagen':'10 Losses' });
+
+  // Single-game hits (ever)
+  let has3 = false, has5 = false;
+  pm.forEach(m => {
+    const h = m.hits[playerName]||0;
+    if (h >= 3) has3 = true;
+    if (h >= 5) has5 = true;
+  });
+  if (has3) badges.push({ icon:'🎯', label: isDE?'3 Treffer/Spiel':'3 Hits in One' });
+  if (has5) badges.push({ icon:'💥', label: isDE?'5 Treffer/Spiel':'5 Hits in One' });
+
+  // Max consecutive wins (ever achieved)
+  const maxW = maxConsecWins(playerName);
+  if (maxW >= 4) badges.push({ icon:'⚡', label: isDE?'4 Siege in Folge':'4-Win Streak' });
+  if (maxW >= 5) badges.push({ icon:'🔥', label: isDE?'5 Siege in Folge':'5-Win Streak' });
+  if (maxW >= 6) badges.push({ icon:'🌟', label: isDE?'6 Siege in Folge':'6-Win Streak' });
+  if (maxW >= 7) badges.push({ icon:'💎', label: isDE?'7 Siege in Folge':'7-Win Streak' });
+
+  // "Zu Null" — wins where the opposing team scored 0 hits total
+  let zuNull = 0;
+  pm.forEach(m => {
+    const myWon = (m.teamA.includes(playerName)&&m.winner==='A')||(m.teamB.includes(playerName)&&m.winner==='B');
+    if (!myWon) return;
+    const oppTeam = m.teamA.includes(playerName) ? m.teamB : m.teamA;
+    const oppHits = oppTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    if (oppHits === 0) zuNull++;
+  });
+  if (zuNull >= 1) badges.push({ icon:'🛡️', label: isDE?`Zu Null ×${zuNull}`:`Clean Sheet ×${zuNull}` });
+
+  // Special hit achievements
+  let hasDbl = false, hasTrpl = false;
+  pm.forEach(m => {
+    const mh = m.multiHits && m.multiHits[playerName];
+    if (mh && mh.double >= 1) hasDbl = true;
+    if (mh && mh.triple >= 1) hasTrpl = true;
+  });
+  if (hasDbl)  badges.push({ icon:'💥', label: isDE?'Doppeltreffer':'Double Hit' });
+  if (hasTrpl) badges.push({ icon:'🔱',   label: isDE?'Dreifachtreffer':'Triple Hit' });
+
+  // Negative awards
+  let zuNullLost = 0;
+  pm.forEach(m => {
+    const myWon = (m.teamA.includes(playerName)&&m.winner==='A')||(m.teamB.includes(playerName)&&m.winner==='B');
+    if (myWon) return;
+    const myTeam = m.teamA.includes(playerName) ? m.teamA : m.teamB;
+    const myTeamHits = myTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    if (myTeamHits === 0) zuNullLost++;
+  });
+  if (zuNullLost >= 1) badges.push({ icon:'💀', label: isDE?`Zu Null verloren ×${zuNullLost}`:`Shutout Loss ×${zuNullLost}` });
+
+  const totalPenalties = pm.reduce((s,m)=>s+(m.penalties&&m.penalties[playerName]?m.penalties[playerName]:0),0);
+  if (totalPenalties >= 1) badges.push({ icon:'🍺', label: isDE?`Strafdosen ×${totalPenalties}`:`Penalties ×${totalPenalties}` });
+
+  return badges;
+}
+
+function renderBadges() {
+  const card = document.getElementById('badgesCard');
+  const container = document.getElementById('badgesContent');
+  if (!state.matches.length) { card.style.display = 'none'; return; }
+
+  const active = state.players.filter(p => state.matches.some(m=>m.teamA.includes(p)||m.teamB.includes(p)));
+
+  // Collect all badges and which players have each
+  const badgeMap = {}; // key → { icon, label, players: [{name, count}] }
+  active.forEach(name => {
+    computeBadges(name).forEach(b => {
+      const key = b.label.replace(/ ×\d+$/, ''); // normalize "Zu Null ×3" → "Zu Null"
+      if (!badgeMap[key]) badgeMap[key] = { icon: b.icon, label: key, players: [] };
+      // Extract count from label if present (e.g. "Zu Null ×3" → count=3)
+      const countMatch = b.label.match(/×(\d+)$/);
+      badgeMap[key].players.push({ name, count: countMatch ? parseInt(countMatch[1]) : null });
+    });
+  });
+
+  const allBadges = Object.values(badgeMap);
+  if (!allBadges.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  // Define canonical order
+  const isDE = currentLang === 'de';
+  const order = isDE
+    ? ['3 Siege','5 Siege','10 Siege','15 Siege','3 Treffer/Spiel','5 Treffer/Spiel','4 Siege in Folge','5 Siege in Folge','6 Siege in Folge','7 Siege in Folge','Zu Null','Doppeltreffer','Dreifachtreffer','Zu Null verloren','Strafdosen','3 Niederlagen','5 Niederlagen','10 Niederlagen']
+    : ['3 Wins','5 Wins','10 Wins','15 Wins','3 Hits in One','5 Hits in One','4-Win Streak','5-Win Streak','6-Win Streak','7-Win Streak','Clean Sheet','Double Hit','Triple Hit','Shutout Loss','Penalties','3 Losses','5 Losses','10 Losses'];
+
+  const sorted = [...allBadges].sort((a,b) => {
+    const ia = order.indexOf(a.label), ib = order.indexOf(b.label);
+    if (ia === -1 && ib === -1) return 0;
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+
+  const negativeKeys = isDE
+    ? ['Zu Null verloren','Strafdosen','Niederlagen']
+    : ['Shutout Loss','Penalties','Losses'];
+
+  container.innerHTML = sorted.map(b => {
+    const isNeg = negativeKeys.some(k => b.label.startsWith(k) || b.label.includes(k));
+    const rowBg  = isNeg ? 'rgba(239,68,68,0.07)'  : 'rgba(34,197,94,0.07)';
+    const rowBdr = isNeg ? 'rgba(239,68,68,0.25)'  : 'rgba(34,197,94,0.25)';
+    const chipBg = isNeg ? 'rgba(239,68,68,0.12)'  : 'rgba(34,197,94,0.12)';
+    const chipBdr= isNeg ? 'rgba(239,68,68,0.4)'   : 'rgba(34,197,94,0.4)';
+    const chipClr= isNeg ? 'rgba(239,68,68,0.9)'   : 'rgba(21,128,61,0.9)';
+    const playerChips = b.players.map(p => {
+      const av = state.avatars[p.name]||'';
+      const countSuffix = p.count !== null ? ` <span style="font-size:0.65rem;opacity:0.8;">×${p.count}</span>` : '';
+      return `<span style="display:inline-flex;align-items:center;gap:3px;padding:3px 8px;background:${chipBg};border:1px solid ${chipBdr};border-radius:20px;font-size:0.78rem;font-weight:700;color:${chipClr};">${av?av+' ':''}${esc(p.name)}${countSuffix}</span>`;
+    }).join('');
+    const accentColor = isNeg ? 'rgba(239,68,68,0.75)' : 'rgba(34,197,94,0.75)';
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 10px;border-radius:10px;margin-bottom:6px;background:${rowBg};border:1px solid ${rowBdr};border-left:3px solid ${accentColor};">
+      <div style="font-size:1.4rem;flex:0 0 28px;text-align:center;">${b.icon}</div>
+      <div style="flex:1;">
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:5px;">${esc(b.label)}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">${playerChips || `<span style="font-size:0.78rem;color:var(--text-muted);">${isDE?'Noch niemand':'Nobody yet'}</span>`}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// COMEBACKS — won despite trailing in hits at halftime
+// ============================================================
+function renderComebacks() {
+  const card = document.getElementById('comebackCard');
+  const container = document.getElementById('comebackContent');
+  if (state.matches.length < 2) { card.style.display = 'none'; return; }
+
+  // A comeback = winning team had fewer hits at the midpoint of the match
+  // We approximate by looking at per-player hit distribution: if the winning team's
+  // combined hits are lower than the losing team's (underdogs who hit less but won)
+  const comebacks = state.matches.filter(m => {
+    const wTeam = m.winner==='A' ? m.teamA : m.teamB;
+    const lTeam = m.winner==='A' ? m.teamB : m.teamA;
+    const wHits = wTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const lHits = lTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    return lHits > wHits; // winning team actually had fewer hits — pure comeback
+  });
+
+  if (!comebacks.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  const isDE = currentLang === 'de';
+  container.innerHTML = comebacks.slice(-5).reverse().map(m => {
+    const wTeam = m.winner==='A' ? m.teamA : m.teamB;
+    const lTeam = m.winner==='A' ? m.teamB : m.teamA;
+    const wHits = wTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const lHits = lTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const date = new Date(m.timestamp).toLocaleDateString();
+    return `<div class="duo-row">
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;">${wTeam.map(p=>esc(p)).join(', ')}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted);">${date}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.82rem;font-weight:700;color:var(--success);">${isDE?'Gewonnen mit':'Won with'} ${wHits}</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);">${isDE?'Gegner':'Opp.'} ${lHits} Tr.</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// HEATMAP — matches per calendar day
+// ============================================================
+
+// ============================================================
 // NEMESIS & SIDEKICK — shown for currently selected H2H player
 // ============================================================
 function renderNemesisSidekick() {
@@ -2800,6 +3959,193 @@ function renderNemesisSidekick() {
 
 
 // ============================================================
+// PLAYER PROFILE — shown in Rivals when a player is selected
+// ============================================================
+function renderPlayerProfile() {
+  const card = document.getElementById('playerProfileCard');
+  const container = document.getElementById('playerProfileContent');
+  const titleEl = document.getElementById('playerProfileTitle');
+  const name = selectedH2HPlayer;
+  if (!name || state.matches.length < 2) { card.style.display = 'none'; return; }
+
+  const pm = state.matches.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+  if (!pm.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  const av = state.avatars[name]||'';
+  titleEl.textContent = `${av?av+' ':''}${name}`;
+
+  const isDE = currentLang === 'de';
+  const wins = pm.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+  const losses = pm.length - wins;
+  const totalHits = pm.reduce((s,m)=>s+(m.hits[name]||0),0);
+  const wr = pm.length ? wins/pm.length : 0;
+  const hpg = pm.length ? totalHits/pm.length : 0;
+
+  // Form trend: last 5 vs previous 5
+  const last5 = pm.slice(-5);
+  const prev5 = pm.slice(-10,-5);
+  const wrLast5 = last5.length ? last5.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length/last5.length : null;
+  const wrPrev5 = prev5.length ? prev5.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length/prev5.length : null;
+  const formTrend = (wrLast5 !== null && wrPrev5 !== null)
+    ? (wrLast5 > wrPrev5+0.1 ? '📈 ' + (isDE?'Aufsteigend':'Rising')
+      : wrLast5 < wrPrev5-0.1 ? '📉 ' + (isDE?'Absteigend':'Declining')
+      : '➡️ ' + (isDE?'Stabil':'Stable'))
+    : null;
+
+  // Best scoring game
+  const bestGame = pm.reduce((best, m) => (m.hits[name]||0) > (best.hits[name]||0) ? m : best, pm[0]);
+  const bestHits = bestGame.hits[name]||0;
+
+  // Games since last hit
+  let gamesSinceHit = 0;
+  for (let i = pm.length - 1; i >= 0; i--) {
+    if ((pm[i].hits[name]||0) > 0) break;
+    gamesSinceHit++;
+  }
+  const everHit = pm.some(m => (m.hits[name]||0) > 0);
+
+  // Time-of-day breakdown — 2-hour windows, only show slots with data
+  const timeSlotData = [];
+  for (let h = 0; h < 24; h += 2) {
+    const slotMatches = pm.filter(m => {
+      const mh = new Date(m.timestamp).getHours();
+      return mh >= h && mh < h+2;
+    });
+    if (!slotMatches.length) continue;
+    const sw = slotMatches.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+    const sh = slotMatches.reduce((s,m)=>s+(m.hits[name]||0),0);
+    const label = `${String(h).padStart(2,'0')}:00–${String(h+2).padStart(2,'0')}:00`;
+    timeSlotData.push({ label, played: slotMatches.length, wins: sw, wr: sw/slotMatches.length, hits: sh });
+  }
+
+  // Day-of-week breakdown
+  const dowNamesLong = isDE
+    ? ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag']
+    : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const dowNamesShort = isDE
+    ? ['So','Mo','Di','Mi','Do','Fr','Sa']
+    : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dowData = {};
+  pm.forEach(m => {
+    const dow = new Date(m.timestamp).getDay();
+    if (!dowData[dow]) dowData[dow] = {w:0,l:0,hits:0};
+    const won = (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B');
+    if (won) dowData[dow].w++; else dowData[dow].l++;
+    dowData[dow].hits += m.hits[name]||0;
+  });
+
+  let html = '';
+
+  // Overview mini-grid
+  const sinceHitBg  = !everHit ? '' : gamesSinceHit === 0 ? 'background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.35);' : gamesSinceHit >= 3 ? 'background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.35);' : '';
+  const sinceHitClr = !everHit ? 'var(--text)' : gamesSinceHit === 0 ? 'var(--success)' : gamesSinceHit >= 3 ? 'var(--danger)' : 'var(--text)';
+  html += `<div class="overview-grid" style="margin-bottom:12px;grid-template-columns:repeat(3,1fr);">
+    <div class="overview-item"><div class="overview-num" style="color:var(--success);">${wins}</div><div class="overview-label">${isDE?'Siege':'Wins'}</div></div>
+    <div class="overview-item"><div class="overview-num" style="color:var(--danger);">${losses}</div><div class="overview-label">${isDE?'Niederlagen':'Losses'}</div></div>
+    <div class="overview-item"><div class="overview-num">${totalHits}</div><div class="overview-label">${isDE?'Treffer':'Hits'}</div></div>
+    <div class="overview-item"><div class="overview-num">${Math.round(wr*100)}%</div><div class="overview-label">${isDE?'Siegquote':'Win Rate'}</div></div>
+    <div class="overview-item"><div class="overview-num">${hpg.toFixed(1)}</div><div class="overview-label">${isDE?'Tr/Spiel':'H/Game'}</div></div>
+    <div class="overview-item" style="${sinceHitBg}"><div class="overview-num" style="color:${sinceHitClr};">${everHit ? gamesSinceHit : '—'}</div><div class="overview-label">${isDE?'∅ seit Hit':'Since hit'}</div></div>
+  </div>`;
+
+  // Penalties & special hits
+  const totalPen  = pm.reduce((s,m)=>s+(m.penalties&&m.penalties[name]?m.penalties[name]:0),0);
+  const totalDbl  = pm.reduce((s,m)=>s+(m.multiHits&&m.multiHits[name]?m.multiHits[name].double||0:0),0);
+  const totalTrpl = pm.reduce((s,m)=>s+(m.multiHits&&m.multiHits[name]?m.multiHits[name].triple||0:0),0);
+  const totalCan  = pm.reduce((s,m)=>s+(m.multiHits&&m.multiHits[name]?m.multiHits[name].can||0:0),0);
+  if (totalPen || totalDbl || totalTrpl || totalCan) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.8rem;">`;
+    if (totalDbl)  html += `<span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.35);border-radius:8px;padding:4px 8px;font-weight:700;color:rgba(21,128,61,0.9);">💥 ${isDE?'Doppel':'Double'}: ${totalDbl}</span>`;
+    if (totalTrpl) html += `<span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.35);border-radius:8px;padding:4px 8px;font-weight:700;color:rgba(21,128,61,0.9);">🔱 ${isDE?'Dreifach':'Triple'}: ${totalTrpl}</span>`;
+    if (totalCan)  html += `<span style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.35);border-radius:8px;padding:4px 8px;font-weight:700;color:rgba(21,128,61,0.9);">🥤 ${isDE?'Dose':'Can'}: ${totalCan}</span>`;
+    if (totalPen)  html += `<span style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.35);border-radius:8px;padding:4px 8px;font-weight:700;color:rgba(239,68,68,0.9);">🍺 ${isDE?'Strafen':'Penalties'}: ${totalPen}</span>`;
+    html += `</div>`;
+  }
+
+  // Form trend
+  if (formTrend) {
+    html += `<div style="font-size:0.82rem;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-weight:700;">${isDE?'Formtrend':'Form Trend'}</span>
+      <span style="float:right;">${formTrend}</span>
+    </div>`;
+  }
+
+  // Best single game
+  if (bestHits > 0) {
+    const bDate = new Date(bestGame.timestamp).toLocaleDateString();
+    const bWon = (bestGame.teamA.includes(name)&&bestGame.winner==='A')||(bestGame.teamB.includes(name)&&bestGame.winner==='B');
+    html += `<div style="font-size:0.82rem;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-weight:700;">${isDE?'Bestes Spiel':'Best Game'}</span>
+      <span style="float:right;">${bestHits} ${isDE?'Treffer':'hits'} · ${bDate} · ${bWon?'✅':'❌'}</span>
+    </div>`;
+  }
+
+  // Time-of-day performance (2-hour windows, bar chart style)
+  if (timeSlotData.length) {
+    html += `<div class="section-label" style="margin-top:10px;margin-bottom:6px;">${isDE?'Leistung nach Uhrzeit (2h-Fenster)':'Performance by Time of Day (2h windows)'}</div>`;
+    timeSlotData.forEach(s => {
+      const pct = Math.round(s.wr*100);
+      const hpg = s.played ? (s.hits/s.played).toFixed(1) : '0';
+      const cls = s.wr >= 0.6 ? 'good' : s.wr <= 0.4 ? 'bad' : '';
+      html += `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:0.78rem;">
+        <span style="flex:0 0 90px;font-weight:600;color:var(--text-muted);font-size:0.72rem;">${s.label}</span>
+        <div style="flex:1;background:var(--inset-bg);border-radius:20px;height:8px;overflow:hidden;border:1px solid var(--border);">
+          <div style="width:${pct}%;height:100%;border-radius:20px;background:${s.wr>=0.6?'var(--success)':s.wr<=0.4?'var(--danger)':'var(--orange)'};transition:width 0.4s;"></div>
+        </div>
+        <span class="time-slot-pill ${cls}" style="flex:0 0 auto;">${pct}%</span>
+        <span style="flex:0 0 auto;font-size:0.7rem;color:var(--orange);font-weight:700;">🎯${s.hits} (${hpg}/G)</span>
+      </div>`;
+    });
+  }
+
+  // Day-of-week performance — table with W/L/% per day
+  const activeDows = Object.entries(dowData).filter(([,d])=>d.w+d.l>=1);
+  if (activeDows.length >= 1) {
+    html += `<div class="section-label" style="margin-top:12px;margin-bottom:6px;">${isDE?'Leistung nach Wochentag':'Performance by Day of Week'}</div>`;
+    html += `<table style="width:100%;border-collapse:collapse;font-size:0.78rem;">
+      <thead><tr>
+        <th style="text-align:left;padding:4px 4px 6px;color:var(--text-muted);font-weight:700;font-size:0.68rem;border-bottom:1.5px solid var(--border);">${isDE?'Tag':'Day'}</th>
+        <th style="text-align:center;padding:4px;color:var(--text-muted);font-size:0.68rem;border-bottom:1.5px solid var(--border);">S</th>
+        <th style="text-align:center;padding:4px;color:var(--text-muted);font-size:0.68rem;border-bottom:1.5px solid var(--border);">N</th>
+        <th style="text-align:center;padding:4px;color:var(--text-muted);font-size:0.68rem;border-bottom:1.5px solid var(--border);">S%</th>
+        <th style="text-align:center;padding:4px;color:var(--text-muted);font-size:0.68rem;border-bottom:1.5px solid var(--border);">${isDE?'Tr/Sp':'H/G'}</th>
+      </tr></thead><tbody>`;
+    activeDows.sort((a,b)=>parseInt(a[0])-parseInt(b[0])).forEach(([dow,d]) => {
+      const total = d.w+d.l;
+      const wr2 = d.w/total;
+      const hpg2 = (d.hits/total).toFixed(1);
+      const color = wr2 >= 0.6 ? 'var(--success)' : wr2 <= 0.4 ? 'var(--danger)' : 'var(--text)';
+      html += `<tr>
+        <td style="padding:6px 4px;font-weight:700;border-bottom:1px solid var(--border);">${dowNamesLong[parseInt(dow)]}</td>
+        <td style="text-align:center;padding:6px 4px;color:var(--success);font-weight:700;border-bottom:1px solid var(--border);">${d.w}</td>
+        <td style="text-align:center;padding:6px 4px;color:var(--danger);border-bottom:1px solid var(--border);">${d.l}</td>
+        <td style="text-align:center;padding:6px 4px;font-weight:800;color:${color};border-bottom:1px solid var(--border);">${Math.round(wr2*100)}%</td>
+        <td style="text-align:center;padding:6px 4px;color:var(--text-muted);border-bottom:1px solid var(--border);">${hpg2}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+  }
+
+  // Badges
+  const badges = computeBadges(name);
+  if (badges.length) {
+    const isDE2 = currentLang === 'de';
+    const negKeys2 = isDE2 ? ['Zu Null verloren','Strafdosen','Niederlagen'] : ['Shutout Loss','Penalties','Losses'];
+    html += `<div class="section-label" style="margin-top:10px;margin-bottom:6px;">Achievements</div>`;
+    html += `<div style="display:flex;flex-wrap:wrap;gap:5px;">${badges.map(b => {
+      const isNeg2 = negKeys2.some(k => b.label.startsWith(k) || b.label.includes(k));
+      const bg  = isNeg2 ? 'rgba(239,68,68,0.12)'  : 'rgba(34,197,94,0.12)';
+      const bdr = isNeg2 ? 'rgba(239,68,68,0.4)'   : 'rgba(34,197,94,0.4)';
+      const clr = isNeg2 ? 'rgba(239,68,68,0.9)'   : 'rgba(21,128,61,0.9)';
+      return `<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;font-size:0.72rem;font-weight:700;background:${bg};border:1px solid ${bdr};color:${clr};white-space:nowrap;">${b.icon} ${esc(b.label)}</span>`;
+    }).join('')}</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+// ============================================================
 // LANGUAGE
 // ============================================================
 let currentLang = 'de'; // 'de' | 'en'
@@ -2810,15 +4156,15 @@ const T = {
   de: {
     // nav
     tabMatch: '⚡ Match', tabBoard: '🏆 Board', tabHistory: '📜 Verlauf',
-    tabStats: '📊 Stats', tabRivals: '🏟️ Rivalen', tabAwards: '🎖️ Awards', tabBackup: '💾 Backup',
+    tabStats: '📈 Gesamt', tabRivals: '🌟 Spieler', tabAwards: '🎖️ Awards', tabBackup: '💾 Backup',
     // match tab
     draftResume: '⚡ Spiel läuft noch — fortsetzen?',
     resume: 'Fortsetzen', discard: 'Verwerfen',
     backupReminderSuffix: 'ungespeicherte Spiele — bitte ein Backup exportieren!',
     selectTeams: '👥 Teams wählen',
     tapInstruction: 'Tippen → A | Nochmal → B | Nochmal → weg | Wischen ← → direkt zuweisen',
-    captains: 'Kapitäne', optional: '(optional)',
-    randomTeams: '🎲 Zufällige Teams', startMatch: '⚡ Spiel starten →',
+    captains: 'Kapitän', optional: '(optional)',
+    clearSelection: '✕ Auswahl löschen', randomTeams: '🎲 Zufällige Teams', startMatch: '⚡ Spiel starten →',
     trackHits: '🍺 Treffer erfassen',
     matchNotes: 'Spielnotizen (optional)',
     matchNotesPlaceholder: 'z.B. Verlängerung, Rematch…',
@@ -2865,7 +4211,7 @@ const T = {
     fastest: '⚡ Schnellstes Spiel', slowest: '🐢 Langsamstes Spiel',
     overallAvg: '⏱️ Gesamtdurchschnitt', avgPerDay: 'Ø pro Tag',
     // rivals
-    headToHead: '⚔️ Direkte Duelle', selectPlayer: 'Spieler auswählen',
+    headToHead: '👤 Individuelle Statistik', selectPlayer: 'Spieler auswählen',
     pickPlayerHint: 'Spieler auswählen, um die Bilanz zu sehen.',
     whoPlayedWhom: '🏟️ Wer spielte gegen wen',
     rrHint: 'Anzahl direkter Duelle — horizontal scrollen',
@@ -2909,6 +4255,7 @@ const T = {
     sumTragic: (name, h) => `😤 Tragische Figur: <strong>${name}</strong> — ${h} Treffer, null Siege.`,
     consistencyFooter: '🎯 konstanteste &nbsp;·&nbsp; 🎲 chaotischste',
     // toasts / alerts
+    winnerHint: '👆 Auf ein Team tippen = Sieger wählen',
     toastSaved: '🏆 Spiel gespeichert!', toastUndone: '↩️ Rückgängig!', toastCleared: '🗑️ Gelöscht!',
     toastRestored: '📥 Wiederhergestellt!', toastReset: '🔄 Turnier zurückgesetzt!',
     alertBothTeams: '⚠️ Beide Teams brauchen mindestens einen Spieler!',
@@ -2939,13 +4286,21 @@ const T = {
     bracketChampion: 'Champion',
     freshTeams: '🆕 Frische Teams',
     rematchSameTeams: '⚡ Gleiche Teams nochmal?',
-    rematchSame: 'Gleich', rematchSwap: 'Tauschen',
+    rematchSame: 'Gleich', rematchSwap: 'Seite tauschen',
     avatarPickTitle: '🎭 Emoji auswählen',
+    // new batch
+    playerCompare: '🆚 Spieler-Vergleich',
+    comparePickB: 'Vergleichen mit:',
+    compareHint: 'Spieler oben auswählen, dann Gegner wählen.',
+    achievementBadges: '🏅 Achievements',
+    comebacks: '🔄 Siege mit weniger Treffern',
+    heatmap: '📅 Aktivitäts-Heatmap',
+    timeStats: '🕐 Tageszeit-Statistiken',
   },
   en: {
     // nav
     tabMatch: '⚡ Match', tabBoard: '🏆 Board', tabHistory: '📜 History',
-    tabStats: '📊 Stats', tabRivals: '🏟️ Rivals', tabAwards: '🎖️ Awards', tabBackup: '💾 Backup',
+    tabStats: '📈 Overall', tabRivals: '🌟 Player', tabAwards: '🎖️ Awards', tabBackup: '💾 Backup',
     // match tab
     draftResume: '⚡ Match in progress — resume?',
     resume: 'Resume', discard: 'Discard',
@@ -2953,7 +4308,7 @@ const T = {
     selectTeams: '👥 Select Teams',
     tapInstruction: 'Tap → A | Tap again → B | Tap again → Off | Swipe ← → to assign directly',
     captains: 'Captains', optional: '(optional)',
-    randomTeams: '🎲 Random Teams', startMatch: '⚡ Start Match →',
+    clearSelection: '✕ Clear selection', randomTeams: '🎲 Random Teams', startMatch: '⚡ Start Match →',
     trackHits: '🍺 Track Bottle Hits',
     matchNotes: 'Match notes (optional)',
     matchNotesPlaceholder: 'e.g. Overtime, Disputed, Rematch…',
@@ -3000,7 +4355,7 @@ const T = {
     fastest: '⚡ Fastest match', slowest: '🐢 Slowest match',
     overallAvg: '⏱️ Overall average', avgPerDay: 'Avg per day',
     // rivals
-    headToHead: '⚔️ Head-to-Head', selectPlayer: 'Select a player',
+    headToHead: '👤 Individual Stats', selectPlayer: 'Select a player',
     pickPlayerHint: 'Pick a player to see their record vs opponents.',
     whoPlayedWhom: '🏟️ Who Played Whom',
     rrHint: 'Times played as opponents — scroll horizontally',
@@ -3044,6 +4399,7 @@ const T = {
     sumTragic: (name, h) => `😤 Tragic hero: <strong>${name}</strong> — ${h} hits, zero wins.`,
     consistencyFooter: '🎯 most consistent &nbsp;·&nbsp; 🎲 most chaotic',
     // toasts / alerts
+    winnerHint: '👆 Tap a team = select winner',
     toastSaved: '🏆 Match saved!', toastUndone: '↩️ Undone!', toastCleared: '🗑️ Cleared!',
     toastRestored: '📥 Restored!', toastReset: '🔄 Tournament reset!',
     alertBothTeams: '⚠️ Both teams need at least one player!',
@@ -3074,8 +4430,16 @@ const T = {
     bracketChampion: 'Champion',
     freshTeams: '🆕 Fresh Teams',
     rematchSameTeams: '⚡ Same teams again?',
-    rematchSame: 'Same', rematchSwap: 'Swap',
+    rematchSame: 'Same', rematchSwap: 'Switch Sides',
     avatarPickTitle: '🎭 Pick Emoji',
+    // new batch
+    playerCompare: '🆚 Player Comparison',
+    comparePickB: 'Compare with:',
+    compareHint: 'Select a player above, then choose an opponent.',
+    achievementBadges: '🏅 Achievements',
+    comebacks: '🔄 Siege mit weniger Treffern',
+    heatmap: '📅 Activity Heatmap',
+    timeStats: '🕐 Time-of-Day Stats',
   }
 };
 
@@ -3125,6 +4489,12 @@ const DE_MATCH_OPENERS = [
   'Kaum angepfiffen, war die Hölle los!',
   'Das war kein Spiel — das war ein Krieg!',
   'Stille vor dem Sturm — dann explodierte das Spielfeld.',
+  'Das Bier war kalt, die Nerven heiß — und dann begann der Kampf.',
+  'Mancher hatte Zweifel, ob es fair zugehen würde. Spoiler: Nein.',
+  'Mit einem kollektiven Aufschrei rollte der Ball — die Jagd begann.',
+  'Auf dem heiligen Rasen des Flunkyball-Tempels brach das Chaos aus.',
+  'Zwei Mannschaften, ein Wille, eine Flasche. Mag die Treffsicherste gewinnen.',
+  'Die Luft vibrierte. Dann: Stille. Dann: Chaos.',
 ];
 const DE_MATCH_CLOSERS = [
   'Am Ende stand ein verdienter Sieger fest.',
@@ -3132,43 +4502,68 @@ const DE_MATCH_CLOSERS = [
   'Eine Partie, die noch lange in Erinnerung bleiben wird.',
   'Nach diesem Spiel brauchte niemand mehr ein zweites Bier — alle hatten genug erlebt.',
   'Der Sieg war erkämpft, nicht geschenkt.',
+  'So geht Flunkyball. Schnell, brutal, unvergesslich.',
+  'Die Flasche war stumm. Der Jubel war ohrenbetäubend.',
+  'Wer das gesehen hat, wird es so schnell nicht vergessen.',
+  'Das Ergebnis war klar — der Weg dorthin war alles andere als das.',
+  'Prost dem Sieger. Und auch dem Verlierer — der braucht es mehr.',
+  'Geschichte wurde geschrieben. Klein, bierschäumend, aber Geschichte.',
 ];
 const DE_HIT_PHRASES = [
   (n,p) => `${p} traf die Flasche ${n === 1 ? 'einmal' : n + '-mal'} — gnadenlos präzise!`,
   (n,p) => `Mit ${n} Treffern bewies ${p} sein Können am Kronkorken.`,
   (n,p) => `Die Flasche hatte keine Chance gegen ${p} (${n} Treffer).`,
-  (n,p) => `${p} hämmerte ${n} × auf die Flasche — und die Flasche spürte es.`,
+  (n,p) => `${p} hämmerte ${n}× auf die Flasche — und die Flasche spürte es.`,
   (n,p) => `${n} Treffer für ${p}: kalter Stahl, heißes Blut.`,
+  (n,p) => `${p} ließ die Flasche ${n === 1 ? 'einmal' : n + '-mal'} tanzen — artistisch!`,
+  (n,p) => `Unnachgiebig und fokussiert: ${p} räumte ${n} Mal ab.`,
+  (n,p) => `Die Bierflasche zitterte bei jedem Auftritt von ${p}. Zu Recht — ${n} Treffer.`,
+  (n,p) => `${p} warf ${n} Mal — und ${n === 1 ? 'der Wurf saß perfekt' : 'alle saßen'}.`,
+  (n,p) => `Wenn Treffer Stimmen wären, hätte ${p} mit ${n} Votes gewonnen.`,
 ];
 const DE_WIN_PHRASES = [
   t => `Team ${t} holte sich den Sieg wie ein alter Meister.`,
   t => `Triumph für Team ${t} — der Gegner konnte nur staunen.`,
   t => `Team ${t} ließ keinen Zweifel daran, wer das Feld beherrscht.`,
   t => `Der Ball, das Bier, der Sieg: alles gehörte Team ${t}.`,
+  t => `Team ${t} drückte dem Spiel seinen Stempel auf — und holte den Sieg.`,
+  t => `Am Ende war es eindeutig: Team ${t} war das bessere Team.`,
+  t => `Team ${t} kämpfte, traf, triumphierte. In dieser Reihenfolge.`,
+  t => `Sieg für Team ${t} — verdient, erkämpft, unvergessen.`,
 ];
 const DE_DAY_OPENERS = [
   'Ein denkwürdiger Spieltag liegt hinter uns.',
   'Die Sonne schien, die Flaschen flogen — was für ein Tag!',
   'Es wurde gespielt, getroffen, gelitten und gejubelt.',
   'Dieser Spieltag hatte alles: Drama, Können und jede Menge Bier.',
+  'Flunkyball in Reinform: kraftvoll, leidenschaftlich, manchmal chaotisch.',
+  'Heute hat der Flunkyball-Gott seinen besten Tag gehabt.',
+  'Wer hätte das gedacht? Eigentlich alle. Aber keiner so genau.',
 ];
 const DE_DAY_CLOSERS = [
   'Morgen geht es weiter — wenn die Muskeln es erlauben.',
   'Der Spieltag ist vorbei, die Legenden sind gemacht.',
   'Man wird noch lange von diesem Tag reden.',
   'Bis zum nächsten Anpfiff: Ehre, wem Ehre gebührt.',
+  'Die Flaschen schweigen. Die Spieler auch. Aber die Erinnerungen bleiben.',
+  'Dieser Tag wird in die Annalen eingehen — zumindest in diesem App.',
+  'Erschöpft, aber zufrieden. So endet ein großer Spieltag.',
 ];
 const DE_TOURN_OPENERS = [
   'Das Turnier ist geschlagen. Die Geschichte ist geschrieben.',
   'Wer hat die Flasche bezwungen? Das Turnier gibt die Antwort.',
   'Nach harten Kämpfen, unvergesslichen Momenten und vielen Bieren: das Urteil steht fest.',
   'Ein Turnier wie aus dem Bilderbuch: Spannung, Drama, Champions.',
+  'Tage voller Treffer, Niederlagen und Triumphe liegen hinter uns.',
+  'Das war kein Turnier — das war ein Epos in Bierflaschen-Schriftzeichen.',
 ];
 const DE_TOURN_CLOSERS = [
   'Auf das nächste Mal — und möge die beste Mannschaft gewinnen.',
   'Das Turnier ist Geschichte. Die Legenden bleiben.',
   'Bis zum Wiedersehen: prost und gut Schuß!',
   'Ehre den Siegern, Respekt den Verlierern — das ist der Geist des Spiels.',
+  'Was auch immer als nächstes kommt — es muss sich erst warm spielen.',
+  'Die Flaschen wurden geleert, die Rangliste ist geschrieben. Ende.',
 ];
 
 const EN_MATCH_OPENERS = [
@@ -3177,80 +4572,143 @@ const EN_MATCH_OPENERS = [
   'Both teams entered with fire in their eyes.',
   'The whistle blew and chaos erupted!',
   'This was no game — this was a battle.',
+  'The beer was cold, the nerves were hot — and so it began.',
+  'Nobody knew what would happen. The bottle certainly didn\'t.',
+  'Two teams. One bottle. Let the chaos commence.',
+  'The field fell silent. Then: mayhem.',
+  'As warm-ups wrapped up, the real drama was just beginning.',
 ];
 const EN_MATCH_CLOSERS = [
   'A worthy winner stood tall at the end.',
   'The crowd roared and the beer flowed freely.',
   'A match that will be remembered for a long time.',
   'Victory was earned, not given.',
+  'That\'s Flunkyball — fast, fierce, and never forgotten.',
+  'The bottle said nothing. The scoreboard said everything.',
+  'Salute the winners. And pour one for the losers — they need it more.',
+  'History written. Small, foam-topped, but history nonetheless.',
+  'The result was clear. The journey there? Anything but.',
 ];
 const EN_HIT_PHRASES = [
   (n,p) => `${p} hit the bottle ${n} time${n!==1?'s':''} — ruthlessly accurate!`,
   (n,p) => `With ${n} hit${n!==1?'s':''}, ${p} showed true bottle-cracking class.`,
   (n,p) => `The bottle had no answer for ${p} (${n} hits).`,
   (n,p) => `${p} hammered ${n}× — the bottle felt every one.`,
+  (n,p) => `${p} made the bottle dance ${n} time${n!==1?'s':''} — sheer artistry.`,
+  (n,p) => `Relentless and focused, ${p} racked up ${n} hit${n!==1?'s':''}.`,
+  (n,p) => `The bottle trembled every time ${p} stepped up — ${n} hit${n!==1?'s':''} later, it was justified.`,
+  (n,p) => `If hits were votes, ${p}\'s ${n} would have won by a landslide.`,
 ];
 const EN_WIN_PHRASES = [
   t => `Team ${t} claimed victory like seasoned champions.`,
   t => `Triumph for Team ${t} — their rivals could only watch.`,
   t => `Team ${t} left no doubt who rules this field.`,
+  t => `Team ${t} fought, hit, and triumphed. In that order.`,
+  t => `A well-deserved win for Team ${t} — earned every drop of it.`,
+  t => `Team ${t} stamped their authority on the match and took home the glory.`,
 ];
 
 function rnd(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-function buildMatchReport(m) {
+function buildMatchReportHTML(m) {
   const isDE = currentLang === 'de';
   const aHits = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
   const bHits = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
   const winTeam = m.winner === 'A' ? 'A' : 'B';
-  const loserTeam = winTeam === 'A' ? 'B' : 'A';
   const winPlayers = m.winner === 'A' ? m.teamA : m.teamB;
   const losePlayers = m.winner === 'A' ? m.teamB : m.teamA;
   const dur = m.duration ? formatTime(m.duration) : null;
-  const date = new Date(m.timestamp).toLocaleDateString();
+  const date = new Date(m.timestamp).toLocaleDateString('de-DE', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
+  const allHitters = [...m.teamA, ...m.teamB]
+    .map(p => ({ name: p, hits: m.hits[p]||0, team: m.teamA.includes(p)?'A':'B' }))
+    .filter(p => p.hits > 0)
+    .sort((a,b) => b.hits - a.hits);
+  const maxH = allHitters.length ? allHitters[0].hits : 1;
+
+  const av = n => (state.avatars[n]||'')+' ';
+  const chips = (arr) => arr.map(n=>`<span class="rpt-player-chip">${av(n)}${esc(n)}</span>`).join('');
   const openers = isDE ? DE_MATCH_OPENERS : EN_MATCH_OPENERS;
-  const closers = isDE ? DE_MATCH_CLOSERS : EN_MATCH_CLOSERS;
   const hitPhrases = isDE ? DE_HIT_PHRASES : EN_HIT_PHRASES;
   const winPhrases = isDE ? DE_WIN_PHRASES : EN_WIN_PHRASES;
+  const closers = isDE ? DE_MATCH_CLOSERS : EN_MATCH_CLOSERS;
+  const mvp = allHitters[0];
 
-  const topHitters = [...m.teamA, ...m.teamB]
-    .map(p => ({ name: p, hits: m.hits[p]||0 }))
-    .filter(p => p.hits > 0)
-    .sort((a,b) => b.hits - a.hits)
-    .slice(0, 3);
+  // Build narrative paragraph
+  const winName = winTeam==='A'?'Team Hecke':'Team Straße';
+  const loseName = winTeam==='A'?'Team Straße':'Team Hecke';
+  const diffHits = Math.abs(aHits - bHits);
+  const diffText = isDE
+    ? (diffHits===0?'mit exakt gleicher Trefferzahl':diffHits===1?'mit einem Treffer Vorsprung':`mit ${diffHits} Treffern Vorsprung`)
+    : (diffHits===0?'with equal hit counts':diffHits===1?'by a single hit':`by ${diffHits} hits`);
+  const mvpSentence = mvp ? (isDE
+    ? rnd(hitPhrases)(mvp.hits, mvp.name)
+    : rnd(hitPhrases)(mvp.hits, mvp.name))
+    : '';
+  const winSentence = rnd(winPhrases)(winTeam==='A'?'Hecke':'Straße');
+  const narrative = [rnd(openers), `${winName} setzte sich ${diffText} gegen ${loseName} durch.`, mvpSentence, winSentence, rnd(closers)].filter(Boolean).join(' ');
 
-  let lines = [rnd(openers), ''];
+  let html = `<div class="rpt-header">
+    <div class="rpt-meta">📅 ${esc(date)}${dur?` · ⏱️ ${esc(dur)}`:''}${m.captainA?` · 👑 ${esc(m.captainA)} (Hecke)`:''}${m.captainB?` · 👑 ${esc(m.captainB)} (Straße)`:''}</div>
+    <div class="rpt-opener">${esc(narrative)}${m.notes?` <em>📝 ${esc(m.notes)}</em>`:''}</div>
+  </div>`;
 
-  if (isDE) {
-    lines.push(`📅 ${date}${dur ? ' · ⏱️ ' + dur : ''}`);
-    lines.push(`🟠 Team A (${aHits} Treffer) vs 🔵 Team B (${bHits} Treffer)`);
-    lines.push(`🏆 Sieger: Team ${winTeam} — ${winPlayers.join(', ')}`);
-  } else {
-    lines.push(`📅 ${date}${dur ? ' · ⏱️ ' + dur : ''}`);
-    lines.push(`🟠 Team A (${aHits} hits) vs 🔵 Team B (${bHits} hits)`);
-    lines.push(`🏆 Winner: Team ${winTeam} — ${winPlayers.join(', ')}`);
+  html += `<div class="rpt-score-block">
+    <div class="rpt-team-card team-a${m.winner==='A'?' winner':''}">
+      <div class="rpt-team-label">🟠 Hecke${m.winner==='A'?' 🏆':''}</div>
+      <div class="rpt-team-hits">${aHits}</div>
+      <div class="rpt-team-hits-label">${isDE?'Treffer':'Hits'}</div>
+      <div class="rpt-player-chips">${chips(m.teamA)}</div>
+    </div>
+    <div class="rpt-vs">vs</div>
+    <div class="rpt-team-card team-b${m.winner==='B'?' winner':''}">
+      <div class="rpt-team-label">🔵 Straße${m.winner==='B'?' 🏆':''}</div>
+      <div class="rpt-team-hits">${bHits}</div>
+      <div class="rpt-team-hits-label">${isDE?'Treffer':'Hits'}</div>
+      <div class="rpt-player-chips">${chips(m.teamB)}</div>
+    </div>
+  </div>`;
+
+  html += `<div class="rpt-winner-banner team-${winTeam.toLowerCase()}">🏆 ${isDE?`Sieger: ${winTeam==='A'?'Team Hecke':'Team Straße'}`:`Winner: ${winTeam==='A'?'Team Hecke':'Team Straße'}`}</div>`;
+
+  if (allHitters.length) {
+    html += `<div class="rpt-hitters"><div class="rpt-hitters-title">🍺 ${isDE?'Treffer':'Hits'}</div>`;
+    allHitters.forEach(p => {
+      const clr = p.team==='A'?'var(--orange)':'var(--blue)';
+      const pct = Math.round((p.hits/maxH)*100);
+      html += `<div class="rpt-hitter-row">
+        <div class="rpt-hitter-name">${av(p.name)}${esc(p.name)}</div>
+        <div class="rpt-hitter-bar-wrap"><div class="rpt-hitter-bar" style="width:${pct}%;background:${clr};"></div></div>
+        <div class="rpt-hitter-val" style="color:${clr};">${p.hits}</div>
+      </div>`;
+    });
+    html += `</div>`;
   }
-  lines.push('');
 
-  topHitters.forEach(p => {
-    lines.push(rnd(hitPhrases)(p.hits, p.name));
-  });
+  return html;
+}
 
-  lines.push('');
-  lines.push(rnd(winPhrases)(winTeam));
-
-  if (m.captainA || m.captainB) {
-    const capLabel = isDE ? 'Kapitäne' : 'Captains';
-    const caps = [m.captainA && `👑 ${m.captainA} (A)`, m.captainB && `👑 ${m.captainB} (B)`].filter(Boolean);
-    lines.push(capLabel + ': ' + caps.join(', '));
+function buildMatchReport(m) {
+  // plaintext version for copy/chatgpt
+  const isDE = currentLang === 'de';
+  const aHits = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
+  const bHits = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
+  const winTeam = m.winner === 'A' ? 'A' : 'B';
+  const winPlayers = m.winner === 'A' ? m.teamA : m.teamB;
+  const dur = m.duration ? formatTime(m.duration) : null;
+  const date = new Date(m.timestamp).toLocaleDateString();
+  const allHitters = [...m.teamA,...m.teamB].map(p=>({name:p,hits:m.hits[p]||0})).filter(p=>p.hits>0).sort((a,b)=>b.hits-a.hits);
+  let lines = [];
+  lines.push(isDE?`📅 ${date}${dur?' · ⏱️ '+dur:''}`:`📅 ${date}${dur?' · ⏱️ '+dur:''}`);
+  lines.push(isDE?`🟠 Team Hecke: ${aHits} Treffer — ${m.teamA.join(', ')}`:`🟠 Team Hecke: ${aHits} hits — ${m.teamA.join(', ')}`);
+  lines.push(isDE?`🔵 Team Straße: ${bHits} Treffer — ${m.teamB.join(', ')}`:`🔵 Team Straße: ${bHits} hits — ${m.teamB.join(', ')}`);
+  lines.push(isDE?`🏆 Sieger: Team ${winTeam} (${winPlayers.join(', ')})`:`🏆 Winner: Team ${winTeam} (${winPlayers.join(', ')})`);
+  if (allHitters.length) {
+    lines.push('');
+    lines.push(isDE?'Treffer:':'Hits:');
+    allHitters.forEach(p => lines.push(`  ${p.name}: ${p.hits}`));
   }
-
-  lines.push('');
-  lines.push(rnd(closers));
-
-  if (m.notes) lines.push('\n📝 ' + m.notes);
-
+  if (m.notes) lines.push('\n📝 '+m.notes);
   return lines.join('\n');
 }
 
@@ -3263,13 +4721,7 @@ function buildDayReport(dayIdx) {
   const dayMatches = grouped[dayKey];
   const dayNum = dayIdx + 1;
 
-  const openers = isDE ? DE_DAY_OPENERS : EN_MATCH_OPENERS;
-  const closers = isDE ? DE_DAY_CLOSERS : EN_MATCH_CLOSERS;
-  const hitPhrases = isDE ? DE_HIT_PHRASES : EN_HIT_PHRASES;
-  const winPhrases = isDE ? DE_WIN_PHRASES : EN_WIN_PHRASES;
-
   const dayHits = dayMatches.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
-
   const playerWins = {}, playerHitsAll = {};
   dayMatches.forEach(m => {
     const winners = m.winner === 'A' ? m.teamA : m.teamB;
@@ -3278,45 +4730,113 @@ function buildDayReport(dayIdx) {
   });
   const mvp = Object.entries(playerWins).sort((a,b)=>b[1]-a[1])[0];
   const topScorer = Object.entries(playerHitsAll).sort((a,b)=>b[1]-a[1])[0];
+  const lines = [];
+  lines.push(isDE?`🗞️ Spieltag ${dayNum} — ${dayKey}`:`🗞️ Day ${dayNum} — ${dayKey}`);
+  lines.push('');
+  lines.push(isDE?`${dayMatches.length} Spiele · ${dayHits} Treffer`:`${dayMatches.length} matches · ${dayHits} hits`);
+  dayMatches.forEach((m,i)=>{
+    const aH=m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0),bH=m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const wt=m.winner==='A'?'Hecke':'Straße';
+    lines.push(`${isDE?`Spiel ${i+1}`:`Match ${i+1}`}: Hecke ${aH} – Straße ${bH} → ${isDE?`Sieger: ${wt}`:`Winner: ${wt}`}`);
+  });
+  lines.push('');
+  if (mvp) lines.push(isDE?`🏅 MVP: ${mvp[0]} (${mvp[1]} Siege)`:`🏅 MVP: ${mvp[0]} (${mvp[1]} wins)`);
+  if (topScorer&&topScorer[1]>0) lines.push(isDE?`🍺 Meiste Treffer: ${topScorer[0]} (${topScorer[1]})`:`🍺 Top scorer: ${topScorer[0]} (${topScorer[1]})`);
+  return lines.join('\n');
+}
 
-  const title = isDE ? `🗞️ Spieltag ${dayNum} — ${dayKey}` : `🗞️ Day ${dayNum} — ${dayKey}`;
-  let lines = [title, '', rnd(openers), ''];
+function buildDayReportHTML(dayIdx) {
+  const isDE = currentLang === 'de';
+  const grouped = groupMatchesByDay();
+  const sortedKeys = Object.keys(grouped).sort((a,b)=>new Date(grouped[a][0].timestamp)-new Date(grouped[b][0].timestamp));
+  const dayKey = sortedKeys[dayIdx];
+  if (!dayKey) return '';
+  const dayMatches = grouped[dayKey];
+  const dayNum = dayIdx + 1;
+  const dayHits = dayMatches.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+  const playerWins = {}, playerHitsAll = {};
+  dayMatches.forEach(m => {
+    (m.winner==='A'?m.teamA:m.teamB).forEach(p=>{playerWins[p]=(playerWins[p]||0)+1;});
+    Object.entries(m.hits).forEach(([p,h])=>{playerHitsAll[p]=(playerHitsAll[p]||0)+h;});
+  });
+  const mvp = Object.entries(playerWins).sort((a,b)=>b[1]-a[1])[0];
+  const topScorer = Object.entries(playerHitsAll).sort((a,b)=>b[1]-a[1])[0];
+  const av = n => (state.avatars[n]||'');
 
-  lines.push(isDE
-    ? `${dayMatches.length} Spiel${dayMatches.length!==1?'e':''}, ${dayHits} Treffer insgesamt.`
-    : `${dayMatches.length} match${dayMatches.length!==1?'es':''}, ${dayHits} total hits.`);
+  const dayOpener = rnd(isDE ? DE_DAY_OPENERS : EN_MATCH_OPENERS);
+  const dayCloser = rnd(isDE ? DE_DAY_CLOSERS : EN_MATCH_CLOSERS);
+  const hitPhrases = isDE ? DE_HIT_PHRASES : EN_HIT_PHRASES;
+  const mvpSentence = mvp
+    ? (isDE ? `${mvp[0]} war mit ${mvp[1]} Sieg${mvp[1]!==1?'en':''} der stärkste Spieler des Tages.`
+            : `${mvp[0]} was the standout player with ${mvp[1]} win${mvp[1]!==1?'s':''}.`)
+    : '';
+  const scorerSentence = topScorer && topScorer[1] > 0
+    ? rnd(hitPhrases)(topScorer[1], topScorer[0])
+    : '';
+  const daySummary = isDE
+    ? `${dayMatches.length} Spiel${dayMatches.length!==1?'e':''} wurden gespielt, insgesamt fielen ${dayHits} Treffer.`
+    : `${dayMatches.length} match${dayMatches.length!==1?'es':''} were played with ${dayHits} total hits.`;
+  const dayNarrative = [dayOpener, daySummary, mvpSentence, scorerSentence, dayCloser].filter(Boolean).join(' ');
+
+  let html = `<div class="rpt-header">
+    <div class="rpt-meta">📅 ${esc(dayKey)} · ${isDE?`Spieltag ${dayNum}`:`Day ${dayNum}`}</div>
+    <div class="rpt-opener">${esc(dayNarrative)}</div>
+  </div>`;
+
+  html += `<div class="rpt-tourn-stats">
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${dayMatches.length}</div><div class="rpt-tourn-stat-label">${isDE?'Spiele':'Matches'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${dayHits}</div><div class="rpt-tourn-stat-label">${isDE?'Treffer':'Hits'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${Object.keys(playerWins).length}</div><div class="rpt-tourn-stat-label">${isDE?'Spieler':'Players'}</div></div>
+  </div>`;
+
+  if (mvp) {
+    html += `<div class="rpt-champion">
+      <div class="rpt-champion-crown">${av(mvp[0])||'🏅'}</div>
+      <div class="rpt-champion-name">${esc(mvp[0])}</div>
+      <div class="rpt-champion-sub">${isDE?`MVP · ${mvp[1]} Siege`:`MVP · ${mvp[1]} wins`}</div>
+    </div>`;
+  }
+
+  if (topScorer && topScorer[1] > 0 && topScorer[0] !== mvp?.[0]) {
+    html += `<div class="rpt-highlight-row">
+      <div class="rpt-highlight-icon">🍺</div>
+      <div class="rpt-highlight-body">
+        <div class="rpt-highlight-text">${esc(topScorer[0])}</div>
+        <div class="rpt-highlight-sub">${isDE?`${topScorer[1]} Treffer`:`${topScorer[1]} hits`}</div>
+      </div>
+    </div>`;
+  }
 
   dayMatches.forEach((m, i) => {
     const aH = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
     const bH = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
-    const winTeam = m.winner === 'A' ? 'A' : 'B';
-    const prefix = isDE ? `Spiel ${i+1}` : `Match ${i+1}`;
-    lines.push(`${prefix}: 🟠 ${aH}H vs 🔵 ${bH}H → ${rnd(winPhrases)(winTeam)}`);
+    const chips = arr => arr.map(n=>`<span class="rpt-player-chip">${av(n)} ${esc(n)}</span>`).join('');
+    const winTeam = m.winner;
+    html += `<div style="padding:8px 14px;border-top:1px solid var(--border);">
+      <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:5px;">${isDE?`Spiel ${i+1}`:`Match ${i+1}`}</div>
+      <div style="display:flex;gap:6px;align-items:stretch;">
+        <div style="flex:1;padding:8px;border-radius:10px;text-align:center;background:rgba(249,115,22,${winTeam==='A'?'0.14':'0.06'});border:1.5px solid rgba(249,115,22,${winTeam==='A'?'0.4':'0.15'});">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--orange);">${aH}${winTeam==='A'?' 🏆':''}</div>
+          <div class="rpt-player-chips" style="justify-content:center;margin-top:4px;">${chips(m.teamA)}</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 3px;font-size:0.7rem;font-weight:800;color:var(--text-muted);">vs</div>
+        <div style="flex:1;padding:8px;border-radius:10px;text-align:center;background:rgba(37,99,235,${winTeam==='B'?'0.14':'0.06'});border:1.5px solid rgba(37,99,235,${winTeam==='B'?'0.4':'0.15'});">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--blue);">${bH}${winTeam==='B'?' 🏆':''}</div>
+          <div class="rpt-player-chips" style="justify-content:center;margin-top:4px;">${chips(m.teamB)}</div>
+        </div>
+      </div>
+    </div>`;
   });
 
-  lines.push('');
-  if (mvp) {
-    lines.push(isDE
-      ? `🏅 Spieler des Tages: ${mvp[0]} mit ${mvp[1]} Sieg${mvp[1]!==1?'en':''}.`
-      : `🏅 Player of the Day: ${mvp[0]} with ${mvp[1]} win${mvp[1]!==1?'s':''}.`);
-  }
-  if (topScorer && topScorer[1] > 0) {
-    const ph = rnd(hitPhrases)(topScorer[1], topScorer[0]);
-    lines.push(ph);
-  }
-
-  lines.push('');
-  lines.push(rnd(closers));
-
-  return lines.join('\n');
+  return html;
 }
 
-function buildTournamentReport() {
+function buildTournamentReportHTML() {
   const isDE = currentLang === 'de';
   const stats = computeStats();
   const players = Object.values(stats).filter(s=>s.played>0);
   const n = state.matches.length;
-  if (!n) return isDE ? 'Keine Spiele vorhanden.' : 'No matches played.';
+  if (!n) return `<div class="rpt-closer">${isDE?'Keine Spiele vorhanden.':'No matches played.'}</div>`;
 
   const totalHits = state.matches.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
   const days = [...new Set(state.matches.map(m=>new Date(m.timestamp).toLocaleDateString()))];
@@ -3324,61 +4844,113 @@ function buildTournamentReport() {
   const topHitter = [...players].sort((a,b)=>b.hits-a.hits)[0];
   const qual = players.filter(p=>p.played>=3).sort((a,b)=>b.winRate-a.winRate);
   const clutch = qual[0];
-
+  // compute all-time best win streak per player (not just current)
   let longestStreakP = null, longestStreakC = 0;
   players.forEach(p => {
-    if (p.streak?.type==='W' && p.streak.count > longestStreakC) {
-      longestStreakC = p.streak.count; longestStreakP = p.name;
-    }
+    const pm = state.matches.filter(m=>m.teamA.includes(p.name)||m.teamB.includes(p.name));
+    let best = 0, cur = 0;
+    pm.forEach(m => {
+      const won = (m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B');
+      if (won) { cur++; best = Math.max(best, cur); } else cur = 0;
+    });
+    if (best > longestStreakC) { longestStreakC = best; longestStreakP = p.name; }
   });
 
-  const openers = isDE ? DE_TOURN_OPENERS : EN_MATCH_OPENERS;
-  const closers = isDE ? DE_TOURN_CLOSERS : EN_MATCH_CLOSERS;
+  const av = n => (state.avatars[n]||'');
+  const tOpener = rnd(isDE ? DE_TOURN_OPENERS : EN_MATCH_OPENERS);
+  const tCloser = rnd(isDE ? DE_TOURN_CLOSERS : EN_MATCH_CLOSERS);
+  const tSummary = isDE
+    ? `${n} Spiele über ${days.length} Tag${days.length!==1?'e':''}, ${totalHits} Treffer insgesamt — mit ${players.length} Spielern am Start.`
+    : `${n} matches over ${days.length} day${days.length!==1?'s':''}, ${totalHits} total hits — with ${players.length} players competing.`;
+  const tLeader = leader?.wins > 0
+    ? (isDE ? `${leader.name} dominierte mit ${leader.wins} Siegen und einer Siegquote von ${Math.round(leader.winRate*100)} Prozent.`
+            : `${leader.name} dominated with ${leader.wins} wins and a ${Math.round(leader.winRate*100)}% win rate.`)
+    : '';
+  const tStreak = longestStreakP && longestStreakC >= 2
+    ? (isDE ? `Die beeindruckendste Serie gehörte ${longestStreakP} mit ${longestStreakC} Siegen in Folge.`
+            : `The most impressive streak belonged to ${longestStreakP} with ${longestStreakC} consecutive wins.`)
+    : '';
+  const tNarrative = [tOpener, tSummary, tLeader, tStreak, tCloser].filter(Boolean).join(' ');
 
-  const title = isDE ? '🏆 TURNIERBERICHT' : '🏆 TOURNAMENT REPORT';
-  let lines = [title, '─'.repeat(28), '', rnd(openers), ''];
+  let html = `<div class="rpt-header">
+    <div class="rpt-meta">📅 ${isDE?'Turnier':'Tournament'} · ${n} ${isDE?`Spiel${n!==1?'e':''}`:` match${n!==1?'es':''}`} · ${days.length} ${isDE?`Tag${days.length!==1?'e':''}`:` day${days.length!==1?'s':''}`}</div>
+    <div class="rpt-opener">${esc(tNarrative)}</div>
+  </div>`;
 
-  lines.push(isDE
-    ? `${n} Spiel${n!==1?'e':''} über ${days.length} Tag${days.length!==1?'e':''} — ${totalHits} Treffer insgesamt.`
-    : `${n} match${n!==1?'es':''} over ${days.length} day${days.length!==1?'s':''} — ${totalHits} total bottle hits.`);
-
-  lines.push('');
+  html += `<div class="rpt-tourn-stats">
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${n}</div><div class="rpt-tourn-stat-label">${isDE?'Spiele':'Matches'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${totalHits}</div><div class="rpt-tourn-stat-label">${isDE?'Treffer':'Hits'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${days.length}</div><div class="rpt-tourn-stat-label">${isDE?'Tage':'Days'}</div></div>
+    <div class="rpt-tourn-stat"><div class="rpt-tourn-stat-num">${players.length}</div><div class="rpt-tourn-stat-label">${isDE?'Spieler':'Players'}</div></div>
+  </div>`;
 
   if (leader?.wins > 0) {
-    lines.push(isDE
-      ? `👑 Siegkönig: ${leader.name} (${leader.wins}W, ${Math.round(leader.winRate*100)}%)`
-      : `👑 Win leader: ${leader.name} (${leader.wins}W, ${Math.round(leader.winRate*100)}%)`);
-  }
-  if (topHitter?.hits > 0) {
-    lines.push(isDE
-      ? `🍺 Trefferkönig: ${topHitter.name} (${topHitter.hits} Treffer, ${topHitter.hitsPerGame.toFixed(1)}/Spiel)`
-      : `🍺 Hit king: ${topHitter.name} (${topHitter.hits} hits, ${topHitter.hitsPerGame.toFixed(1)}/game)`);
-  }
-  if (clutch) {
-    lines.push(isDE
-      ? `🎯 Effizienz-Ass: ${clutch.name} (${Math.round(clutch.winRate*100)}% in ${clutch.played} Spielen)`
-      : `🎯 Efficiency ace: ${clutch.name} (${Math.round(clutch.winRate*100)}% in ${clutch.played} games)`);
-  }
-  if (longestStreakP && longestStreakC >= 2) {
-    lines.push(isDE
-      ? `🔥 Heißeste Serie: ${longestStreakP} mit ${longestStreakC} Siegen in Folge`
-      : `🔥 Hottest streak: ${longestStreakP} with ${longestStreakC} wins in a row`);
+    html += `<div class="rpt-champion">
+      <div class="rpt-champion-crown">${av(leader.name)||'👑'}</div>
+      <div class="rpt-champion-name">${esc(leader.name)}</div>
+      <div class="rpt-champion-sub">${isDE?'Meiste Siege':'Most wins'} · ${leader.wins}W / ${Math.round(leader.winRate*100)}%</div>
+    </div>`;
   }
 
-  lines.push('');
+  const highlights = [];
+  if (topHitter?.hits > 0) highlights.push({ icon:'🍺', text: esc(topHitter.name), sub: isDE?`${topHitter.hits} Treffer · ${topHitter.hitsPerGame.toFixed(1)}/Spiel`:`${topHitter.hits} hits · ${topHitter.hitsPerGame.toFixed(1)}/game` });
+  if (clutch && clutch.name !== leader?.name) highlights.push({ icon:'🎯', text: esc(clutch.name), sub: isDE?`${Math.round(clutch.winRate*100)}% Siegquote in ${clutch.played} Spielen`:`${Math.round(clutch.winRate*100)}% win rate in ${clutch.played} games` });
+  if (longestStreakP && longestStreakC >= 2) highlights.push({ icon:'🔥', text: esc(longestStreakP), sub: isDE?`${longestStreakC} Siege in Folge`:`${longestStreakC} wins in a row` });
+
+  if (highlights.length) {
+    highlights.forEach(h => {
+      html += `<div class="rpt-highlight-row">
+        <div class="rpt-highlight-icon">${h.icon}</div>
+        <div class="rpt-highlight-body">
+          <div class="rpt-highlight-text">${h.text}</div>
+          <div class="rpt-highlight-sub">${h.sub}</div>
+        </div>
+      </div>`;
+    });
+  }
+
   const groupedDays = groupMatchesByDay();
   const sortedKeys = Object.keys(groupedDays).sort((a,b)=>new Date(groupedDays[a][0].timestamp)-new Date(groupedDays[b][0].timestamp));
-  sortedKeys.forEach((d, i) => {
-    const dm = groupedDays[d];
-    const dh = dm.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
-    lines.push(isDE
-      ? `Tag ${i+1} (${d}): ${dm.length} Spiele, ${dh} Treffer`
-      : `Day ${i+1} (${d}): ${dm.length} matches, ${dh} hits`);
+  if (sortedKeys.length > 1) {
+    sortedKeys.forEach((d, i) => {
+      const dm = groupedDays[d];
+      const dh = dm.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+      const dayWins = {};
+      dm.forEach(m => { const w = m.winner==='A'?m.teamA:m.teamB; w.forEach(p=>{dayWins[p]=(dayWins[p]||0)+1;}); });
+      const mvp = Object.entries(dayWins).sort((a,b)=>b[1]-a[1])[0];
+      html += `<div class="rpt-day-row">
+        <div class="rpt-day-label">${isDE?`Tag ${i+1}`:`Day ${i+1}`}</div>
+        <div>
+          <div class="rpt-day-info">${esc(d)} · ${dm.length} ${isDE?`Spiel${dm.length!==1?'e':''}`:` match${dm.length!==1?'es':''}`} · ${dh} ${isDE?'Treffer':'hits'}</div>
+          ${mvp?`<div class="rpt-day-sub">🏅 MVP: ${esc(mvp[0])} (${mvp[1]}${isDE?' Siege':' wins'})</div>`:''}
+        </div>
+      </div>`;
+    });
+  }
+
+  return html;
+}
+
+function buildTournamentReport() {
+  // plaintext for copy
+  const isDE = currentLang === 'de';
+  const stats = computeStats();
+  const players = Object.values(stats).filter(s=>s.played>0);
+  const n = state.matches.length;
+  if (!n) return isDE ? 'Keine Spiele vorhanden.' : 'No matches played.';
+  const totalHits = state.matches.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+  const days = [...new Set(state.matches.map(m=>new Date(m.timestamp).toLocaleDateString()))];
+  const leader = [...players].sort((a,b)=>b.wins-a.wins||b.winRate-a.winRate)[0];
+  const topHitter = [...players].sort((a,b)=>b.hits-a.hits)[0];
+  let lines = [isDE?'🏆 TURNIERBERICHT':'🏆 TOURNAMENT REPORT',''];
+  lines.push(isDE?`${n} Spiele · ${days.length} Tage · ${totalHits} Treffer`:`${n} matches · ${days.length} days · ${totalHits} hits`);
+  if (leader?.wins>0) lines.push(isDE?`👑 Meiste Siege: ${leader.name} (${leader.wins}W, ${Math.round(leader.winRate*100)}%)`:`👑 Most wins: ${leader.name} (${leader.wins}W, ${Math.round(leader.winRate*100)}%)`);
+  if (topHitter?.hits>0) lines.push(isDE?`🍺 Meiste Treffer: ${topHitter.name} (${topHitter.hits}, ${topHitter.hitsPerGame.toFixed(1)}/Spiel)`:`🍺 Most hits: ${topHitter.name} (${topHitter.hits}, ${topHitter.hitsPerGame.toFixed(1)}/game)`);
+  const grouped = groupMatchesByDay();
+  Object.keys(grouped).sort().forEach((d,i)=>{
+    const dm = grouped[d], dh = dm.reduce((s,m)=>s+Object.values(m.hits).reduce((a,b)=>a+b,0),0);
+    lines.push(isDE?`Tag ${i+1} (${d}): ${dm.length} Spiele, ${dh} Treffer`:`Day ${i+1} (${d}): ${dm.length} matches, ${dh} hits`);
   });
-
-  lines.push('');
-  lines.push(rnd(closers));
-
   return lines.join('\n');
 }
 
@@ -3449,16 +5021,38 @@ function buildTournamentChatGPT() {
 }
 
 // ---- show fns ----
-function openReportModal(title, text) {
+function formatReportHTML(text) {
+  // Section-heading lines: start with 🏆🟠🔵📅👑📝
+  const headingRx = /^[🏆🟠🔵📅👑📝🎯⚡🌟🔥💎]/u;
+  // Meta lines: contain · or date-like patterns
+  const metaRx = /^📅|^⏱️/u;
+  // Flavor/opener/closer lines (short, no emoji, italic style)
+  const lines = text.split('\n');
+  return lines.map(line => {
+    if (line.trim() === '') return `<span class="report-line empty"> </span>`;
+    const safe = esc(line);
+    // Bold team names and numbers
+    const formatted = safe
+      .replace(/(Team\s[AB]|Hecke|Straße)/g, '<strong>$1</strong>')
+      .replace(/(\d+\s*(?:Treffer|hits?))/g, '<strong>$1</strong>');
+    if (metaRx.test(line)) return `<span class="report-line meta">${formatted}</span>`;
+    if (headingRx.test(line)) return `<span class="report-line heading">${formatted}</span>`;
+    return `<span class="report-line">${formatted}</span>`;
+  }).join('');
+}
+
+function openReportModal(title, bodyHTML, copyText) {
   document.getElementById('reportTitle').textContent = title;
-  document.getElementById('reportBody').textContent = text;
+  document.getElementById('reportBody').innerHTML = bodyHTML;
   document.getElementById('reportOverlay').classList.remove('hidden');
+  const copyPayload = copyText || '';
+  document.getElementById('reportCopyBtn').style.display = copyPayload ? '' : 'none';
   document.getElementById('reportCopyBtn').onclick = () => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => showToast(t('copied')));
+      navigator.clipboard.writeText(copyPayload).then(() => showToast(t('copied')));
     } else {
       const ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta); ta.select();
+      ta.value = copyPayload; document.body.appendChild(ta); ta.select();
       document.execCommand('copy'); document.body.removeChild(ta);
       showToast(t('copied'));
     }
@@ -3468,29 +5062,33 @@ function openReportModal(title, text) {
 function showMatchReport(id) {
   const m = state.matches.find(x=>x.id===id);
   if (!m) return;
-  openReportModal('🗞️ ' + t('btnMatchReport').replace(/^🗞️\s*/,''), buildMatchReport(m));
+  openReportModal('🗞️ ' + t('btnMatchReport').replace(/^🗞️\s*/,''), buildMatchReportHTML(m), buildMatchReport(m));
 }
 function showMatchChatGPT(id) {
   const m = state.matches.find(x=>x.id===id);
   if (!m) return;
-  openReportModal('🤖 ChatGPT Prompt', buildMatchChatGPT(m));
+  const txt = buildMatchChatGPT(m);
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
 }
 function showDayReport(dayIdx) {
-  openReportModal('🗞️ ' + t('btnDayReport').replace(/^🗞️\s*/,''), buildDayReport(dayIdx));
+  openReportModal('🗞️ ' + t('btnDayReport').replace(/^🗞️\s*/,''), buildDayReportHTML(dayIdx), buildDayReport(dayIdx));
 }
 function showDayChatGPT(dayIdx) {
-  openReportModal('🤖 ChatGPT Prompt', buildDayChatGPT(dayIdx));
+  const txt = buildDayChatGPT(dayIdx);
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
 }
 function showTournamentReport() {
-  openReportModal('🏆 ' + t('btnTournamentReport').replace(/^🏆\s*/,''), buildTournamentReport());
+  openReportModal('🏆 ' + t('btnTournamentReport').replace(/^🏆\s*/,''), buildTournamentReportHTML(), buildTournamentReport());
 }
 function showTournamentChatGPT() {
-  openReportModal('🤖 ChatGPT Prompt', buildTournamentChatGPT());
+  const txt = buildTournamentChatGPT();
+  openReportModal('🤖 ChatGPT Prompt', `<div class="report-plain">${esc(txt)}</div>`, txt);
 }
 
 // ============================================================
 // BACKUP / EXPORT / IMPORT
 // ============================================================
+
 document.getElementById('exportBtn').addEventListener('click', () => {
   const json = JSON.stringify(state, null, 2);
   const blob = new Blob([json], { type:'application/json' });
@@ -3739,6 +5337,27 @@ function init() {
   document.getElementById('avatarPickerOverlay').addEventListener('click', e => {
     if (e.target === document.getElementById('avatarPickerOverlay'))
       document.getElementById('avatarPickerOverlay').classList.add('hidden');
+  });
+
+  // Add export 📤 button to every card that has a card-title
+  const skipTabs = ['tab-new-match','tab-backup'];
+  document.querySelectorAll('.card').forEach(card => {
+    // Skip cards in match or backup tabs
+    const inSkip = skipTabs.some(id => document.getElementById(id)?.contains(card));
+    if (inSkip) return;
+    const titleRow = card.querySelector('.card-title');
+    if (!titleRow) return;
+    // Don't duplicate
+    if (titleRow.querySelector('.card-export-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'card-export-btn';
+    btn.title = 'Als Bild teilen';
+    btn.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
+    btn.addEventListener('click', () => {
+      const titleText = (titleRow.querySelector('[data-i18n]')?.textContent || titleRow.querySelector('.card-title-text')?.textContent || 'kachel').trim().replace(/[^a-zA-Z0-9äöüÄÖÜß ]/g,'').trim().replace(/ +/g,'-').toLowerCase();
+      exportCardAsImage(card, titleText + '.png');
+    });
+    titleRow.appendChild(btn);
   });
 
   // sticky score visibility via IntersectionObserver
