@@ -102,39 +102,6 @@ body {
   transition: all 0.2s;
 }
 .nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
-.nav-tab-more {
-  flex: none; padding: 12px 16px; background: none; border: none;
-  color: var(--text-muted); font-size: 1.1rem; font-weight: 700;
-  cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent;
-  margin-bottom: -2px; transition: all 0.2s; margin-left: auto;
-}
-.nav-tab-more:active { color: var(--orange); }
-/* overflow menu */
-.overflow-menu {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 150;
-  display: none;
-}
-.overflow-menu.open { display: block; }
-.overflow-menu-backdrop {
-  position: absolute; inset: 0;
-}
-.overflow-menu-panel {
-  position: absolute; right: 8px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px; padding: 6px; min-width: 180px;
-  box-shadow: var(--glass-shadow-lg);
-}
-.overflow-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; border-radius: 10px; border: none;
-  background: none; color: var(--text); font-size: 0.9rem; font-weight: 600;
-  cursor: pointer; width: 100%; text-align: left; transition: background 0.15s;
-}
-.overflow-item:active { background: rgba(249,115,22,0.12); }
-.overflow-item.active-page { color: var(--orange); }
 
 /* ── PAGES ───────────────────────────────────────────────── */
 .page { display: none; padding: 16px; max-width: 600px; margin: 0 auto; }
@@ -292,6 +259,13 @@ body {
 }
 .match-card.win-a { border-left-color: var(--orange); }
 .match-card.win-b { border-left-color: var(--blue); }
+.match-winner-banner {
+  border-radius: 9px; padding: 7px 12px;
+  font-size: 0.88rem; font-weight: 800; color: #fff;
+  display: flex; align-items: center; gap: 6px;
+}
+.match-winner-banner.banner-a { background: linear-gradient(90deg, var(--orange), var(--orange-dark)); }
+.match-winner-banner.banner-b { background: linear-gradient(90deg, var(--blue), var(--blue-dark)); }
 .match-teams { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
 .match-team-tag { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
 .match-team-tag.team-a { background: var(--orange); color: #fff; }
@@ -658,21 +632,9 @@ body {
   <button class="nav-tab" data-tab="stats" data-i18n="tabStats">📊 Stats</button>
   <button class="nav-tab" data-tab="rivals" data-i18n="tabRivals">🏟️ Rivals</button>
   <button class="nav-tab" data-tab="awards" data-i18n="tabAwards">🎖️ Awards</button>
-  <button class="nav-tab-more" id="moreMenuBtn">⋯</button>
+  <button class="nav-tab" data-tab="history" data-i18n="tabHistory">📜 Verlauf</button>
+  <button class="nav-tab" data-tab="backup" data-i18n="tabBackup">💾 Backup</button>
 </nav>
-
-<!-- overflow menu (history / backup) -->
-<div class="overflow-menu" id="overflowMenu">
-  <div class="overflow-menu-backdrop" id="overflowBackdrop"></div>
-  <div class="overflow-menu-panel" id="overflowPanel">
-    <button class="overflow-item" data-tab="history" id="omHistory">
-      <span>📜</span><span data-i18n="tabHistory">Verlauf</span>
-    </button>
-    <button class="overflow-item" data-tab="backup" id="omBackup">
-      <span>💾</span><span data-i18n="tabBackup">Backup</span>
-    </button>
-  </div>
-</div>
 
 <!-- ===================== MATCH TAB ===================== -->
 <div id="tab-new-match" class="page active">
@@ -731,8 +693,9 @@ body {
         </div>
       </div>
     </div>
-    <button class="btn btn-secondary" id="randomTeamsBtn" data-i18n="randomTeams">🎲 Random Teams</button>
-    <button class="btn btn-primary" id="startMatchBtn" data-i18n="startMatch">⚡ Start Match →</button>
+    <button class="btn btn-secondary" id="freshTeamsBtn" data-i18n="freshTeams">🆕 Frische Teams</button>
+    <button class="btn btn-secondary" id="randomTeamsBtn" data-i18n="randomTeams">🎲 Zufällige Teams</button>
+    <button class="btn btn-primary" id="startMatchBtn" data-i18n="startMatch">⚡ Spiel starten →</button>
   </div>
 
   <div id="matchStep2" style="display:none;">
@@ -1173,32 +1136,6 @@ function openTab(tab) {
   if (tab === 'backup')      updateLastSavedDisplay();
 }
 
-(function() {
-  const btn = document.getElementById('moreMenuBtn');
-  const menu = document.getElementById('overflowMenu');
-  const backdrop = document.getElementById('overflowBackdrop');
-  const panel = document.getElementById('overflowPanel');
-
-  function openMenu() {
-    // position panel below the ⋯ button
-    const rect = btn.getBoundingClientRect();
-    panel.style.top = (rect.bottom + 4) + 'px';
-    menu.classList.add('open');
-  }
-  function closeMenu() { menu.classList.remove('open'); }
-
-  btn.addEventListener('click', e => { e.stopPropagation(); menu.classList.contains('open') ? closeMenu() : openMenu(); });
-  backdrop.addEventListener('click', closeMenu);
-
-  document.querySelectorAll('.overflow-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const tab = item.dataset.tab;
-      openTab(tab);
-      closeMenu();
-    });
-  });
-})();
-
 // ============================================================
 // DARK MODE
 // ============================================================
@@ -1386,6 +1323,76 @@ document.getElementById('randomTeamsBtn').addEventListener('click', () => {
   renderPlayerSelectionGrid();
   renderCaptainPickers();
   saveDraft();
+});
+
+document.getElementById('freshTeamsBtn').addEventListener('click', () => {
+  const players = [...state.players];
+  if (players.length < 2) { alert(currentLang==='de'?'Mindestens 2 Spieler benötigt.':'Need at least 2 players.'); return; }
+
+  // Build co-play matrix: how often has each pair been on the same team?
+  const coPlay = {};
+  const key = (a, b) => [a,b].sort().join('§');
+  players.forEach(a => players.forEach(b => { if (a!==b) coPlay[key(a,b)] = 0; }));
+  state.matches.forEach(m => {
+    [m.teamA, m.teamB].forEach(team => {
+      for (let i=0; i<team.length; i++) for (let j=i+1; j<team.length; j++) {
+        const k = key(team[i], team[j]);
+        if (k in coPlay) coPlay[k]++;
+      }
+    });
+  });
+
+  // Score a split: sum of co-play counts within each team (lower = fresher)
+  const splitScore = (teamA, teamB) => {
+    let score = 0;
+    [teamA, teamB].forEach(team => {
+      for (let i=0; i<team.length; i++) for (let j=i+1; j<team.length; j++) {
+        score += coPlay[key(team[i], team[j])] || 0;
+      }
+    });
+    return score;
+  };
+
+  const n = players.length;
+  const half = Math.floor(n / 2);
+  let bestA = [], bestB = [], bestScore = Infinity;
+
+  // For small groups try all splits; for large use greedy + random restarts
+  if (n <= 10) {
+    // enumerate combinations of `half` players for team A
+    const combo = (arr, k) => {
+      const result = [];
+      const pick = (start, current) => {
+        if (current.length === k) { result.push([...current]); return; }
+        for (let i=start; i<arr.length-(k-current.length-1); i++) {
+          current.push(arr[i]); pick(i+1, current); current.pop();
+        }
+      };
+      pick(0, []);
+      return result;
+    };
+    const shuffledP = [...players].sort(() => Math.random()-0.5);
+    combo(shuffledP, half).forEach(a => {
+      const b = shuffledP.filter(p => !a.includes(p));
+      const s = splitScore(a, b);
+      if (s < bestScore) { bestScore = s; bestA = a; bestB = b; }
+    });
+  } else {
+    // 200 random restarts
+    for (let r=0; r<200; r++) {
+      const shuffledP = [...players].sort(() => Math.random()-0.5);
+      const a = shuffledP.slice(0, half), b = shuffledP.slice(half);
+      const s = splitScore(a, b);
+      if (s < bestScore) { bestScore = s; bestA = [...a]; bestB = [...b]; }
+    }
+  }
+
+  matchTeamA = bestA; matchTeamB = bestB;
+  matchCaptainA = null; matchCaptainB = null;
+  renderPlayerSelectionGrid();
+  renderCaptainPickers();
+  saveDraft();
+  showToast(currentLang==='de'?`🆕 Frische Teams! (Score: ${bestScore})`:`🆕 Fresh teams! (score: ${bestScore})`);
 });
 document.getElementById('startMatchBtn').addEventListener('click', () => {
   if (!matchTeamA.length || !matchTeamB.length) { alert(t('alertBothTeams')); return; }
@@ -1575,9 +1582,22 @@ function renderLeaderboard() {
   let html = `<table class="stats-table"><thead><tr>
     <th>#</th>${thSort('name',t('colPlayer'))}${thSort('wins',t('colW'))}${thSort('losses',t('colL'))}${thSort('winRate',t('colWinPct'))}${thSort('hits',t('colHits'))}${thSort('hitsPerGame',t('colHPG'))}
   </tr></thead><tbody>`;
+  // Assign tied ranks: players with same wins/winRate/hits share rank
+  const ranks = [];
+  let rankNum = 1;
   players.forEach((p, i) => {
-    const rankClass = showMedals && i < 3 ? `top-${i+1}` : '';
-    const rankCell  = showMedals && i < 3 ? medals[i] : (i + 1);
+    if (i === 0) { ranks.push(rankNum); return; }
+    const prev = players[i-1];
+    const samePrimary = lbSortCol !== 'name' && p[lbSortCol] === prev[lbSortCol];
+    const tiedAll = samePrimary && p.wins === prev.wins && p.winRate === prev.winRate && p.hits === prev.hits;
+    if (!tiedAll) rankNum = i + 1;
+    ranks.push(rankNum);
+  });
+
+  players.forEach((p, i) => {
+    const rank = ranks[i];
+    const rankClass = showMedals && rank <= 3 ? `top-${rank}` : '';
+    const rankCell  = showMedals && rank <= 3 ? medals[rank-1] : rank;
     let streakHtml  = '';
     if (p.streak && p.streak.count >= 2) {
       const cls  = p.streak.type === 'W' ? 'streak-w' : 'streak-l';
@@ -1612,21 +1632,27 @@ function renderHistory() {
     const aHits   = m.teamA.reduce((s,p) => s+(m.hits[p]||0), 0);
     const bHits   = m.teamB.reduce((s,p) => s+(m.hits[p]||0), 0);
     const aW = m.winner==='A', bW = m.winner==='B';
-    const aPlayers = m.teamA.map(p => `${esc(p)}: ${m.hits[p]||0}`).join(', ');
-    const bPlayers = m.teamB.map(p => `${esc(p)}: ${m.hits[p]||0}`).join(', ');
+    const aPlayers = m.teamA.map(p => `${state.avatars[p]?state.avatars[p]+' ':''}${esc(p)}: ${m.hits[p]||0}`).join(', ');
+    const bPlayers = m.teamB.map(p => `${state.avatars[p]?state.avatars[p]+' ':''}${esc(p)}: ${m.hits[p]||0}`).join(', ');
     const dur   = m.duration ? `⏱️ ${formatTime(m.duration)}` : '';
     const notes = m.notes ? `<div class="match-notes-display">📝 ${esc(m.notes)}</div>` : '';
-    const capA  = m.captainA ? ` <span style="font-size:0.75rem;opacity:0.85;">👑 ${esc(m.captainA)}</span>` : '';
-    const capB  = m.captainB ? ` <span style="font-size:0.75rem;opacity:0.85;">👑 ${esc(m.captainB)}</span>` : '';
+    const capA  = m.captainA ? ` 👑${esc(m.captainA)}` : '';
+    const capB  = m.captainB ? ` 👑${esc(m.captainB)}` : '';
+    const isDE  = currentLang === 'de';
+    // winner banner
+    const winnerBanner = `<div class="match-winner-banner ${aW?'banner-a':'banner-b'}">
+      🏆 ${aW ? `Hecke${capA}` : `Straße${capB}`} ${isDE?'gewinnt':'wins'} · ${aW?aHits:bHits}–${aW?bHits:aHits}
+    </div>`;
     return `<div class="match-card ${aW?'win-a':'win-b'}">
       <button class="delete-btn" onclick="deleteMatch(${m.id})">🗑</button>
-      <div class="match-teams">
-        <span class="match-team-tag team-a ${aW?'winner':''}">🟠 Hecke ${aW?'🏆':''}${capA}</span>
+      ${winnerBanner}
+      <div class="match-teams" style="margin-top:8px;">
+        <span class="match-team-tag team-a">🟠 Hecke${capA} <span style="opacity:0.75;">${aHits}H</span></span>
         <span style="color:var(--text-muted);font-size:0.8rem;">vs</span>
-        <span class="match-team-tag team-b ${bW?'winner':''}">🔵 Straße ${bW?'🏆':''}${capB}</span>
+        <span class="match-team-tag team-b">🔵 Straße${capB} <span style="opacity:0.75;">${bHits}H</span></span>
       </div>
-      <div class="match-hits"><span style="color:var(--orange);">🟠 ${aHits} hits</span> — ${aPlayers}</div>
-      <div class="match-hits" style="margin-top:4px;"><span style="color:var(--blue);">🔵 ${bHits} hits</span> — ${bPlayers}</div>
+      <div class="match-hits" style="font-size:0.78rem;color:var(--text-muted);">${aPlayers}</div>
+      <div class="match-hits" style="margin-top:2px;font-size:0.78rem;color:var(--text-muted);">${bPlayers}</div>
       ${notes}
       <div class="match-meta"><span>🕐 ${date}</span>${dur?`<span>${dur}</span>`:''}</div>
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
@@ -1775,6 +1801,18 @@ function renderAwards() {
   renderDuos();
 }
 
+// Score a player for a given set of matches using winRate*0.6 + normalised hitsPerGame*0.4
+function playerFormScore(name, matches) {
+  if (!matches.length) return 0;
+  const pm = matches.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+  if (!pm.length) return -1; // didn't play
+  const wins = pm.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+  const hits = pm.reduce((s,m)=>s+(m.hits[name]||0),0);
+  const wr = wins/pm.length;
+  const hpg = hits/pm.length;
+  return { wr, hpg, played: pm.length, score: wr*0.6 + hpg*0.15 }; // 0.15 keeps hpg comparable
+}
+
 function renderTeamAwards() {
   const card = document.getElementById('teamAwardsCard');
   const container = document.getElementById('teamAwardsContent');
@@ -1786,59 +1824,63 @@ function renderTeamAwards() {
   // Group matches by day
   const grouped = {};
   state.matches.forEach(m => {
-    const key = new Date(m.timestamp).toLocaleDateString();
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(m);
+    const dayKey = new Date(m.timestamp).toLocaleDateString();
+    if (!grouped[dayKey]) grouped[dayKey] = [];
+    grouped[dayKey].push(m);
   });
   const sortedDays = Object.keys(grouped).sort((a,b) =>
     new Date(grouped[a][0].timestamp) - new Date(grouped[b][0].timestamp));
 
-  // Team of the day — per day, the lineup (sorted names) with most wins
-  if (sortedDays.length >= 1) {
-    sortedDays.forEach((day, idx) => {
-      const dayMatches = grouped[day];
-      const lineupWins = {};
-      dayMatches.forEach(m => {
-        const winners = m.winner === 'A' ? m.teamA : m.teamB;
-        const key = [...winners].sort().join(' & ');
-        lineupWins[key] = (lineupWins[key]||0) + 1;
-      });
-      const best = Object.entries(lineupWins).sort((a,b) => b[1]-a[1]);
-      if (!best.length || best[0][1] < 1) return;
-      const maxW = best[0][1];
-      const tied = best.filter(([,w]) => w === maxW).map(([k]) => k);
-      const tieTag = tied.length > 1 ? `<span class="award-tie">${t('awardTie', tied.length)}</span>` : '';
-      const names = tied.map(k => `<strong>${esc(k)}</strong>`).join(', ');
-      html += `<div class="award-card">
-        <div class="award-icon">🌟</div>
-        <div class="award-info">
-          <div class="award-title">${isDE?`Tag ${idx+1} — Team des Tages`:`Day ${idx+1} — Team of the Day`}</div>
-          <div class="award-names">${names}${tieTag}</div>
-          <div class="award-value">${maxW}${isDE?' Sieg(e) an diesem Tag':' win(s) on this day'}</div>
-        </div>
-      </div>`;
-    });
+  // Helper: pick N top-scoring players from a pool for a given match set
+  function topNByForm(pool, dayMatches, n) {
+    return pool
+      .map(name => { const f = playerFormScore(name, dayMatches); return { name, ...f }; })
+      .filter(p => p.played > 0)
+      .sort((a,b) => b.score - a.score)
+      .slice(0, n);
   }
 
-  // Team of the tournament — lineup with most wins across all matches (≥2 wins together)
-  const lineupAll = {};
-  state.matches.forEach(m => {
-    const winners = m.winner === 'A' ? m.teamA : m.teamB;
-    const key = [...winners].sort().join(' & ');
-    lineupAll[key] = (lineupAll[key]||0) + 1;
+  // Team of the day — two players with best combined form that day (each from different "roles":
+  // best win-rate player + best hits player, then fill with next best overall)
+  sortedDays.forEach((day, idx) => {
+    const dayMatches = grouped[day];
+    const activeThat = state.players.filter(p => dayMatches.some(m=>m.teamA.includes(p)||m.teamB.includes(p)));
+    if (activeThat.length < 2) return;
+    // pick team size = half the average team size that day
+    const avgSize = Math.round(dayMatches.reduce((s,m)=>s+m.teamA.length,0)/dayMatches.length);
+    const teamSize = Math.max(2, Math.min(avgSize, Math.floor(activeThat.length/2)));
+    const top = topNByForm(activeThat, dayMatches, teamSize);
+    if (!top.length) return;
+    const names = top.map(p => {
+      const av = state.avatars[p.name]||'';
+      return `<strong>${av?av+' ':''}${esc(p.name)}</strong> <span style="font-size:0.72rem;color:var(--text-muted);">${Math.round(p.wr*100)}%·${p.hpg.toFixed(1)}H</span>`;
+    }).join(', ');
+    html += `<div class="award-card">
+      <div class="award-icon">🌟</div>
+      <div class="award-info">
+        <div class="award-title">${isDE?`Tag ${idx+1} — Team des Tages`:`Day ${idx+1} — Team of the Day`}</div>
+        <div class="award-names">${names}</div>
+        <div class="award-value">${isDE?'Beste individuelle Form des Tages':'Best individual form on this day'}</div>
+      </div>
+    </div>`;
   });
-  const topLineup = Object.entries(lineupAll).filter(([,w]) => w >= 2).sort((a,b) => b[1]-a[1]);
-  if (topLineup.length) {
-    const maxW = topLineup[0][1];
-    const tied = topLineup.filter(([,w]) => w === maxW).map(([k]) => k);
-    const tieTag = tied.length > 1 ? `<span class="award-tie">${t('awardTie', tied.length)}</span>` : '';
-    const names = tied.map(k => `<strong>${esc(k)}</strong>`).join(', ');
+
+  // Team of the tournament — top players across all matches
+  const allActive = state.players.filter(p => state.matches.some(m=>m.teamA.includes(p)||m.teamB.includes(p)));
+  const avgSizeAll = Math.round(state.matches.reduce((s,m)=>s+m.teamA.length,0)/state.matches.length);
+  const tournTeamSize = Math.max(2, Math.min(avgSizeAll, Math.floor(allActive.length/2)));
+  const topTourn = topNByForm(allActive, state.matches, tournTeamSize).filter(p=>p.played>=2);
+  if (topTourn.length >= 2) {
+    const names = topTourn.map(p => {
+      const av = state.avatars[p.name]||'';
+      return `<strong>${av?av+' ':''}${esc(p.name)}</strong> <span style="font-size:0.72rem;color:var(--text-muted);">${Math.round(p.wr*100)}%·${p.hpg.toFixed(1)}H</span>`;
+    }).join(', ');
     html += `<div class="award-card">
       <div class="award-icon">🏆</div>
       <div class="award-info">
         <div class="award-title">${isDE?'Team des Turniers':'Team of the Tournament'}</div>
-        <div class="award-names">${names}${tieTag}</div>
-        <div class="award-value">${maxW}${isDE?' gemeinsame Siege':' wins together'}</div>
+        <div class="award-names">${names}</div>
+        <div class="award-value">${isDE?'Beste individuelle Gesamtform (≥2 Spiele)':'Best overall individual form (≥2 games)'}</div>
       </div>
     </div>`;
   }
@@ -1846,20 +1888,20 @@ function renderTeamAwards() {
   // Most dominant match — biggest hit differential win
   let bestDom = null, bestDomDiff = 0;
   state.matches.forEach(m => {
-    const wTeam = m.winner === 'A' ? m.teamA : m.teamB;
-    const lTeam = m.winner === 'A' ? m.teamB : m.teamA;
+    const wTeam = m.winner==='A'?m.teamA:m.teamB;
+    const lTeam = m.winner==='A'?m.teamB:m.teamA;
     const wH = wTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
     const lH = lTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
-    const diff = wH - lH;
-    if (diff > bestDomDiff) { bestDomDiff = diff; bestDom = { wTeam, wH, lH, date: new Date(m.timestamp).toLocaleDateString() }; }
+    const diff = wH-lH;
+    if (diff>bestDomDiff) { bestDomDiff=diff; bestDom={wTeam,wH,lH,date:new Date(m.timestamp).toLocaleDateString()}; }
   });
   if (bestDom && bestDomDiff >= 3) {
-    const key = [...bestDom.wTeam].sort().join(' & ');
+    const wNames = bestDom.wTeam.map(p=>{const av=state.avatars[p]||'';return (av?av+' ':'')+p;}).join(', ');
     html += `<div class="award-card">
       <div class="award-icon">💥</div>
       <div class="award-info">
         <div class="award-title">${isDE?'Dominantester Sieg':'Most Dominant Win'}</div>
-        <div class="award-names"><strong>${esc(key)}</strong></div>
+        <div class="award-names"><strong>${esc(wNames)}</strong></div>
         <div class="award-value">${bestDom.wH}–${bestDom.lH} ${isDE?'Treffer':'hits'} (+${bestDomDiff}) · ${esc(bestDom.date)}</div>
       </div>
     </div>`;
@@ -2283,10 +2325,53 @@ function renderSummary() {
     .filter(p => p.hits > 0)
     .sort((a,b) => (b.hits*(1-b.winRate)) - (a.hits*(1-a.winRate)))[0];
 
-  // Last match
-  const last = state.matches[state.matches.length-1];
-  const lastWinnerTeam = last.winner === 'A' ? last.teamA : last.teamB;
-  const lastWinnerNames = lastWinnerTeam.slice(0,2).join(' & ') + (lastWinnerTeam.length > 2 ? '…' : '');
+  // Hecke vs Straße head-to-head
+  const heckeWins = state.matches.filter(m => m.winner === 'A').length;
+  const strWins = state.matches.filter(m => m.winner === 'B').length;
+
+  // Closest match (smallest absolute hit diff)
+  let closestMatch = null, closestDiff = Infinity;
+  state.matches.forEach(m => {
+    const aH = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const bH = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const diff = Math.abs(aH - bH);
+    if (diff < closestDiff) { closestDiff = diff; closestMatch = m; }
+  });
+
+  // Biggest blowout (largest hit diff)
+  let blowoutMatch = null, blowoutDiff = 0;
+  state.matches.forEach(m => {
+    const aH = m.teamA.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const bH = m.teamB.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const diff = Math.abs(aH - bH);
+    if (diff > blowoutDiff) { blowoutDiff = diff; blowoutMatch = m; }
+  });
+
+  // Busiest day (most matches)
+  const matchesByDay = {};
+  state.matches.forEach(m => {
+    const d = new Date(m.timestamp).toLocaleDateString();
+    matchesByDay[d] = (matchesByDay[d]||0) + 1;
+  });
+  const busiestDay = Object.entries(matchesByDay).sort((a,b)=>b[1]-a[1])[0];
+
+  // Most improved: player whose win rate in last-half matches > first-half
+  let mostImproved = null, bestImprovement = 0;
+  players.forEach(p => {
+    const pm = state.matches.filter(m => m.teamA.includes(p.name)||m.teamB.includes(p.name));
+    if (pm.length < 4) return;
+    const half = Math.floor(pm.length/2);
+    const firstWr = pm.slice(0,half).filter(m=>(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B')).length / half;
+    const lastWr = pm.slice(half).filter(m=>(m.teamA.includes(p.name)&&m.winner==='A')||(m.teamB.includes(p.name)&&m.winner==='B')).length / (pm.length-half);
+    const imp = lastWr - firstWr;
+    if (imp > bestImprovement) { bestImprovement = imp; mostImproved = p.name; }
+  });
+
+  // Best captain win rate (≥2 captain appearances)
+  const captainStar = [...players].filter(p => p.captainPlayed >= 2).sort((a,b) => (b.captainWins/b.captainPlayed)-(a.captainWins/a.captainPlayed))[0];
+
+  // Zero wins player who hit the most (tragic hero)
+  const tragic = [...players].filter(p => p.wins === 0 && p.hits > 0).sort((a,b) => b.hits-a.hits)[0];
 
   const sentences = [];
   sentences.push(t('sumSpans', n, nWord, dCount, dWord, totalHits));
@@ -2310,7 +2395,32 @@ function renderSummary() {
   if (mostActive && mostActive.played >= 3) {
     sentences.push(t('sumActive', esc(mostActive.name), mostActive.played));
   }
-  sentences.push(t('sumLast', esc(lastWinnerNames)));
+  if (heckeWins !== strWins && n >= 3) {
+    sentences.push(t('sumH2H', heckeWins, strWins));
+  }
+  if (closestMatch && closestDiff <= 1 && n >= 3) {
+    const aH2 = closestMatch.teamA.reduce((s,p)=>s+(closestMatch.hits[p]||0),0);
+    const bH2 = closestMatch.teamB.reduce((s,p)=>s+(closestMatch.hits[p]||0),0);
+    sentences.push(t('sumClose', aH2, bH2));
+  }
+  if (blowoutMatch && blowoutDiff >= 4 && n >= 3) {
+    const winSide = blowoutMatch.winner === 'A' ? blowoutMatch.teamA : blowoutMatch.teamB;
+    const winName = winSide[0] ? esc(winSide[0]) : '?';
+    sentences.push(t('sumBlowout', winName, blowoutDiff));
+  }
+  if (busiestDay && busiestDay[1] >= 4) {
+    sentences.push(t('sumBusiestDay', busiestDay[1]));
+  }
+  if (mostImproved && bestImprovement >= 0.25) {
+    sentences.push(t('sumImproved', esc(mostImproved), Math.round(bestImprovement*100)));
+  }
+  if (captainStar && captainStar.captainPlayed >= 2) {
+    const capWr = Math.round((captainStar.captainWins/captainStar.captainPlayed)*100);
+    sentences.push(t('sumCaptain', esc(captainStar.name), capWr, captainStar.captainPlayed));
+  }
+  if (tragic && tragic.hits >= 3) {
+    sentences.push(t('sumTragic', esc(tragic.name), tragic.hits));
+  }
 
   container.innerHTML = `<div class="summary-text">${sentences.map(s=>`<span class="summary-sentence">${s}</span>`).join('')}</div>`;
 }
@@ -2790,7 +2900,13 @@ const T = {
     sumStreak: (name, n) => `🔥 <strong>${name}</strong> ist gerade auf einer ${n}-Spiele-Siegesserie.`,
     sumUnlucky: (name, h, wr) => `😬 Die Pechgeschichte des Turniers gehört <strong>${name}</strong>: ${h} Treffer, aber nur ${wr}% Siege.`,
     sumActive: (name, n) => `Aktivster Spieler: <strong>${name}</strong> mit ${n} Einsätzen.`,
-    sumLast: (names) => `Das letzte Spiel gewann das Team von <strong>${names}</strong>.`,
+    sumH2H: (a, b) => `Im Duell Hecke gegen Straße führt ${a>b?'Hecke':'Straße'} mit <strong>${Math.max(a,b)}:${Math.min(a,b)}</strong>.`,
+    sumClose: (a, b) => `Das knappste Spiel endete mit <strong>${a}:${b}</strong> — hauchdünn.`,
+    sumBlowout: (name, diff) => `Die deutlichste Niederlage: ein Team verlor mit <strong>${diff} Treffern</strong> Unterschied.`,
+    sumBusiestDay: (n) => `Der spielreichste Tag hatte <strong>${n} Spiele</strong> — volles Programm.`,
+    sumImproved: (name, pct) => `📈 <strong>${name}</strong> steigerte sich zur zweiten Hälfte um ${pct}% Siegquote.`,
+    sumCaptain: (name, wr, n) => `Als Kapitän ungeschlagen: <strong>${name}</strong> gewinnt ${wr}% seiner ${n} Führungseinsätze.`,
+    sumTragic: (name, h) => `😤 Tragische Figur: <strong>${name}</strong> — ${h} Treffer, null Siege.`,
     consistencyFooter: '🎯 konstanteste &nbsp;·&nbsp; 🎲 chaotischste',
     // toasts / alerts
     toastSaved: '🏆 Spiel gespeichert!', toastUndone: '↩️ Rückgängig!', toastCleared: '🗑️ Gelöscht!',
@@ -2821,6 +2937,7 @@ const T = {
     bracketView: '🎯 Bracket',
     bracketReset: '↺ Zurücksetzen',
     bracketChampion: 'Champion',
+    freshTeams: '🆕 Frische Teams',
     rematchSameTeams: '⚡ Gleiche Teams nochmal?',
     rematchSame: 'Gleich', rematchSwap: 'Tauschen',
     avatarPickTitle: '🎭 Emoji auswählen',
@@ -2918,7 +3035,13 @@ const T = {
     sumStreak: (name, n) => `🔥 <strong>${name}</strong> is currently on a ${n}-match winning streak.`,
     sumUnlucky: (name, h, wr) => `😬 The tournament's hard-luck story belongs to <strong>${name}</strong>: ${h} hits but only ${wr}% wins.`,
     sumActive: (name, n) => `Most active player: <strong>${name}</strong> with ${n} appearances.`,
-    sumLast: (names) => `The last match was won by <strong>${names}</strong>'s team.`,
+    sumH2H: (a, b) => `In the Hecke vs Straße head-to-head, <strong>${a>b?'Hecke':'Straße'} leads ${Math.max(a,b)}–${Math.min(a,b)}</strong>.`,
+    sumClose: (a, b) => `The closest match ended <strong>${a}:${b}</strong> — razor thin.`,
+    sumBlowout: (name, diff) => `The biggest blowout: one team lost by <strong>${diff} hits</strong>.`,
+    sumBusiestDay: (n) => `The busiest day packed in <strong>${n} matches</strong> — full throttle.`,
+    sumImproved: (name, pct) => `📈 <strong>${name}</strong> improved by ${pct}% win rate in the second half.`,
+    sumCaptain: (name, wr, n) => `Captain clutch: <strong>${name}</strong> wins ${wr}% of their ${n} captain appearances.`,
+    sumTragic: (name, h) => `😤 Tragic hero: <strong>${name}</strong> — ${h} hits, zero wins.`,
     consistencyFooter: '🎯 most consistent &nbsp;·&nbsp; 🎲 most chaotic',
     // toasts / alerts
     toastSaved: '🏆 Match saved!', toastUndone: '↩️ Undone!', toastCleared: '🗑️ Cleared!',
@@ -2949,6 +3072,7 @@ const T = {
     bracketView: '🎯 Bracket',
     bracketReset: '↺ Reset',
     bracketChampion: 'Champion',
+    freshTeams: '🆕 Fresh Teams',
     rematchSameTeams: '⚡ Same teams again?',
     rematchSame: 'Same', rematchSwap: 'Swap',
     avatarPickTitle: '🎭 Pick Emoji',
