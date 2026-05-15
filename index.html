@@ -102,6 +102,39 @@ body {
   transition: all 0.2s;
 }
 .nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.nav-tab-more {
+  flex: none; padding: 12px 16px; background: none; border: none;
+  color: var(--text-muted); font-size: 1.1rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent;
+  margin-bottom: -2px; transition: all 0.2s; margin-left: auto;
+}
+.nav-tab-more:active { color: var(--orange); }
+/* overflow menu */
+.overflow-menu {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 150;
+  display: none;
+}
+.overflow-menu.open { display: block; }
+.overflow-menu-backdrop {
+  position: absolute; inset: 0;
+}
+.overflow-menu-panel {
+  position: absolute; right: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 6px; min-width: 180px;
+  box-shadow: var(--glass-shadow-lg);
+}
+.overflow-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-radius: 10px; border: none;
+  background: none; color: var(--text); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; width: 100%; text-align: left; transition: background 0.15s;
+}
+.overflow-item:active { background: rgba(249,115,22,0.12); }
+.overflow-item.active-page { color: var(--orange); }
 
 /* ── PAGES ───────────────────────────────────────────────── */
 .page { display: none; padding: 16px; max-width: 600px; margin: 0 auto; }
@@ -422,10 +455,12 @@ body {
 .form-row:last-child { border-bottom:none; }
 .form-name { font-weight:700; font-size:0.88rem; flex:0 0 80px; color:var(--text); }
 .form-dots { display:flex; gap:4px; flex:1; }
-.form-dot { width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:800; color:#fff; flex-shrink:0; }
+.form-dot { width:20px; height:20px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:800; color:#fff; flex-shrink:0; }
 .form-dot-w { background:var(--success); }
 .form-dot-l { background:var(--danger); }
 .form-dot-empty { background:var(--border); }
+.form-dot-skip { background:var(--border); color:var(--text-muted); }
+.form-dot-latest { outline:2px solid var(--orange); outline-offset:1px; }
 .summary-text { font-size:0.88rem; line-height:1.7; color:var(--text); }
 .summary-text strong { color:var(--orange); }
 .summary-sentence { display:block; padding:3px 0; }
@@ -444,6 +479,25 @@ body {
   background: var(--inset-bg); border: 1px solid var(--border);
   border-radius: 16px; padding: 10px 0; margin-bottom: 14px;
 }
+/* sticky mini-score bar shown when scrolled past live-score during match */
+.sticky-score {
+  position: sticky; top: 112px; z-index: 98;
+  display: none;
+  background: var(--nav-bg);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 6px 20px;
+  justify-content: center; align-items: center; gap: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  -webkit-transform: translateZ(0); transform: translateZ(0);
+}
+.sticky-score.visible { display: flex; }
+.sticky-score-num { font-size: 1.4rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+.sticky-score-num.score-a { color: var(--orange); }
+.sticky-score-num.score-b { color: var(--blue); }
+.sticky-score-sep { font-size: 1rem; font-weight: 900; color: var(--border); }
+.sticky-score-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); text-align: center; line-height: 1.2; }
 .live-score-side { flex: 1; text-align: center; }
 .live-score-num { font-size: 2.8rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
 .live-score-num.score-a { color: var(--orange); }
@@ -453,7 +507,7 @@ body {
 
 /* ── EDIT PLAYERS MODAL ──────────────────────────────────── */
 .edit-players-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
-.edit-player-row { display: flex; align-items: center; gap: 6px; background: var(--inset-bg); border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; }
+.edit-player-row { display: flex; align-items: center; gap: 6px; background: var(--inset-bg); border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; position: relative; }
 .edit-player-input { flex: 1; background: none; border: none; color: var(--text); font-size: 0.88rem; font-weight: 600; outline: none; min-width: 0; }
 .edit-player-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1rem; padding: 0 2px; flex-shrink: 0; }
 
@@ -513,6 +567,77 @@ body {
 .day-stat-item { background:var(--glass-bg); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
 .day-stat-label { font-size:0.68rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; }
 .day-stat-value { font-size:0.95rem; font-weight:800; margin-top:2px; }
+
+/* ── EMOJI AVATAR ────────────────────────────────────────── */
+.avatar-emoji { font-size:1.2rem; margin-right:3px; vertical-align:middle; }
+.avatar-picker-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:6px; }
+.avatar-option { font-size:1.3rem; width:100%; aspect-ratio:1; border-radius:8px; border:2px solid transparent; background:var(--inset-bg); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.avatar-option.selected { border-color:var(--orange); background:rgba(249,115,22,0.15); }
+.avatar-option:active { transform:scale(0.9); }
+.edit-player-avatar { font-size:1.2rem; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:8px; border:1.5px solid var(--border); background:var(--inset-bg); flex-shrink:0; transition:background 0.15s; }
+.edit-player-avatar:hover { background:rgba(249,115,22,0.15); }
+
+/* ── NEMESIS / SIDEKICK ──────────────────────────────────── */
+.nemesis-sidekick-row { display:flex; gap:8px; margin-top:8px; }
+.ns-card { flex:1; background:var(--inset-bg); border:1px solid var(--border); border-radius:12px; padding:10px; text-align:center; }
+.ns-icon { font-size:1.4rem; }
+.ns-label { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin:3px 0; }
+.ns-name { font-size:0.9rem; font-weight:800; color:var(--text); }
+.ns-stat { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+
+/* ── HIT EFFICIENCY ──────────────────────────────────────── */
+.eff-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.eff-row:last-child { border-bottom:none; }
+.eff-name { font-weight:700; flex:0 0 72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); }
+.eff-bar-wrap { flex:1; display:flex; flex-direction:column; gap:3px; }
+.eff-bar-row { display:flex; align-items:center; gap:6px; font-size:0.72rem; }
+.eff-bar-label { flex:0 0 14px; font-weight:700; }
+.eff-bar-track { flex:1; background:var(--inset-bg); border-radius:20px; height:8px; overflow:hidden; border:1px solid var(--border); }
+.eff-bar-fill-w { height:100%; border-radius:20px; background:linear-gradient(90deg,var(--success),#16a34a); transition:width 0.4s; }
+.eff-bar-fill-l { height:100%; border-radius:20px; background:linear-gradient(90deg,var(--danger),#b91c1c); transition:width 0.4s; }
+.eff-val { flex:0 0 28px; text-align:right; color:var(--text-muted); font-size:0.7rem; }
+
+/* ── BRACKET ─────────────────────────────────────────────── */
+.bracket-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:8px; }
+.bracket { display:flex; gap:0; align-items:stretch; }
+.bracket-round { display:flex; flex-direction:column; justify-content:space-around; min-width:110px; padding:0 6px; }
+.bracket-round-label { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); text-align:center; margin-bottom:8px; padding-bottom:4px; border-bottom:1px solid var(--border); }
+.bracket-match { background:var(--inset-bg); border:1px solid var(--border); border-radius:10px; margin:4px 0; overflow:hidden; }
+.bracket-slot { padding:7px 10px; font-size:0.8rem; font-weight:600; color:var(--text); display:flex; align-items:center; gap:5px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s; min-height:34px; }
+.bracket-slot:last-child { border-bottom:none; }
+.bracket-slot.winner { background:rgba(249,115,22,0.15); color:var(--orange-dark); font-weight:800; }
+.dark .bracket-slot.winner { color:var(--orange-light); }
+.bracket-slot.bye { color:var(--text-muted); font-style:italic; font-size:0.75rem; cursor:default; }
+.bracket-slot:not(.bye):hover { background:rgba(249,115,22,0.08); }
+.bracket-connector { display:flex; flex-direction:column; justify-content:space-around; width:14px; }
+.bracket-connector-line { border-right:2px solid var(--border); flex:1; }
+.bracket-setup-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:10px 0; }
+.bracket-player-btn { padding:10px 6px; border-radius:10px; border:1.5px solid var(--border); background:var(--inset-bg); color:var(--text); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s; text-align:center; display:flex; align-items:center; justify-content:center; gap:4px; }
+.bracket-player-btn.in { background:linear-gradient(135deg,var(--orange),var(--orange-dark)); border-color:var(--orange-dark); color:#fff; }
+.bracket-player-btn:active { transform:scale(0.95); }
+.per-day-tbl { width:100%; border-collapse:collapse; font-size:0.78rem; margin-top:4px; }
+.per-day-tbl th { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); padding:4px 4px 6px; text-align:center; border-bottom:1.5px solid var(--border); }
+.per-day-tbl th:first-child { text-align:left; }
+.per-day-tbl td { padding:7px 4px; text-align:center; border-bottom:1px solid var(--border); }
+.per-day-tbl td:first-child { text-align:left; font-weight:700; }
+.per-day-tbl tr:last-child td { border-bottom:none; }
+.pct-cell { font-weight:800; }
+.pct-hi { color:var(--success); }
+.pct-lo { color:var(--danger); }
+.pct-mid { color:var(--text-muted); }
+.win-rate-size-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.win-rate-size-row:last-child { border-bottom:none; }
+.wrs-name { font-weight:700; flex:0 0 72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wrs-cells { display:flex; gap:6px; flex:1; flex-wrap:wrap; }
+.wrs-cell { font-size:0.72rem; padding:3px 7px; border-radius:20px; font-weight:700; background:var(--inset-bg); border:1px solid var(--border); color:var(--text-muted); }
+.wrs-cell.good { background:rgba(34,197,94,0.15); color:#15803d; border-color:rgba(34,197,94,0.4); }
+.dark .wrs-cell.good { color:#86efac; }
+.wrs-cell.bad  { background:rgba(239,68,68,0.12); color:#b91c1c; border-color:rgba(239,68,68,0.3); }
+.dark .wrs-cell.bad { color:#fca5a5; }
+.momentum-block { text-align:center; padding:12px 0 8px; }
+.momentum-pct { font-size:2.2rem; font-weight:900; color:var(--orange); }
+.momentum-label { font-size:0.8rem; color:var(--text-muted); margin-top:4px; }
+.momentum-detail { font-size:0.75rem; color:var(--text-muted); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -530,12 +655,24 @@ body {
 <nav class="nav-tabs">
   <button class="nav-tab active" data-tab="new-match" data-i18n="tabMatch">⚡ Match</button>
   <button class="nav-tab" data-tab="leaderboard" data-i18n="tabBoard">🏆 Board</button>
-  <button class="nav-tab" data-tab="history" data-i18n="tabHistory">📜 History</button>
   <button class="nav-tab" data-tab="stats" data-i18n="tabStats">📊 Stats</button>
   <button class="nav-tab" data-tab="rivals" data-i18n="tabRivals">🏟️ Rivals</button>
   <button class="nav-tab" data-tab="awards" data-i18n="tabAwards">🎖️ Awards</button>
-  <button class="nav-tab" data-tab="backup" data-i18n="tabBackup">💾 Backup</button>
+  <button class="nav-tab-more" id="moreMenuBtn">⋯</button>
 </nav>
+
+<!-- overflow menu (history / backup) -->
+<div class="overflow-menu" id="overflowMenu">
+  <div class="overflow-menu-backdrop" id="overflowBackdrop"></div>
+  <div class="overflow-menu-panel" id="overflowPanel">
+    <button class="overflow-item" data-tab="history" id="omHistory">
+      <span>📜</span><span data-i18n="tabHistory">Verlauf</span>
+    </button>
+    <button class="overflow-item" data-tab="backup" id="omBackup">
+      <span>💾</span><span data-i18n="tabBackup">Backup</span>
+    </button>
+  </div>
+</div>
 
 <!-- ===================== MATCH TAB ===================== -->
 <div id="tab-new-match" class="page active">
@@ -556,15 +693,23 @@ body {
     <div id="backupReminder" style="display:none;" class="backup-banner">
       💾 <span id="backupCount"></span> <span data-i18n="backupReminderSuffix">unsaved matches — consider exporting a backup!</span>
     </div>
+    <div id="quickRematchBar" style="display:none;background:linear-gradient(135deg,var(--blue),var(--blue-dark));" class="draft-banner">
+      <div class="draft-banner-text" data-i18n="rematchSameTeams">⚡ Gleiche Teams nochmal?</div>
+      <div class="draft-banner-actions">
+        <button class="draft-action-btn draft-restore" onclick="quickRematch(false)" data-i18n="rematchSame">Gleich</button>
+        <button class="draft-action-btn draft-restore" onclick="quickRematch(true)" style="background:rgba(249,115,22,0.9);color:#fff;" data-i18n="rematchSwap">Tauschen</button>
+        <button class="draft-action-btn draft-discard" onclick="document.getElementById('quickRematchBar').style.display='none'">✕</button>
+      </div>
+    </div>
     <div class="card">
       <div class="card-title"><span class="card-title-text" data-i18n="selectTeams">👥 Select Teams</span></div>
       <div style="display:flex; gap:8px; margin-bottom:12px;">
         <div style="flex:1; padding:8px; background:rgba(249,115,22,0.10); border-radius:10px; border:1.5px solid rgba(249,115,22,0.5);">
-          <div style="font-size:0.75rem; font-weight:700; color:var(--orange); margin-bottom:4px;">🟠 TEAM A</div>
+          <div style="font-size:0.75rem; font-weight:700; color:var(--orange); margin-bottom:4px;">🟠 TEAM HECKE</div>
           <div id="teamACount" style="font-size:0.85rem; color:var(--text-muted);">0 players</div>
         </div>
         <div style="flex:1; padding:8px; background:rgba(29,78,216,0.10); border-radius:10px; border:1.5px solid rgba(29,78,216,0.5);">
-          <div style="font-size:0.75rem; font-weight:700; color:var(--blue); margin-bottom:4px;">🔵 TEAM B</div>
+          <div style="font-size:0.75rem; font-weight:700; color:var(--blue); margin-bottom:4px;">🔵 TEAM STRASSE</div>
           <div id="teamBCount" style="font-size:0.85rem; color:var(--text-muted);">0 players</div>
         </div>
       </div>
@@ -576,11 +721,11 @@ body {
         <div class="section-label">👑 <span data-i18n="captains">Captains</span> <span style="font-weight:400;text-transform:none;letter-spacing:0;" data-i18n="optional">(optional)</span></div>
         <div style="display:flex;gap:8px;margin-top:6px;">
           <div style="flex:1;">
-            <div style="font-size:0.72rem;font-weight:700;color:var(--orange);margin-bottom:5px;">🟠 Team A</div>
+            <div style="font-size:0.72rem;font-weight:700;color:var(--orange);margin-bottom:5px;">🟠 Team Hecke</div>
             <div id="captainPickerA" class="captain-picker-row"></div>
           </div>
           <div style="flex:1;">
-            <div style="font-size:0.72rem;font-weight:700;color:var(--blue);margin-bottom:5px;">🔵 Team B</div>
+            <div style="font-size:0.72rem;font-weight:700;color:var(--blue);margin-bottom:5px;">🔵 Team Straße</div>
             <div id="captainPickerB" class="captain-picker-row"></div>
           </div>
         </div>
@@ -591,6 +736,18 @@ body {
   </div>
 
   <div id="matchStep2" style="display:none;">
+    <!-- sticky mini-scoreboard shown when live-score scrolls off screen -->
+    <div class="sticky-score" id="stickyScore">
+      <div style="text-align:center;">
+        <div class="sticky-score-num score-a" id="stickyScoreA">0</div>
+        <div class="sticky-score-label">Hecke</div>
+      </div>
+      <div class="sticky-score-sep">–</div>
+      <div style="text-align:center;">
+        <div class="sticky-score-num score-b" id="stickyScoreB">0</div>
+        <div class="sticky-score-label">Straße</div>
+      </div>
+    </div>
     <div class="card">
       <div class="card-title">
         <span class="card-title-text" data-i18n="trackHits">🍺 Track Bottle Hits</span>
@@ -599,24 +756,24 @@ body {
       <div class="live-score" id="liveScore">
         <div class="live-score-side">
           <div class="live-score-num score-a" id="liveScoreA">0</div>
-          <div class="live-score-label">Team A</div>
+          <div class="live-score-label">Hecke</div>
         </div>
         <div class="live-score-sep">–</div>
         <div class="live-score-side">
           <div class="live-score-num score-b" id="liveScoreB">0</div>
-          <div class="live-score-label">Team B</div>
+          <div class="live-score-label">Straße</div>
         </div>
       </div>
       <div class="team-section">
         <div class="team-header team-a">
-          <span>🟠 Team A</span>
+          <span>🟠 Team Hecke</span>
           <span id="teamATotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
         </div>
         <div id="teamAHitRows"></div>
       </div>
       <div class="team-section">
         <div class="team-header team-b">
-          <span>🔵 Team B</span>
+          <span>🔵 Team Straße</span>
           <span id="teamBTotalHits" style="font-size:0.85rem;font-weight:600;">0 hits</span>
         </div>
         <div id="teamBHitRows"></div>
@@ -629,8 +786,8 @@ body {
     <div class="card">
       <div class="card-title"><span class="card-title-text" data-i18n="selectWinner">🏅 Select Winner</span></div>
       <div class="win-section">
-        <button class="win-btn team-a-win" id="winTeamA" onclick="selectWinner('A')" data-i18n="teamAWins">🟠 Team A Wins!</button>
-        <button class="win-btn team-b-win" id="winTeamB" onclick="selectWinner('B')" data-i18n="teamBWins">🔵 Team B Wins!</button>
+        <button class="win-btn team-a-win" id="winTeamA" onclick="selectWinner('A')" data-i18n="teamAWins">🟠 Team Hecke gewinnt!</button>
+        <button class="win-btn team-b-win" id="winTeamB" onclick="selectWinner('B')" data-i18n="teamBWins">🔵 Team Straße gewinnt!</button>
       </div>
     </div>
     <div style="display:flex; gap:8px;">
@@ -680,7 +837,7 @@ body {
     <div id="dailyContent"><div class="empty-state"><div class="emoji">📅</div><p data-i18n="noMatchData">No match data yet.</p></div></div>
   </div>
   <div class="card" id="formCard" style="display:none;">
-    <div class="card-title"><span class="card-title-text" data-i18n="recentForm">📈 Recent Form (last 5 matches)</span></div>
+    <div class="card-title"><span class="card-title-text" data-i18n="recentForm">📈 Aktuelle Form (letzte 10 Spiele)</span></div>
     <div id="formContent"></div>
   </div>
   <div class="card" id="consistencyCard" style="display:none;">
@@ -699,6 +856,22 @@ body {
     <div class="card-title"><span class="card-title-text" data-i18n="matchPace">⏱️ Match Pace</span></div>
     <div id="matchPaceContent"></div>
   </div>
+  <div class="card" id="hitEfficiencyCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="hitEfficiency">🎯 Hit Efficiency (wins vs losses)</span></div>
+    <div id="hitEfficiencyContent"></div>
+  </div>
+  <div class="card" id="perDayWinRateCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="perDayWinRate">📅 Win Rate per Day</span></div>
+    <div id="perDayWinRateContent"></div>
+  </div>
+  <div class="card" id="winRateBySizeCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="winRateBySize">👥 Win Rate by Team Size</span></div>
+    <div id="winRateBySizeContent"></div>
+  </div>
+  <div class="card" id="momentumCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="momentum">🔥 Momentum</span></div>
+    <div id="momentumContent"></div>
+  </div>
 </div>
 
 <!-- ===================== RIVALS TAB ===================== -->
@@ -709,6 +882,10 @@ body {
     <div class="player-picker" id="h2hPlayerPicker"></div>
     <div id="h2hContent">
       <div class="empty-state" style="padding:16px 0;"><p data-i18n="pickPlayerHint">Pick a player to see their record vs opponents.</p></div>
+    </div>
+    <div id="nemesisCard" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+      <div class="section-label" data-i18n="nemesisSidekick">😈 Nemesis &amp; 🤝 Sidekick</div>
+      <div id="nemesisContent"></div>
     </div>
   </div>
   <div class="card">
@@ -725,16 +902,21 @@ body {
 <!-- ===================== AWARDS TAB ===================== -->
 <div id="tab-awards" class="page">
   <div class="card">
-    <div class="card-title"><span class="card-title-text" data-i18n="playerAwards">🎖️ Player Awards</span></div>
+    <div class="card-title"><span class="card-title-text" data-i18n="playerAwards">🎖️ Spielerauszeichnungen</span></div>
     <div id="awardsContent">
       <div class="empty-state"><div class="emoji">🏅</div><p data-i18n="playToUnlock">Play some matches to unlock awards!</p></div>
     </div>
   </div>
+  <div class="card" id="teamAwardsCard" style="display:none;">
+    <div class="card-title"><span class="card-title-text" data-i18n="teamAwards">🏅 Team-Awards</span></div>
+    <div id="teamAwardsContent"></div>
+  </div>
   <div class="card" id="duoCard" style="display:none;">
-    <div class="card-title"><span class="card-title-text" data-i18n="bestDuos">🤝 Best Duos</span></div>
+    <div class="card-title"><span class="card-title-text" data-i18n="bestDuos">🤝 Beste Duos</span></div>
     <div id="duoContent"></div>
   </div>
 </div>
+
 
 <!-- ===================== BACKUP TAB ===================== -->
 <div id="tab-backup" class="page">
@@ -767,6 +949,16 @@ body {
     <div class="modal-actions">
       <button class="btn btn-secondary" id="editPlayersCancel">Cancel</button>
       <button class="btn btn-primary" id="editPlayersSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="avatarPickerOverlay">
+  <div class="modal" style="max-width:320px;">
+    <h3 data-i18n="avatarPickTitle">🎭 Emoji auswählen</h3>
+    <div class="avatar-picker-grid" id="avatarPickerGrid"></div>
+    <div style="margin-top:10px;">
+      <button class="btn btn-secondary" onclick="document.getElementById('avatarPickerOverlay').classList.add('hidden')">✕ Cancel</button>
     </div>
   </div>
 </div>
@@ -808,7 +1000,8 @@ let state = {
   matches: [],
   lastSaved: null,
   darkMode: false,
-  matchesSinceBackup: 0
+  matchesSinceBackup: 0,
+  avatars: {}
 };
 
 let matchTeamA = [], matchTeamB = [], matchHits = {}, selectedWinner = null, currentStep = 1;
@@ -868,6 +1061,7 @@ function load() {
       if (!Array.isArray(state.players)) state.players = [...DEFAULT_PLAYERS];
       if (!Array.isArray(state.matches)) state.matches = [];
       if (typeof state.matchesSinceBackup !== 'number') state.matchesSinceBackup = 0;
+      if (!state.avatars || typeof state.avatars !== 'object') state.avatars = {};
     }
   } catch(e) { console.error('Load error:', e); }
 }
@@ -958,20 +1152,52 @@ function markBackupDone() {
 // NAVIGATION
 // ============================================================
 document.querySelectorAll('.nav-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + tab).classList.add('active');
-    if (tab === 'leaderboard') renderLeaderboard();
-    if (tab === 'history')     renderHistory();
-    if (tab === 'awards')      renderAwards();
-    if (tab === 'rivals')      renderRivals();
-    if (tab === 'stats')       renderStats();
-    if (tab === 'backup')      updateLastSavedDisplay();
-  });
+  btn.addEventListener('click', () => openTab(btn.dataset.tab));
 });
+
+// ============================================================
+// OVERFLOW MENU (history / backup)
+// ============================================================
+function openTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`.nav-tab[data-tab="${tab}"]`);
+  if (btn) btn.classList.add('active');
+  const page = document.getElementById('tab-' + tab);
+  if (page) page.classList.add('active');
+  if (tab === 'leaderboard') renderLeaderboard();
+  if (tab === 'history')     renderHistory();
+  if (tab === 'awards')      renderAwards();
+  if (tab === 'rivals')      renderRivals();
+  if (tab === 'stats')       renderStats();
+  if (tab === 'backup')      updateLastSavedDisplay();
+}
+
+(function() {
+  const btn = document.getElementById('moreMenuBtn');
+  const menu = document.getElementById('overflowMenu');
+  const backdrop = document.getElementById('overflowBackdrop');
+  const panel = document.getElementById('overflowPanel');
+
+  function openMenu() {
+    // position panel below the ⋯ button
+    const rect = btn.getBoundingClientRect();
+    panel.style.top = (rect.bottom + 4) + 'px';
+    menu.classList.add('open');
+  }
+  function closeMenu() { menu.classList.remove('open'); }
+
+  btn.addEventListener('click', e => { e.stopPropagation(); menu.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+
+  document.querySelectorAll('.overflow-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const tab = item.dataset.tab;
+      openTab(tab);
+      closeMenu();
+    });
+  });
+})();
 
 // ============================================================
 // DARK MODE
@@ -1093,13 +1319,18 @@ function setCaptain(side, name) {
 // ============================================================
 // PLAYER SELECTION (tap-cycle + swipe)
 // ============================================================
+function playerDisplayName(name) {
+  const av = state.avatars[name];
+  return av ? av + ' ' + name : name;
+}
+
 function renderPlayerSelectionGrid() {
   const grid = document.getElementById('playerSelectionGrid');
   grid.innerHTML = '';
   [...state.players].sort((a,b) => a.localeCompare(b)).forEach(name => {
     const btn = document.createElement('button');
     btn.className = 'player-btn';
-    btn.textContent = name;
+    btn.textContent = playerDisplayName(name);
     if (matchTeamA.includes(name))      btn.classList.add('team-a');
     else if (matchTeamB.includes(name)) btn.classList.add('team-b');
     btn.addEventListener('click', () => cyclePlayerTeam(name));
@@ -1180,8 +1411,9 @@ function renderTeamHitRows(containerId, players) {
     const isCaptain = name === matchCaptainA || name === matchCaptainB;
     const row = document.createElement('div');
     row.className = 'player-hit-row';
+    const av = state.avatars[name] ? state.avatars[name] + ' ' : '';
     row.innerHTML = `
-      <div class="player-name-hit">${isCaptain ? '👑 ' : ''}${esc(name)}</div>
+      <div class="player-name-hit">${isCaptain ? '👑 ' : ''}${av}${esc(name)}</div>
       <button class="hit-btn hit-minus" onclick="changeHit('${esc(name)}',-1)">−</button>
       <div class="hit-count" id="hit-${esc(name)}">${matchHits[name]||0}</div>
       <button class="hit-btn hit-plus"  onclick="changeHit('${esc(name)}', 1)">+</button>`;
@@ -1202,6 +1434,8 @@ function updateHitTotals() {
   document.getElementById('teamBTotalHits').textContent = hWord(bT);
   document.getElementById('liveScoreA').textContent = aT;
   document.getElementById('liveScoreB').textContent = bT;
+  document.getElementById('stickyScoreA').textContent = aT;
+  document.getElementById('stickyScoreB').textContent = bT;
 }
 function selectWinner(team) {
   selectedWinner = team;
@@ -1223,12 +1457,32 @@ function saveMatch() {
     notes: document.getElementById('matchNotesInput').value.trim(), duration,
     captainA: matchCaptainA, captainB: matchCaptainB
   };
+  lastMatchTeamA = [...matchTeamA]; lastMatchTeamB = [...matchTeamB];
   state.matches.push(match); state.matchesSinceBackup++;
   clearDraft(); save(); launchConfetti(); showToast(t('toastSaved'));
   matchTeamA = []; matchTeamB = []; matchHits = {}; selectedWinner = null;
   matchCaptainA = null; matchCaptainB = null;
   document.getElementById('timerDisplay').textContent = '0:00';
+  // Show quick-rematch bar
+  const qrb = document.getElementById('quickRematchBar');
+  if (qrb && lastMatchTeamA.length && lastMatchTeamB.length) qrb.style.display = 'flex';
   renderPlayerSelectionGrid(); goToStep(1);
+}
+
+// ============================================================
+// QUICK REMATCH — store last teams for pre-fill with swap
+// ============================================================
+let lastMatchTeamA = [], lastMatchTeamB = [];
+
+function quickRematch(swap) {
+  matchTeamA = swap ? [...lastMatchTeamB] : [...lastMatchTeamA];
+  matchTeamB = swap ? [...lastMatchTeamA] : [...lastMatchTeamB];
+  matchCaptainA = null; matchCaptainB = null;
+  matchHits = {}; selectedWinner = null;
+  document.getElementById('quickRematchBar').style.display = 'none';
+  renderPlayerSelectionGrid();
+  renderCaptainPickers();
+  saveDraft();
 }
 
 // ============================================================
@@ -1332,7 +1586,7 @@ function renderLeaderboard() {
     }
     html += `<tr class="${rankClass}">
       <td class="rank-cell">${rankCell}</td>
-      <td class="player-name-cell">${esc(p.name)}${streakHtml}</td>
+      <td class="player-name-cell">${state.avatars[p.name]?state.avatars[p.name]+' ':''}${esc(p.name)}${streakHtml}</td>
       <td style="color:var(--success);font-weight:700;">${p.wins}</td>
       <td style="color:var(--danger);">${p.losses}</td>
       <td>${Math.round(p.winRate*100)}%</td>
@@ -1367,9 +1621,9 @@ function renderHistory() {
     return `<div class="match-card ${aW?'win-a':'win-b'}">
       <button class="delete-btn" onclick="deleteMatch(${m.id})">🗑</button>
       <div class="match-teams">
-        <span class="match-team-tag team-a ${aW?'winner':''}">🟠 Team A ${aW?'🏆':''}${capA}</span>
+        <span class="match-team-tag team-a ${aW?'winner':''}">🟠 Hecke ${aW?'🏆':''}${capA}</span>
         <span style="color:var(--text-muted);font-size:0.8rem;">vs</span>
-        <span class="match-team-tag team-b ${bW?'winner':''}">🔵 Team B ${bW?'🏆':''}${capB}</span>
+        <span class="match-team-tag team-b ${bW?'winner':''}">🔵 Straße ${bW?'🏆':''}${capB}</span>
       </div>
       <div class="match-hits"><span style="color:var(--orange);">🟠 ${aHits} hits</span> — ${aPlayers}</div>
       <div class="match-hits" style="margin-top:4px;"><span style="color:var(--blue);">🔵 ${bHits} hits</span> — ${bPlayers}</div>
@@ -1424,11 +1678,12 @@ function renderAwards() {
   const all     = Object.values(stats).filter(s => s.played > 0);
   const container = document.getElementById('awardsContent');
   if (!all.length) {
-    container.innerHTML = '<div class="empty-state"><div class="emoji">🏅</div><p>Play some matches to unlock awards!</p></div>';
+    container.innerHTML = `<div class="empty-state"><div class="emoji">🏅</div><p>${t('playToUnlock')}</p></div>`;
     document.getElementById('duoCard').style.display = 'none';
+    document.getElementById('teamAwardsCard').style.display = 'none';
     return;
   }
-
+  const isDE = currentLang === 'de';
   let html = '';
 
   // Most wins
@@ -1444,12 +1699,48 @@ function renderAwards() {
   if (qualified.length) {
     const wrWinners = allTied(qualified, p => p.winRate);
     html += awardBlock('🎯', t('awardBestRate'), wrWinners,
-      p => `${Math.round(p.winRate*100)}% (${p.played} ${currentLang==='de'?'Spiele':'games'})`);
+      p => `${Math.round(p.winRate*100)}% (${p.played} ${isDE?'Spiele':'games'})`);
+  }
+
+  // Highest hits/game (≥2 games)
+  const hpgQual = all.filter(p => p.played >= 2);
+  if (hpgQual.length) {
+    const hpgWinners = allTied(hpgQual, p => p.hitsPerGame);
+    html += awardBlock('⚡', isDE ? 'Schütze des Turniers' : 'Top Scorer/Game', hpgWinners,
+      p => `${p.hitsPerGame.toFixed(1)} ${isDE?'Tr./Spiel':'hits/game'}`);
+  }
+
+  // Longest win streak right now
+  const streakers = all.filter(p => p.streak && p.streak.type === 'W' && p.streak.count >= 2);
+  if (streakers.length) {
+    const sWinners = allTied(streakers, p => p.streak.count);
+    html += awardBlock('🔥', isDE ? 'Heißeste Serie' : 'Hottest Streak', sWinners,
+      p => `${p.streak.count}${isDE?' Siege in Folge':' wins in a row'}`);
+  }
+
+  // Ice cold — longest loss streak
+  const coldies = all.filter(p => p.streak && p.streak.type === 'L' && p.streak.count >= 2);
+  if (coldies.length) {
+    const cWinners = allTied(coldies, p => p.streak.count);
+    html += awardBlock('🧊', isDE ? 'Kälteste Serie' : 'Ice-Cold Streak', cWinners,
+      p => `${p.streak.count}${isDE?' Niederlagen in Folge':' losses in a row'}`);
+  }
+
+  // Iron man — most games played
+  const ironWinners = allTied(all, p => p.played);
+  html += awardBlock('💪', isDE ? 'Eiserner Spieler' : 'Iron Player', ironWinners,
+    p => `${p.played} ${isDE?'Spiele':'games'}`);
+
+  // Perfect captain (≥2 games as captain, 100% win)
+  const perfectCaps = all.filter(p => p.captainPlayed >= 2 && p.captainWins === p.captainPlayed);
+  if (perfectCaps.length) {
+    html += awardBlock('👑', isDE ? 'Perfekter Kapitän' : 'Perfect Captain', perfectCaps,
+      p => `${p.captainWins}/${p.captainPlayed} ${isDE?'als Kapitän':'as captain'}`);
   }
 
   // Most unlucky
   if (all.length >= 2) {
-    const scored   = all.map(p => ({ ...p, unlucky: p.hits * (1 - p.winRate) })).filter(p => p.hits > 0);
+    const scored = all.map(p => ({ ...p, unlucky: p.hits * (1 - p.winRate) })).filter(p => p.hits > 0);
     const uWinners = allTied(scored, p => p.unlucky);
     if (uWinners.length) {
       html += awardBlock('😬', t('awardUnlucky'), uWinners,
@@ -1457,8 +1748,124 @@ function renderAwards() {
     }
   }
 
+  // Clutch under pressure — best win rate when team size ≤ 2 (≥2 such games)
+  const clutchStats = {};
+  state.matches.forEach(m => {
+    ['A','B'].forEach(side => {
+      const team = side === 'A' ? m.teamA : m.teamB;
+      if (team.length > 2) return;
+      const won = m.winner === side;
+      team.forEach(p => {
+        if (!clutchStats[p]) clutchStats[p] = {w:0,l:0};
+        if (won) clutchStats[p].w++; else clutchStats[p].l++;
+      });
+    });
+  });
+  const clutchList = Object.entries(clutchStats)
+    .filter(([,s]) => s.w+s.l >= 2)
+    .map(([n,s]) => ({ name:n, played:s.w+s.l, wins:s.w, losses:s.l, winRate:s.w/(s.w+s.l), hits:0, streak:null, captainPlayed:0, captainWins:0 }));
+  if (clutchList.length) {
+    const clutchWinners = allTied(clutchList, p => p.winRate);
+    html += awardBlock('🎪', isDE ? 'Clutch-Spieler (1v1/2v2)' : 'Clutch Player (1v1/2v2)', clutchWinners,
+      p => `${Math.round(p.winRate*100)}% (${p.played}G)`);
+  }
+
   container.innerHTML = html || `<div class="empty-state"><div class="emoji">🏅</div><p>${t('playToUnlock')}</p></div>`;
+  renderTeamAwards();
   renderDuos();
+}
+
+function renderTeamAwards() {
+  const card = document.getElementById('teamAwardsCard');
+  const container = document.getElementById('teamAwardsContent');
+  if (state.matches.length < 2) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  const isDE = currentLang === 'de';
+  let html = '';
+
+  // Group matches by day
+  const grouped = {};
+  state.matches.forEach(m => {
+    const key = new Date(m.timestamp).toLocaleDateString();
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(m);
+  });
+  const sortedDays = Object.keys(grouped).sort((a,b) =>
+    new Date(grouped[a][0].timestamp) - new Date(grouped[b][0].timestamp));
+
+  // Team of the day — per day, the lineup (sorted names) with most wins
+  if (sortedDays.length >= 1) {
+    sortedDays.forEach((day, idx) => {
+      const dayMatches = grouped[day];
+      const lineupWins = {};
+      dayMatches.forEach(m => {
+        const winners = m.winner === 'A' ? m.teamA : m.teamB;
+        const key = [...winners].sort().join(' & ');
+        lineupWins[key] = (lineupWins[key]||0) + 1;
+      });
+      const best = Object.entries(lineupWins).sort((a,b) => b[1]-a[1]);
+      if (!best.length || best[0][1] < 1) return;
+      const maxW = best[0][1];
+      const tied = best.filter(([,w]) => w === maxW).map(([k]) => k);
+      const tieTag = tied.length > 1 ? `<span class="award-tie">${t('awardTie', tied.length)}</span>` : '';
+      const names = tied.map(k => `<strong>${esc(k)}</strong>`).join(', ');
+      html += `<div class="award-card">
+        <div class="award-icon">🌟</div>
+        <div class="award-info">
+          <div class="award-title">${isDE?`Tag ${idx+1} — Team des Tages`:`Day ${idx+1} — Team of the Day`}</div>
+          <div class="award-names">${names}${tieTag}</div>
+          <div class="award-value">${maxW}${isDE?' Sieg(e) an diesem Tag':' win(s) on this day'}</div>
+        </div>
+      </div>`;
+    });
+  }
+
+  // Team of the tournament — lineup with most wins across all matches (≥2 wins together)
+  const lineupAll = {};
+  state.matches.forEach(m => {
+    const winners = m.winner === 'A' ? m.teamA : m.teamB;
+    const key = [...winners].sort().join(' & ');
+    lineupAll[key] = (lineupAll[key]||0) + 1;
+  });
+  const topLineup = Object.entries(lineupAll).filter(([,w]) => w >= 2).sort((a,b) => b[1]-a[1]);
+  if (topLineup.length) {
+    const maxW = topLineup[0][1];
+    const tied = topLineup.filter(([,w]) => w === maxW).map(([k]) => k);
+    const tieTag = tied.length > 1 ? `<span class="award-tie">${t('awardTie', tied.length)}</span>` : '';
+    const names = tied.map(k => `<strong>${esc(k)}</strong>`).join(', ');
+    html += `<div class="award-card">
+      <div class="award-icon">🏆</div>
+      <div class="award-info">
+        <div class="award-title">${isDE?'Team des Turniers':'Team of the Tournament'}</div>
+        <div class="award-names">${names}${tieTag}</div>
+        <div class="award-value">${maxW}${isDE?' gemeinsame Siege':' wins together'}</div>
+      </div>
+    </div>`;
+  }
+
+  // Most dominant match — biggest hit differential win
+  let bestDom = null, bestDomDiff = 0;
+  state.matches.forEach(m => {
+    const wTeam = m.winner === 'A' ? m.teamA : m.teamB;
+    const lTeam = m.winner === 'A' ? m.teamB : m.teamA;
+    const wH = wTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const lH = lTeam.reduce((s,p)=>s+(m.hits[p]||0),0);
+    const diff = wH - lH;
+    if (diff > bestDomDiff) { bestDomDiff = diff; bestDom = { wTeam, wH, lH, date: new Date(m.timestamp).toLocaleDateString() }; }
+  });
+  if (bestDom && bestDomDiff >= 3) {
+    const key = [...bestDom.wTeam].sort().join(' & ');
+    html += `<div class="award-card">
+      <div class="award-icon">💥</div>
+      <div class="award-info">
+        <div class="award-title">${isDE?'Dominantester Sieg':'Most Dominant Win'}</div>
+        <div class="award-names"><strong>${esc(key)}</strong></div>
+        <div class="award-value">${bestDom.wH}–${bestDom.lH} ${isDE?'Treffer':'hits'} (+${bestDomDiff}) · ${esc(bestDom.date)}</div>
+      </div>
+    </div>`;
+  }
+
+  container.innerHTML = html || `<div style="font-size:0.85rem;color:var(--text-muted);padding:8px 0;">${isDE?'Noch keine Teamdaten.':'No team data yet.'}</div>`;
 }
 
 function renderDuos() {
@@ -1513,7 +1920,7 @@ function renderH2HPicker() {
     const btn = document.createElement('button');
     btn.className = 'picker-btn' + (selectedH2HPlayer===name?' selected':'');
     btn.textContent = name;
-    btn.addEventListener('click', () => { selectedH2HPlayer = name; renderH2HPicker(); renderH2HContent(); });
+    btn.addEventListener('click', () => { selectedH2HPlayer = name; renderH2HPicker(); renderH2HContent(); renderNemesisSidekick(); });
     picker.appendChild(btn);
   });
 }
@@ -1596,6 +2003,10 @@ function renderStats() {
   renderCaptainStats();
   renderPersonalBests();
   renderMatchPace();
+  renderHitEfficiency();
+  renderPerDayWinRate();
+  renderWinRateBySize();
+  renderMomentum();
 }
 
 function renderOverview() {
@@ -1813,7 +2224,7 @@ function renderPersonalBests() {
   });
   if (maxTeamMatch) {
     const teamEmoji = maxTeamSide === 'A' ? '🟠' : '🔵';
-    const teamLabel = maxTeamSide === 'A' ? 'Team A' : 'Team B';
+    const teamLabel = maxTeamSide === 'A' ? 'Team Hecke' : 'Team Straße';
     const matchDate = new Date(maxTeamMatch.timestamp).toLocaleDateString();
     html += `<div style="padding-top:12px;border-top:1px solid var(--border);">
       <div class="section-label">${t('pbBiggestTeam')}</div>
@@ -1905,7 +2316,7 @@ function renderSummary() {
 }
 
 // ============================================================
-// RECENT FORM — last 5 matches per player (only those active)
+// RECENT FORM — last 10 matches globally, per player W/L/– (sat out)
 // ============================================================
 function renderRecentForm() {
   const card = document.getElementById('formCard');
@@ -1917,22 +2328,26 @@ function renderRecentForm() {
     .filter(p => state.matches.some(m => m.teamA.includes(p)||m.teamB.includes(p)))
     .sort((a,b) => a.localeCompare(b));
 
-  // For each player, compute last-5 results ordered newest→oldest
+  // last 10 global matches, newest first
+  const last10 = [...state.matches].slice(-10).reverse();
+  const isLast = last10[0]; // most recent match overall
+
   const rows = active.map(name => {
-    const pm = state.matches.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
-    const last5 = pm.slice(-5).reverse(); // newest first
-    const dots = Array.from({length:5}, (_,i) => {
-      if (i >= last5.length) return `<div class="form-dot form-dot-empty"></div>`;
-      const m = last5[i];
+    const dots = last10.map((m, i) => {
+      const played = m.teamA.includes(name) || m.teamB.includes(name);
+      const isNewest = i === 0 && m === isLast;
+      if (!played) {
+        return `<div class="form-dot form-dot-skip" title="${isNewest?'⬅ letztes Spiel':''}">–</div>`;
+      }
       const won = (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B');
-      return `<div class="form-dot ${won?'form-dot-w':'form-dot-l'}">${won?'W':'L'}</div>`;
+      return `<div class="form-dot ${won?'form-dot-w':'form-dot-l'} ${isNewest?'form-dot-latest':''}">${won?'W':'L'}</div>`;
     });
-    const recent = last5.filter((_,i)=>i<last5.length);
-    const recentWins = recent.filter(m=>(m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+    const played = last10.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+    const wins   = played.filter(m => (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
     return `<div class="form-row">
-      <div class="form-name">${esc(name)}</div>
+      <div class="form-name">${state.avatars[name]?state.avatars[name]+' ':''}${esc(name)}</div>
       <div class="form-dots">${dots.join('')}</div>
-      <div style="font-size:0.75rem;color:var(--text-muted);flex:0 0 32px;text-align:right;">${recentWins}/${Math.min(pm.length,5)}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);flex:0 0 32px;text-align:right;">${wins}/${played.length}</div>
     </div>`;
   });
 
@@ -2023,6 +2438,258 @@ function renderMatchPace() {
 }
 
 // ============================================================
+// HIT EFFICIENCY — avg hits in wins vs losses per player
+// ============================================================
+function renderHitEfficiency() {
+  const card = document.getElementById('hitEfficiencyCard');
+  const container = document.getElementById('hitEfficiencyContent');
+  const eligible = [];
+  state.players.forEach(name => {
+    const wHits = [], lHits = [];
+    state.matches.forEach(m => {
+      if (!m.teamA.includes(name) && !m.teamB.includes(name)) return;
+      const won = (m.teamA.includes(name) && m.winner==='A') || (m.teamB.includes(name) && m.winner==='B');
+      const h = m.hits[name] || 0;
+      if (won) wHits.push(h); else lHits.push(h);
+    });
+    if (wHits.length < 1 && lHits.length < 1) return;
+    const wAvg = wHits.length ? wHits.reduce((a,b)=>a+b,0)/wHits.length : null;
+    const lAvg = lHits.length ? lHits.reduce((a,b)=>a+b,0)/lHits.length : null;
+    eligible.push({ name, wAvg, lAvg, wCount: wHits.length, lCount: lHits.length });
+  });
+  if (eligible.length < 2) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  eligible.sort((a,b) => (b.wAvg||0)-(a.wAvg||0));
+  const maxVal = Math.max(...eligible.map(e => Math.max(e.wAvg||0, e.lAvg||0)), 0.1);
+  const av = (n) => n !== null ? n.toFixed(1) : '—';
+  container.innerHTML = eligible.map(e => `
+    <div class="eff-row">
+      <div class="eff-name" title="${esc(e.name)}">${state.avatars[e.name]?state.avatars[e.name]+' ':''}${esc(e.name)}</div>
+      <div class="eff-bar-wrap">
+        ${e.wAvg !== null ? `<div class="eff-bar-row">
+          <div class="eff-bar-label" style="color:var(--success);">W</div>
+          <div class="eff-bar-track"><div class="eff-bar-fill-w" style="width:${Math.round((e.wAvg/maxVal)*100)}%"></div></div>
+          <div class="eff-val">${av(e.wAvg)}</div>
+        </div>` : ''}
+        ${e.lAvg !== null ? `<div class="eff-bar-row">
+          <div class="eff-bar-label" style="color:var(--danger);">L</div>
+          <div class="eff-bar-track"><div class="eff-bar-fill-l" style="width:${Math.round((e.lAvg/maxVal)*100)}%"></div></div>
+          <div class="eff-val">${av(e.lAvg)}</div>
+        </div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// PER-DAY WIN RATE — win rate broken down per tournament day
+// ============================================================
+function renderPerDayWinRate() {
+  const card = document.getElementById('perDayWinRateCard');
+  const container = document.getElementById('perDayWinRateContent');
+  if (!state.matches.length) { card.style.display = 'none'; return; }
+
+  const grouped = {};
+  state.matches.forEach(m => {
+    const key = new Date(m.timestamp).toLocaleDateString();
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(m);
+  });
+  const sortedDays = Object.keys(grouped).sort((a,b) => new Date(grouped[a][0].timestamp)-new Date(grouped[b][0].timestamp));
+  if (sortedDays.length < 2) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  const active = state.players.filter(p => state.matches.some(m => m.teamA.includes(p)||m.teamB.includes(p)));
+
+  // header
+  let html = `<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table class="per-day-tbl"><thead><tr>
+      <th>${t('colPlayer')}</th>`;
+  sortedDays.forEach((_, i) => { html += `<th>${t('dayLabel', i+1)}</th>`; });
+  html += '</tr></thead><tbody>';
+
+  active.forEach(name => {
+    html += `<tr><td>${state.avatars[name]?state.avatars[name]+' ':''}${esc(name)}</td>`;
+    sortedDays.forEach(day => {
+      const dm = grouped[day].filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+      if (!dm.length) { html += '<td style="color:var(--text-muted);">—</td>'; return; }
+      const wins = dm.filter(m => (m.teamA.includes(name)&&m.winner==='A')||(m.teamB.includes(name)&&m.winner==='B')).length;
+      const pct = Math.round((wins/dm.length)*100);
+      const cls = pct >= 60 ? 'pct-hi' : pct <= 40 ? 'pct-lo' : 'pct-mid';
+      html += `<td class="pct-cell ${cls}">${pct}%<br><span style="font-size:0.65rem;font-weight:400;color:var(--text-muted);">${wins}/${dm.length}</span></td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+// ============================================================
+// WIN RATE BY TEAM SIZE
+// ============================================================
+function renderWinRateBySize() {
+  const card = document.getElementById('winRateBySizeCard');
+  const container = document.getElementById('winRateBySizeContent');
+  const active = state.players.filter(p => state.matches.some(m => m.teamA.includes(p)||m.teamB.includes(p)));
+  if (!active.length) { card.style.display = 'none'; return; }
+
+  let hasData = false;
+  const rows = active.map(name => {
+    const bySz = {};
+    state.matches.forEach(m => {
+      const onA = m.teamA.includes(name), onB = m.teamB.includes(name);
+      if (!onA && !onB) return;
+      const sz = onA ? m.teamA.length : m.teamB.length;
+      if (!bySz[sz]) bySz[sz] = { w:0, l:0 };
+      const won = (onA && m.winner==='A') || (onB && m.winner==='B');
+      if (won) bySz[sz].w++; else bySz[sz].l++;
+    });
+    const sizes = Object.keys(bySz).map(Number).sort((a,b)=>a-b);
+    if (sizes.length < 2) return null;
+    hasData = true;
+    const cells = sizes.map(sz => {
+      const { w, l } = bySz[sz]; const tot = w+l;
+      const pct = Math.round((w/tot)*100);
+      const cls = pct >= 60 ? 'good' : pct <= 40 ? 'bad' : '';
+      return `<span class="wrs-cell ${cls}">${sz}v${sz}: ${pct}%</span>`;
+    }).join('');
+    return { name, cells };
+  }).filter(Boolean);
+
+  if (!hasData) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  container.innerHTML = rows.map(r => `
+    <div class="win-rate-size-row">
+      <div class="wrs-name" title="${esc(r.name)}">${state.avatars[r.name]?state.avatars[r.name]+' ':''}${esc(r.name)}</div>
+      <div class="wrs-cells">${r.cells}</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// MOMENTUM — after a win, probability of winning next match
+// ============================================================
+function renderMomentum() {
+  const card = document.getElementById('momentumCard');
+  const container = document.getElementById('momentumContent');
+  if (state.matches.length < 4) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  let afterWin = 0, afterWinWins = 0;
+  let afterLoss = 0, afterLossWins = 0;
+  // group-wide: look at consecutive matches in order (no player filter)
+  for (let i = 1; i < state.matches.length; i++) {
+    const prev = state.matches[i-1];
+    const cur  = state.matches[i];
+    // only count if consecutive same-day or adjacent
+    const prevWon = (prev.winner === 'A'); // track winning side as just "did A win"
+    // We measure: after a win (regardless of who won), what's the chance the same players winning next
+    // Better: globally, after any match, does next match tend to be won by a carry-team?
+    // Simpler useful stat: for each player, after winning, win rate in next match
+  }
+
+  // Player-level momentum
+  let totalAfterW = 0, totalAfterWW = 0;
+  let totalAfterL = 0, totalAfterLW = 0;
+  state.players.forEach(name => {
+    const pm = state.matches.filter(m => m.teamA.includes(name)||m.teamB.includes(name));
+    for (let i = 1; i < pm.length; i++) {
+      const prev = pm[i-1], cur = pm[i];
+      const prevWon = (prev.teamA.includes(name)&&prev.winner==='A')||(prev.teamB.includes(name)&&prev.winner==='B');
+      const curWon  = (cur.teamA.includes(name)&&cur.winner==='A')||(cur.teamB.includes(name)&&cur.winner==='B');
+      if (prevWon) { totalAfterW++; if (curWon) totalAfterWW++; }
+      else         { totalAfterL++; if (curWon) totalAfterLW++; }
+    }
+  });
+
+  if (totalAfterW < 3 && totalAfterL < 3) { card.style.display = 'none'; return; }
+
+  const pctW = totalAfterW > 0 ? Math.round((totalAfterWW/totalAfterW)*100) : null;
+  const pctL = totalAfterL > 0 ? Math.round((totalAfterLW/totalAfterL)*100) : null;
+  const isDE = currentLang === 'de';
+
+  let html = '';
+  if (pctW !== null) {
+    const arrow = pctW > 55 ? '📈' : pctW < 45 ? '📉' : '➡️';
+    html += `<div class="momentum-block">
+      <div class="momentum-pct">${arrow} ${pctW}%</div>
+      <div class="momentum-label">${isDE ? 'Siegchance nach einem Sieg' : 'Win rate after a win'} (${totalAfterW} ${isDE?'Fälle':'cases'})</div>
+    </div>`;
+  }
+  if (pctL !== null) {
+    const arrow2 = pctL > 55 ? '📈' : pctL < 45 ? '📉' : '➡️';
+    html += `<div class="momentum-block" style="padding-top:0;">
+      <div class="momentum-pct" style="color:var(--blue);">${arrow2} ${pctL}%</div>
+      <div class="momentum-label">${isDE ? 'Siegchance nach einer Niederlage' : 'Win rate after a loss'} (${totalAfterL} ${isDE?'Fälle':'cases'})</div>
+    </div>`;
+  }
+  if (pctW !== null && pctL !== null) {
+    const diff = pctW - pctL;
+    const note = Math.abs(diff) < 8
+      ? (isDE ? '➡️ Momentum spielt kaum eine Rolle.' : '➡️ Momentum has little effect.')
+      : diff > 0
+        ? (isDE ? `🔥 Siegen bringt +${diff}pp Vorteil im nächsten Spiel.` : `🔥 Winning gives +${diff}pp edge next match.`)
+        : (isDE ? `😤 Niederlagen motivieren (+${-diff}pp Bounce-back).` : `😤 Losses motivate (+${-diff}pp bounce-back).`);
+    html += `<div class="momentum-detail">${note}</div>`;
+  }
+  container.innerHTML = html;
+}
+
+// ============================================================
+// NEMESIS & SIDEKICK — shown for currently selected H2H player
+// ============================================================
+function renderNemesisSidekick() {
+  const card = document.getElementById('nemesisCard');
+  const container = document.getElementById('nemesisContent');
+  const name = selectedH2HPlayer;
+  if (!name || state.matches.length < 2) { card.style.display = 'none'; return; }
+
+  const vs = {}, with_ = {};
+  state.matches.forEach(m => {
+    const onA = m.teamA.includes(name), onB = m.teamB.includes(name);
+    if (!onA && !onB) return;
+    const myWon = (onA && m.winner==='A') || (onB && m.winner==='B');
+    const opps  = onA ? m.teamB : m.teamA;
+    const mates = (onA ? m.teamA : m.teamB).filter(p => p !== name);
+    opps.forEach(o => {
+      if (!vs[o]) vs[o] = {w:0,l:0};
+      if (myWon) vs[o].w++; else vs[o].l++;
+    });
+    mates.forEach(mate => {
+      if (!with_[mate]) with_[mate] = {w:0,l:0};
+      if (myWon) with_[mate].w++; else with_[mate].l++;
+    });
+  });
+
+  const oppList  = Object.entries(vs).filter(([,r])=>r.w+r.l>=2)
+    .map(([n,r])=>({n, wr:r.w/(r.w+r.l), total:r.w+r.l}))
+    .sort((a,b)=>a.wr-b.wr||b.total-a.total);
+  const mateList = Object.entries(with_).filter(([,r])=>r.w+r.l>=2)
+    .map(([n,r])=>({n, wr:r.w/(r.w+r.l), total:r.w+r.l}))
+    .sort((a,b)=>b.wr-a.wr||b.total-a.total);
+
+  const nemesis  = oppList[0]  || null;
+  const sidekick = mateList[0] || null;
+
+  if (!nemesis && !sidekick) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  const nBlock = nemesis ? `<div class="ns-card">
+    <div class="ns-icon">😈</div>
+    <div class="ns-label">Nemesis</div>
+    <div class="ns-name">${state.avatars[nemesis.n]?state.avatars[nemesis.n]+' ':''}${esc(nemesis.n)}</div>
+    <div class="ns-stat">${Math.round((1-nemesis.wr)*100)}% ${currentLang==='de'?'Niederlagen':'loss rate'} (${nemesis.total}G)</div>
+  </div>` : '';
+  const sBlock = sidekick ? `<div class="ns-card">
+    <div class="ns-icon">🤝</div>
+    <div class="ns-label">Sidekick</div>
+    <div class="ns-name">${state.avatars[sidekick.n]?state.avatars[sidekick.n]+' ':''}${esc(sidekick.n)}</div>
+    <div class="ns-stat">${Math.round(sidekick.wr*100)}% ${currentLang==='de'?'Siegquote':'win rate'} (${sidekick.total}G)</div>
+  </div>` : '';
+
+  container.innerHTML = `<div class="nemesis-sidekick-row">${nBlock}${sBlock}</div>`;
+}
+
+
+// ============================================================
 // LANGUAGE
 // ============================================================
 let currentLang = 'de'; // 'de' | 'en'
@@ -2046,7 +2713,7 @@ const T = {
     matchNotes: 'Spielnotizen (optional)',
     matchNotesPlaceholder: 'z.B. Verlängerung, Rematch…',
     selectWinner: '🏅 Sieger wählen',
-    teamAWins: '🟠 Team A gewinnt!', teamBWins: '🔵 Team B gewinnt!',
+    teamAWins: '🟠 Team Hecke gewinnt!', teamBWins: '🔵 Team Straße gewinnt!',
     back: '← Zurück', saveMatch: '💾 Spiel speichern',
     // leaderboard
     leaderboard: '🏆 Rangliste',
@@ -2064,7 +2731,7 @@ const T = {
     tournamentStory: '📖 Turnierstory',
     tournamentOverview: '📊 Turnierübersicht',
     dailyBreakdown: '📅 Tagesübersicht',
-    recentForm: '📈 Aktuelle Form (letzte 5 Spiele)',
+    recentForm: '📈 Aktuelle Form (letzte 10 Spiele)',
     consistency: '🎳 Konstanz (Stdabw. Treffer/Spiel)',
     captainRecords: '👑 Kapitän-Statistiken',
     personalBests: '⚡ Persönliche Bestleistungen',
@@ -2139,6 +2806,24 @@ const T = {
     confirmImport: '📥 Backup importieren', confirmImportMsg: '⚠️ Alle aktuellen Daten werden ERSETZT. Sicher?',
     confirmReset: '🔄 Turnier zurücksetzen', confirmResetMsg: 'Tippe "RESET" zur Bestätigung. ALLE Spieldaten werden gelöscht.',
     confirmResetRequired: 'RESET',
+    // new features
+    teamAwards: '🏅 Team-Awards',
+    tabBracket: '🎯 Bracket',
+    hitEfficiency: '🎯 Trefferquote (Sieg vs Niederlage)',
+    perDayWinRate: '📅 Siegquote pro Tag',
+    winRateBySize: '👥 Siegquote nach Teamgröße',
+    momentum: '🔥 Momentum',
+    nemesisSidekick: '😈 Nemesis & 🤝 Sidekick',
+    bracketSetup: '🎯 Knockout-Bracket',
+    bracketSelectPlayers: 'Spieler auswählen (2, 4, 8 oder 16)',
+    bracketClear: '✕ Leeren',
+    bracketGenerate: '🎯 Bracket generieren',
+    bracketView: '🎯 Bracket',
+    bracketReset: '↺ Zurücksetzen',
+    bracketChampion: 'Champion',
+    rematchSameTeams: '⚡ Gleiche Teams nochmal?',
+    rematchSame: 'Gleich', rematchSwap: 'Tauschen',
+    avatarPickTitle: '🎭 Emoji auswählen',
   },
   en: {
     // nav
@@ -2156,7 +2841,7 @@ const T = {
     matchNotes: 'Match notes (optional)',
     matchNotesPlaceholder: 'e.g. Overtime, Disputed, Rematch…',
     selectWinner: '🏅 Select Winner',
-    teamAWins: '🟠 Team A Wins!', teamBWins: '🔵 Team B Wins!',
+    teamAWins: '🟠 Team Hecke Wins!', teamBWins: '🔵 Team Straße Wins!',
     back: '← Back', saveMatch: '💾 Save Match',
     // leaderboard
     leaderboard: '🏆 Leaderboard',
@@ -2174,7 +2859,7 @@ const T = {
     tournamentStory: '📖 Tournament Story',
     tournamentOverview: '📊 Tournament Overview',
     dailyBreakdown: '📅 Daily Breakdown',
-    recentForm: '📈 Recent Form (last 5 matches)',
+    recentForm: '📈 Recent Form (last 10 matches)',
     consistency: '🎳 Consistency (std dev of hits/game)',
     captainRecords: '👑 Captain Records',
     personalBests: '⚡ Personal Bests',
@@ -2249,6 +2934,24 @@ const T = {
     confirmImport: '📥 Import Backup', confirmImportMsg: '⚠️ This will REPLACE all current data. Are you sure?',
     confirmReset: '🔄 Reset Tournament', confirmResetMsg: 'Type "RESET" to confirm. ALL match data will be deleted.',
     confirmResetRequired: 'RESET',
+    // new features
+    teamAwards: '🏅 Team Awards',
+    tabBracket: '🎯 Bracket',
+    hitEfficiency: '🎯 Hit Efficiency (wins vs losses)',
+    perDayWinRate: '📅 Win Rate per Day',
+    winRateBySize: '👥 Win Rate by Team Size',
+    momentum: '🔥 Momentum',
+    nemesisSidekick: '😈 Nemesis & 🤝 Sidekick',
+    bracketSetup: '🎯 Knockout Bracket',
+    bracketSelectPlayers: 'Select players (2, 4, 8, or 16)',
+    bracketClear: '✕ Clear',
+    bracketGenerate: '🎯 Generate Bracket',
+    bracketView: '🎯 Bracket',
+    bracketReset: '↺ Reset',
+    bracketChampion: 'Champion',
+    rematchSameTeams: '⚡ Same teams again?',
+    rematchSame: 'Same', rematchSwap: 'Swap',
+    avatarPickTitle: '🎭 Pick Emoji',
   }
 };
 
@@ -2772,29 +3475,62 @@ let editPlayersList = [];
 
 function openEditPlayers() {
   editPlayersList = [...state.players];
+  editAvatarsList = state.players.map(p => state.avatars[p] || '');
   renderEditPlayersGrid();
   document.getElementById('editPlayersTitle').textContent = t('editPlayersTitle');
   document.getElementById('addPlayerBtn').textContent = t('addPlayer');
   document.getElementById('editPlayersOverlay').classList.remove('hidden');
 }
 
+const AVATAR_OPTIONS = ['😀','😎','🤩','🥳','🍺','🔥','⚡','🎯','👑','🦁','🐯','🦊','🐺','🦅','🎲','💪','🏆','🎪','🌟','🚀','💥','🎸','⚽','🏈'];
+
 function renderEditPlayersGrid() {
   const grid = document.getElementById('editPlayersGrid');
-  grid.innerHTML = editPlayersList.map((name, i) => `
+  grid.innerHTML = editPlayersList.map((name, i) => {
+    const av = editAvatarsList[i] || '';
+    return `
     <div class="edit-player-row">
+      <button class="edit-player-avatar" onclick="openAvatarPicker(${i})" title="Pick emoji">${av || '👤'}</button>
       <input class="edit-player-input" value="${esc(name)}" placeholder="${t('playerNamePlaceholder')}"
         oninput="editPlayersList[${i}]=this.value.trim()" data-idx="${i}">
       <button class="edit-player-del" onclick="removeEditPlayer(${i})">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+}
+
+let editAvatarsList = [];
+let avatarPickerTarget = -1;
+
+function openAvatarPicker(idx) {
+  avatarPickerTarget = idx;
+  const existing = editAvatarsList[idx] || '';
+  const modal = document.getElementById('avatarPickerOverlay');
+  const grid = document.getElementById('avatarPickerGrid');
+  grid.innerHTML = ['', ...AVATAR_OPTIONS].map(em => {
+    const sel = em === existing ? ' selected' : '';
+    const label = em || '✕';
+    return `<button class="avatar-option${sel}" onclick="pickAvatar('${em}')">${label}</button>`;
+  }).join('');
+  modal.classList.remove('hidden');
+}
+
+function pickAvatar(em) {
+  if (avatarPickerTarget >= 0) {
+    editAvatarsList[avatarPickerTarget] = em;
+    renderEditPlayersGrid();
+  }
+  document.getElementById('avatarPickerOverlay').classList.add('hidden');
 }
 
 function removeEditPlayer(i) {
   editPlayersList.splice(i, 1);
+  editAvatarsList.splice(i, 1);
   renderEditPlayersGrid();
 }
 
 document.getElementById('addPlayerBtn').addEventListener('click', () => {
   editPlayersList.push('');
+  editAvatarsList.push('');
   renderEditPlayersGrid();
   // focus the new input
   const inputs = document.querySelectorAll('.edit-player-input');
@@ -2805,9 +3541,12 @@ document.getElementById('editPlayersSave').addEventListener('click', () => {
   // Collect current values from inputs (oninput may not fire for all)
   const inputs = document.querySelectorAll('.edit-player-input');
   inputs.forEach((inp, i) => { if (editPlayersList[i] !== undefined) editPlayersList[i] = inp.value.trim(); });
-  const cleaned = editPlayersList.filter(n => n.length > 0);
+  const cleaned = editPlayersList.map((n,i) => ({ name:n, av: editAvatarsList[i]||'' })).filter(x => x.name.length > 0);
   if (!cleaned.length) { alert(currentLang === 'de' ? 'Mindestens ein Spieler erforderlich.' : 'At least one player required.'); return; }
-  state.players = cleaned;
+  const newAvatars = {};
+  cleaned.forEach(x => { if (x.av) newAvatars[x.name] = x.av; });
+  state.players = cleaned.map(x => x.name);
+  state.avatars = newAvatars;
   save();
   renderPlayerSelectionGrid();
   document.getElementById('editPlayersOverlay').classList.add('hidden');
@@ -2873,6 +3612,23 @@ function init() {
     if (e.target === document.getElementById('reportOverlay'))
       document.getElementById('reportOverlay').classList.add('hidden');
   });
+  document.getElementById('avatarPickerOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('avatarPickerOverlay'))
+      document.getElementById('avatarPickerOverlay').classList.add('hidden');
+  });
+
+  // sticky score visibility via IntersectionObserver
+  const liveScore = document.getElementById('liveScore');
+  const stickyScore = document.getElementById('stickyScore');
+  if (liveScore && stickyScore && window.IntersectionObserver) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const inStep2 = currentStep === 2;
+        stickyScore.classList.toggle('visible', inStep2 && !e.isIntersecting);
+      });
+    }, { threshold: 0 });
+    obs.observe(liveScore);
+  }
 }
 init();
 </script>
